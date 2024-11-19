@@ -1,0 +1,13 @@
+MD dynamics of spring chain with Euler integrator
+
+In questa cartella sono presenti tutti i file necessari per la risoluzione dell'esercizio 1.1 delle dispense. In particolare abbiamo:
+
+- "esercitazione1.ipynb": un jupyter notebook contenente dei cenni teorici e la risoluzione dell'esercizio
+
+- "noEnCons.1e-3.dat": i valori determinati durante una simulazione di 10 ps effettuata con timestep pari a 1e-3 ps
+
+- "noEnCons.1e-4.dat": i valori determinati durante una simulazione di 10 ps effettuata con timestep pari a 1e-4 ps
+
+- "noEnCons.1e-5.dat": i valori determinati durante una simulazione di 10 ps effettuata con timestep pari a 1e-5 ps
+
+- "graficiGnuplot": una cartella contente al suo interno tutti i grafici fatti con gnuplot
