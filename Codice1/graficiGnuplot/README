@@ -1,0 +1,9 @@
+In questa cartella sono presenti i grafici fatti con gnuplot. In particolare abbiamo:
+
+- "noEnergiaConservata.pdf": file con simulazione a dt = 1e-3 in cui è evidente come la somma di energia cinetica e potenziale non sia costante
+
+- "confrontoIntervalliTempo.pdf": file con confronto di simulazioni con tre intervalli temporali differenti
+
+- "confrontoIntervalli.gnuplot": comandi gnuplot per realizzare il confronto con i tre intervalli temporali differenti
+
+- "noEnCons.gnuplot": comandi gnuplot per rendere evidente come non si abbia conservazione dell'energia totale nel caso di utilizzo dell'algoritmo di Eulero
