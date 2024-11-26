@@ -1,0 +1,22 @@
+In questa cartella sono presenti:
+
+- conf_dt_Verlet.pdf: confronto fra diversi time-step per la conservazione dell'energia totale con l'algoritmo di Verlet.
+
+- conf_lungh_Verlet.pdf: confronto fra diversi time-step per la lunghezza della catena con l'algoritmo di Verlet.
+
+- conf_dt_Vel_Verlet.pdf: confronto fra diversi time-step per la conservazione dell'energia totale con l'algoritmo Velocity Verlet.
+
+- conf_lungh_Vel_Verlet.pdf: confronto fra diversi time-step per la lunghezza della catena con l'algoritmo Velocity Verlet.
+
+- confResUnits.pdf: confronto fra output ottenuto con input riscalati in nuove unita di misura
+
+- dipCondIniziali_1D.pdf: confronto della lunghezza della catena nel caso di due condizioni iniziali unidimensionali leggermente discostate
+
+- dipCondIniziali_3D.pdf: confronto della lunghezza della catena nel caso di due condizioni iniziali tridimensionali leggermente discostate
+
+- temperatura1D.pdf: temperatura per catena costituita da masse e molle unidimensionale
+
+- temperatura3D.pdf: temperatura per catena costituita da masse e molle tridimensionale
+
+
+I files .gnuplot con le istruzioni sono da ricercarsi nelle cartelle relative alle quantita d'interesse.
