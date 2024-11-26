@@ -1,0 +1,12 @@
+MD dynamics of a spring-mass chain with recursion times calculation
+
+In questa cartella si trovano le soluzioni degli esercizi che si basano sul codice md.3. In particolare si hanno:
+
+- esercitazione3.ipynb: jupiter notebook con le soluzioni degli esercizi e grafici fatti in python
+
+- recTemp: cartella che contiene i file necessari per il calcolo della temperatura con considerazioni entropiche
+
+- confTemp: cartella per il calcolo della temperatura sfruttando l'equipartizione
+
+- graficiGnuplot: cartella con i grafici fatti in gnuplot
+
