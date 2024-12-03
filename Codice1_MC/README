@@ -1,0 +1,15 @@
+MC simulation of a spring-mass chain.
+
+
+In questa cartella sono presenti le risoluzioni di tutti gli esercizi che richiedono l'utilizzo del codice mc.1. In particolare abbiamo:
+
+- 'esercitazione1.ipynb': un jupiter notebook contenete alcuni cenni teorici relativi agli argomenti trattati in questa esercitazione e le risoluzioni degli esercizi.
+
+- 'ott_gamma.sh': uno script utilizzato per la determinazione di gamma ottimale, che consente di modificare il seed del generatore di numeri casuali ad ogni iterazione e di determinare il numero di mosse tentate per giungere a termalizzazione per vari gamma fissati.
+
+- 'confrontoGamma': una cartella contenente il file dei risultati dell'ottimizzazione rispetto a gamma
+
+- 'confrontoMC_MD': una cartella contutto il necessario per il confronto fra la simulazione Monte Carlo e quella Molecular Dynamics
+
+- 'graficiGnuplot': una cartella contenente tutti i grafici fatti con gnuplot
+ 

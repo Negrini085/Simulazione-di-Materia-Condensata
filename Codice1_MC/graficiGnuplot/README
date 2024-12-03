@@ -1,0 +1,11 @@
+In questa cartella sono presenti i grafici fatti con gnuplot. In particolare abbiamo:
+
+- '2DbinningMC.pdf': probabilità ottenuta con binning su raggio di girazione e distanza head-tail sull'output della simulazione Monte-Carlo
+
+- 'confrontoMC_MD_gyration-radius.pdf': confronto fra i binning 1D rispetto al raggio di girazione ottenuti nel caso Monte Carlo ed in quello Molecular Dynamics
+
+- 'confrontoMC_MD_head-tail.pdf': confronto fra i binning 1D rispetto alla distanza head-tail ottenuti nel caso Monte Carlo ed in quello Molecular Dynamics
+
+- 'confrontoSeed.pdf': grafico con confronto sui numeri di mosse tentate per giungere a termalizzazione ottenuti con 3 seed differenti
+
+- 'ottimizzazioneGamma.pdf': grafico che riporta l'ottimizzazione in gamma, ottenuta come media di 1000 risultati ottenuti a seed differenti
