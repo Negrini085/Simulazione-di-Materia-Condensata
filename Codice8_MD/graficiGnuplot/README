@@ -1,0 +1,17 @@
+In questa cartella sono presenti dei grafici fatti con gnuplot riguardanti l'esercizio 3.1 delle dispense. In particolare:
+
+- "2Dbinning.pdf": contiene il grafico della densità di probabilità in funzione del raggio di girazione e della distanza fra testa e coda della catena.
+
+- "2Dbinning_plane.pdf": contiene la stessa informazione del grafico precedente, solo che non è più presente la superficie tridimensionale, ma il valore della probabilità in funzione del raggio di girazione e della distanza testa-coda della catena è dato da una scala colore.
+
+- "2Dbinning_plane_int.pdf": contiene le stesse informazioni del grafico precedente, solo con un'interpolazione che rende più graduale la variazione di p.
+
+- "2Dfree_energy.pdf": contiene la superficie tridimensionale descritta dall'energia libera del sistema, valutata effettuando il logaritmo della probabilità ottenuta in precedenza.
+
+- "2Dfree_energy_plane.pdf":  contiene la stessa informazione del grafico precedente, solo che non è più presente la superficie tridimensionale, ma il valore dell'energia libera in funzione del raggio di girazione e della distanza testa-coda della catena è dato da una scala colore. 
+
+- "1Dbinning_q_diretto.pdf": contiene il risultato del binning diretto effettuato rispetto alla distanza fra testa e coda della catena in analisi.
+
+- "1Dbinning_Rg_diretto.pdf": contiene il risultato del binning diretto effettuato rispetto al raggio di girazione del sistema preso in considerazione.
+
+- "confronto_metodi.pdf": contiene il confornto fra i due metodi di valutazione. E' necessario un fattore moltiplicativo pari a 1/1.4 per far coincidere la curva proiettata con quella ottenuta direttamente.

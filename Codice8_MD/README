@@ -1,0 +1,13 @@
+MD simulation of a spring-mass chain with LJ interaction, and Langevin thermostat.
+
+In questa cartella sono presenti tutti i file necessari per la risoluzione dell'esercizio 3.1 delle dispense. In particolare:
+
+- "esercitazione8.ipynb": è un jupiter notebook dove sono presenti alcuni cenni di teoria e i risultati ottenuti. I grafici sono fatti in python, ma sono presenti anche quelli in gnuplot all'interno della cartella.
+
+- "output.dat": contiene i valori degli osservabili ottenuti mediante una simulazione da 20 milioni di step della dinamica del sistema di masse e molle in analisi. 
+
+- "2Dbinning": cartella contente il file per binning in 2D
+
+- "1Dbining": cartella contenente i file ottenuti mediante binning unidimensionale
+
+- "graficiGnuplot": una cartella contenente tutti i grafici prodotti con gnuplot. All'interno è presente un file README in cui viene specificato in ciascuno di quelli cosa venga graficato.
