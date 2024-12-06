@@ -1,0 +1,29 @@
+
+
+*******************************************************************************
+Tue Nov 26 18:48:35 2024
+
+
+FIT:    data read from 'recursion2.dat'
+        format = z
+        #datapoints = 68
+        residuals are weighted equally (unit weight)
+
+function used for fitting: b*x
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   b            
+   0 2.2489285920e+11   0.00e+00  3.88e+01    1.000000e+00
+   3 1.6520647940e+09  -6.14e-05  3.88e-02    1.476719e+03
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 1.65206e+09
+rel. change during last iteration : -6.13624e-10
+
+degrees of freedom    (FIT_NDF)                        : 67
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 4965.65
+variance of residuals (reduced chisquare) = WSSR/ndf   : 2.46577e+07
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b               = 1476.72          +/- 15.51        (1.05%)

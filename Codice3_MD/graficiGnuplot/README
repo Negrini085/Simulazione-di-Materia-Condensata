@@ -1,0 +1,9 @@
+In questa cartella sono presenti due grafici:
+
+- rec_temp.pdf: contiene il fit per determinare la temperatura basandosi sui tempi di ricorsione
+
+- temperatura.pdf: contiene la temperatura per una simulazione effettuata a partire dalla configurazione initialchain.1.xyz
+
+
+
+Le istruzioni per riprodurre i grafici precedenti sono presenti in file '.gnuplot' nelle relative cartelle.
