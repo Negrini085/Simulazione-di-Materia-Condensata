@@ -1,0 +1,7 @@
+
+
+In questa cartella sono presenti i grafici prodotti con gnuplot:
+
+	- speedup_n_step: un grafico in cui è studiato lo speedup per simulazioni di diverse lunghezze
+
+	- speedup_n_part: un grafico in cui è studiato lo speedup per simulazioni con numero di atomi diverso 

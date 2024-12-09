@@ -1,1 +1,17 @@
 MD of Lennard-Jones gas of Ne atoms with Langevin at 300K
+
+
+
+In questa cartella sono presenti le risoluzioni di tutti gli esercizi che richiedono l'utilizzo del codice lammps.1. In particolare abbiamo:
+
+- 'esercitazione1.ipynb': un jupiter notebook contenete le risoluzioni degli esercizi.
+
+- 'animation': una cartella contenente l'animazione presente nel notebook
+
+- 'scaling': una cartella con i tempi d'esecuzione misurati
+
+- 'graficiGnuplot': una cartella contenente tutti i grafici fatti con gnuplot
+
+
+
+Le istruzioni per riprodurre i grafici precedenti sono presenti in file '.gnuplot' nelle relative cartelle.
