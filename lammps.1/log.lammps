@@ -1,0 +1,143 @@
+LAMMPS (2 Aug 2023 - Update 1)
+#set units in eV, Angstrom, ps
+units           metal
+
+# periodic boundaries along all directions
+boundary p p p
+
+# creates a cubic simulation box of side=10, and 1 atom type
+region          mybox block  0 20  0 20  0 20  units box
+create_box      1 mybox
+Created orthogonal box = (0 0 0) to (20 20 20)
+  2 by 1 by 3 MPI processor grid
+
+# fills the box with 100 atoms of type 1 with random coordinates (seed=4447)
+create_atoms    1 random 250 4447 mybox
+Created 250 atoms
+  using lattice units in orthogonal box = (0 0 0) to (20 20 20)
+  create_atoms CPU = 0.000 seconds
+
+# set the mass of atom type 1 to that of Ne
+mass            1 20.1797
+
+# skin for neighbors list
+neighbor        2.0 bin
+
+# neighbors list update every 100 steps
+neigh_modify    every 10 delay 0 check yes
+
+# lennard-jones interaction with radial cutoff r_c=10
+pair_style      lj/cut 10.0
+
+# coefficient for LJ: epsilon=0.001, sigma=1
+pair_coeff      * * 0.001 1.0
+
+# set the time step
+timestep            0.001
+
+# adding a Langevin thermostat at 300K
+fix LAN all langevin 300 300 0.1 4567
+
+# saving trajectories to file every 100 timesteps
+#dump            1 all atom 100 traj.dump
+
+# print output every 1000 steps
+#thermo          1000
+
+# quantities to print
+#thermo_style    custom time step temp etotal pe ke press ndanger
+#thermo_modify   flush yes
+
+
+# set integrator to velocity-verlet
+run_style verlet
+
+# adding limited integrator to avoid "explosions"
+fix NVE all nve/limit 0.001
+
+# performing a few steps to avert too-close atoms
+run 3000
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 10 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 3.109 | 3.111 | 3.113 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0              89.933279      0              89.933279      72492.155    
+      3000   6.633634      -0.052654575    0              0.16085408     32.957369    
+Loop time of 0.227205 on 6 procs for 3000 steps with 250 atoms
+
+Performance: 1140.822 ns/day, 0.021 hours/ns, 13203.960 timesteps/s, 3.301 Matom-step/s
+84.0% CPU use with 6 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.088089   | 0.11168    | 0.13798    |   4.7 | 49.15
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.077139   | 0.10444    | 0.12904    |   5.0 | 45.97
+Output  | 1.4352e-05 | 1.5484e-05 | 1.8339e-05 |   0.0 |  0.01
+Modify  | 0.0065599  | 0.0080671  | 0.0092804  |   0.9 |  3.55
+Other   |            | 0.003003   |            |       |  1.32
+
+Nlocal:        41.6667 ave          46 max          33 min
+Histogram: 1 0 0 0 0 0 2 1 1 1
+Nghost:        1360.17 ave        1429 max        1284 min
+Histogram: 1 0 2 0 0 0 0 1 1 1
+Neighs:           4672 ave        5399 max        3774 min
+Histogram: 1 0 0 1 0 1 0 2 0 1
+
+Total # of neighbors = 28032
+Ave neighs/atom = 112.128
+Neighbor list builds = 0
+Dangerous builds = 0
+
+
+# replacing integrator with standard (not limited)
+unfix NVE
+fix NVE all nve
+
+# perform the simulation
+run 50000 upto
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Per MPI rank memory allocation (min/avg/max) = 3.109 | 3.111 | 3.113 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+      3000   6.633634      -0.052654575    0              0.16085408     32.957369    
+     50000   323.7442      -0.0044272272   0              10.415531      1431.5443    
+Loop time of 3.74058 on 6 procs for 47000 steps with 250 atoms
+
+Performance: 1085.608 ns/day, 0.022 hours/ns, 12564.907 timesteps/s, 3.141 Matom-step/s
+85.5% CPU use with 6 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 1.5525     | 1.7777     | 2.1451     |  14.6 | 47.52
+Neigh   | 0.049068   | 0.051754   | 0.057533   |   1.3 |  1.38
+Comm    | 1.3912     | 1.7733     | 2.0044     |  15.1 | 47.41
+Output  | 1.6332e-05 | 1.7437e-05 | 2.1219e-05 |   0.0 |  0.00
+Modify  | 0.085875   | 0.091257   | 0.10245    |   2.0 |  2.44
+Other   |            | 0.04655    |            |       |  1.24
+
+Nlocal:        41.6667 ave          55 max          35 min
+Histogram: 1 1 1 2 0 0 0 0 0 1
+Nghost:        1368.83 ave        1425 max        1337 min
+Histogram: 2 2 0 0 0 0 0 1 0 1
+Neighs:        4678.83 ave        6502 max        4049 min
+Histogram: 3 0 2 0 0 0 0 0 0 1
+
+Total # of neighbors = 28073
+Ave neighs/atom = 112.292
+Neighbor list builds = 512
+Dangerous builds = 0
+
+Total wall time: 0:00:03
