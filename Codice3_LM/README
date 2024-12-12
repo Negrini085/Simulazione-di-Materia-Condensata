@@ -1,0 +1,21 @@
+Wetting of a water droplet on gold surface
+
+In questa cartella sono presenti tutte le quantità necessarie per la risoluzione dell'esercizio 4.3. In particolare sono presenti:
+
+	- 'esercitazione3.ipynb': jupiter notebook con la risoluzione dell'esercizio in analisi
+	
+	- 'Immagini': cartella con gif ed immagini presenti nel notebook, generate con ovito
+	
+	- 'last_filt': cartella contenete l'ultima configurazione ed i vari stadi che portano al file su cui viene eseguito il fit sferico
+	
+	- 'last_5': cartella con le ultime 5 configurazioni filtrate ed il codice necessario per analizzarle
+	
+	- 'output.out': file di output della simulazione
+	
+	- 'traj.dump': configurazioni visitate dal sistema durante la sua evoluzione
+	
+	- 'graficiGnuplot': cartella contenete i vari grafici gnuplot generati
+	
+
+
+I file '.gnuplot' con le informazioni necessarie per la formazione dei vari grafici sono sparse nelle varie cartelle.
