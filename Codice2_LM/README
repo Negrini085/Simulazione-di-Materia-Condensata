@@ -1,1 +1,14 @@
 MD of a periodic water, or of a freestanding droplet, at 300K
+
+
+In questa cartella sono presenti tutti i file necessari per la risoluzione dell'esercizio 4.2. In particolare si ha:
+
+	- 'esercitazione2.ipynb': jupiter notebook con la risoluzione dell'esercizio
+	
+	- 'long': cartella con valori relativi alla simulazione con pbc
+	
+	- 'short': cartella con valori relativi alla simulazione free standing
+	
+	- 'graficiGnuplot': cartella contenente i vari grafici su gnuplot
+
+
