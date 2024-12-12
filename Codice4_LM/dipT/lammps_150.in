@@ -34,7 +34,7 @@ fix             1 water langevin 150.0 150.0 1.0 4567
 fix             2 water nve
 compute         Twater water temp/com
 compute         COM water com
-fix             3 water print 1000 "$(time) $(c_COM[1]) $(c_COM[2])" file xy_175.dat screen no
+fix             3 water print 1000 "$(time) $(c_COM[1]) $(c_COM[2])" file xy_150.dat screen no
 
 ######### OUTPUT ####################################################
 thermo_style    custom time step temp c_Twater pe ke etotal ndanger c_COM[1] c_COM[2] c_COM[3]
