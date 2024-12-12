@@ -1,0 +1,50 @@
+
+units           metal                   # eV, Ang, ps
+variable        kcal_mol equal 43.36e-3 # eV
+atom_style      full
+boundary        p p p
+processors      * * 1
+
+bond_style      harmonic
+angle_style     harmonic
+
+read_data       water_molecule_on_gold.data
+
+timestep        1e-3
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0 check yes exclude molecule/intra all
+
+group           water type 1 2
+
+######### PAIR STYLE AND COEFFS #####################################################
+pair_style      lj/smooth/linear 10.0
+
+# water-water and NT-water LJ interaction
+pair_coeff      *   *      0.00                0.00
+pair_coeff      1   3      0.02                2.00
+
+
+bond_coeff      1 1.0 0.9572
+angle_coeff     1 1.0 104.52
+set             type 1 charge -1.1128
+set             type 2 charge  0.5564
+
+######### FIXES #####################################################
+fix             1 water langevin 300.0 300.0 1.0 4567
+fix             2 water nve
+compute         Twater water temp/com
+compute         COM water com
+fix             3 water print 1000 "$(time) $(c_COM[1]) $(c_COM[2])" file xy_300.dat screen no
+
+######### OUTPUT ####################################################
+thermo_style    custom time step temp c_Twater pe ke etotal ndanger c_COM[1] c_COM[2] c_COM[3]
+thermo          1000
+
+dump            mydump  all custom 1000 traj_diffusion.dump type x y z
+dump_modify     mydump  first yes flush yes
+
+run 10000000
+
+
+
+
