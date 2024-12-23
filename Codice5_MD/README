@@ -1,0 +1,21 @@
+MD simulation of a spring-mass chain with Langevin thermostat.
+
+
+In questa cartella si trovano le soluzioni degli esercizi che si basano sul codice md.5. In particolare si hanno:
+
+- esercitazione5.ipynb: jupiter notebook con le soluzioni degli esercizi e grafici fatti in python
+
+- termG: cartella che contiene i file necessari per lo studio della termalizzazione in funzione di gamma, possibile grazie allo script termG.sh
+
+- nullT: cartella che contiene i file necessari per lo studio della caduta in temperatura nel caso in cui si imponga T=0 al Langevin, possibile grazie allo script fitExp.sh
+
+- short_chLen: cartella che contiene i file necessari per lo studio della lunghezza della catena al variare del seed, possibile grazie allo script chLen.sh. Le run considerate sono troppo corte
+
+- long_chLen: cartella che contiene i file necessari per lo studio della lunghezza della catena al variare del seed, possibile grazie allo script chLen.sh. Le run considerate sono 50 volte più lunghe di quelle che sono considerate nella cartella precedente
+
+- graficiGnuplot: cartella con i grafici fatti in gnuplot
+
+
+
+I file '.gnuplot' per la creazione dei grafici sono presenti nelle rispettive sotto-cartelle.
+
