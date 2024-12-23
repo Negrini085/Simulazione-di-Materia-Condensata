@@ -1,0 +1,17 @@
+GO MODEL
+
+In questa cartella si trovano le soluzioni degli esercizi che si basano sul codice md.6. In particolare si hanno:
+
+- esercitazione6.ipynb: jupiter notebook con le soluzioni degli esercizi e grafici fatti in python
+
+- initialXYZ: cartella che contiene le configurazioni iniziali utilizzate per la risoluzione degli esercizi e l'esecuzione dei vari cambi configurazionali del sistema
+
+- unfold_fold: cartella che contiene i file necessari per lo studio dei processi di unfolding e refolding
+
+- rateCalc: cartella che contiene i file necessari per il calcolo dei tassi di folding ed unfolding. In particolare sono presenti i file di output delle run considerate. Per tale studio è stato utilizzato lo script rateCalc.sh
+
+- graficiGnuplot: cartella con i grafici fatti in gnuplot
+
+
+
+I file '.gnuplot' per la creazione dei grafici sono presenti nelle rispettive sotto-cartelle.
