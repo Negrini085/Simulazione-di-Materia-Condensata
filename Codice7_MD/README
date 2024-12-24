@@ -1,0 +1,14 @@
+Purely repulsive ensemble of 100 atoms in a periodic cubic box of side 5 Å
+
+
+In questa cartella si trovano le soluzioni degli esercizi che si basano sul codice md.7. In particolare si hanno:
+
+- esercitazione7.ipynb: jupiter notebook con le soluzioni degli esercizi e grafici fatti in python
+
+- simT: cartella che contiene i file necessari per lo studio del tempo di termalizzazione
+
+- graficiGnuplot: cartella con i grafici fatti in gnuplot
+
+
+
+I file '.gnuplot' per generare i vari grafici sono nelle cartelle relative al grafico profotto.
