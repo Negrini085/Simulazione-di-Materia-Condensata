@@ -1,0 +1,18 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 90.01     35.61    35.61   200001   178.03   178.13  calc_forces
+  9.37     39.31     3.70    20001   185.24   185.28  calc_energies
+  0.66     39.57     0.26                             velocity_Verlet_integrator
+  0.05     39.59     0.02  4640034     0.00     0.00  dist
+  0.05     39.61     0.02    20001     1.00     1.00  write_traj
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this

@@ -1,0 +1,19 @@
+MD simulation of a spring-mass chain surrounded by fluid particles, with periodic boundaries or confining box.
+
+In questa cartella sono presenti le soluzioni a tutti gli esercizi utilizzanti il codice di dinamica molecolare 'md.4'. In particolare e possibile trovare:
+
+- 'esercitazione4.ipynb': jupiter notebook contenente alcuni cenni teorici e gli output grafici fatti in python
+
+- 'gif': una cartella contenente le gif per il confronto fra simulazione con e senza PBC.
+
+- 'profiling' & 'r_cut': due cartelle per il profiling, delle quali la seconda serve per evidenziare come il cutoff influenzi le tempistiche d'esecuzione.
+
+- 'neigh_list': una cartella contenente gli output in caso di utilizzo o meno della lista dei primi vicini
+
+- 'consShift': una cartella per sondare le proprietà di conservazione dell'energia nel momento in cui viene introdotto il cutoff
+
+- 'confT': una cartella contenete i files per confrontare temperatura dell'acqua e della molecola
+
+- 'one_fast': una cartella per lo studio della dinamica nel momento in cui si ha una sola particella molto energetica
+
+- 'graficiGnuplot': una cartella contenente tutti i grafici fatti con gnuplot
