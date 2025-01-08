@@ -1,0 +1,14 @@
+Il modello di Ising consiste in un reticolo che presenta un momento magnetico (o spin) in ogni sito. Nel 
+modello questi spin assumono la forma più semplice possibile, non particolarmente realistica, di variabili 
+scalari $\sigma_i$ di valori $\pm 1$, rappresentanti rispettivamente dipoli unitari rivolti verso l'alto oppure 
+verso il basso. Tali spin interagiscono fra loro e possono accoppiarsi ad un campo magnetico esterno e 
+per tale motivo l'Hamiltoniana del sistema assume la forma 
+
+\begin{equation}
+    H\,=\,-J\sum_{\left<ij\right>} \sigma_i \sigma_j\,-\,h\sum_{i} \sigma_i,
+    \label{eq: ising_ham}
+\end{equation}
+
+dove la notazione $\left<ij\right>$ denota una somma su primi vicini. Se il parametro $J$ è positivo i dipoli vicini 
+tendono ad allinearsi e quindi il modello è di tipo ferromagnetico, altrimenti quando $J\,<\,0$ si ha anti-allineamento 
+e fenomenologia anti-ferromagnetica.

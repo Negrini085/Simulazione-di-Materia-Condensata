@@ -1,0 +1,121 @@
+\documentclass[a4paper,11pt]{article}
+
+% Pacchetti di base
+\usepackage[utf8]{inputenc} % Per caratteri UTF-8
+\usepackage[T1]{fontenc} % Font migliorati
+\usepackage[italian]{babel} % Lingua italiana
+\usepackage{amsmath, amssymb, amsthm} % Matematica avanzata
+\usepackage{geometry} % Gestione margini
+\geometry{a4paper, margin=2.5cm}
+\usepackage{graphicx} % Per immagini
+\usepackage{hyperref} % Collegamenti ipertestuali
+\usepackage{cleveref} % Riferimenti migliorati
+\usepackage{fancyhdr} % Intestazioni e piè di pagina
+\usepackage{enumitem} % Liste personalizzate
+\usepackage{xcolor} % Colori
+\usepackage{booktabs} % Tabelle eleganti
+
+% Impostazioni per link ipertestuali
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=red,
+    urlcolor=blue,
+    pdftitle={Dispense Universitarie},
+    pdfauthor={Autore},
+    pdfsubject={Teoria},
+    pdfkeywords={LaTeX, Dispense, Università}
+}
+
+% Ambiente per teoremi, definizioni e dimostrazioni
+\theoremstyle{definition}
+\newtheorem{definition}{Definizione}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corollario}[theorem]
+\theoremstyle{remark}
+\newtheorem{remark}{Osservazione}[section]
+
+% Numerazione delle equazioni
+\numberwithin{equation}{section}
+
+% Intestazione e piè di pagina
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Dispense Universitarie}}
+\fancyhead[R]{\textit{\leftmark}}
+\fancyfoot[C]{\thepage}
+
+% Titolo e autore
+\title{\textbf{Il modello di Ising}}
+\author{Autore: Filippo Negrini \\
+        Corso: Simulazione di Materia Condensata e Biosistemi \\
+        Università: Università degli Studi di Milano}
+\date{\today}
+
+\begin{document}
+
+% Pagina del titolo
+\maketitle
+\tableofcontents
+\newpage
+
+\input{Sezioni/Introduzione.tex}
+\input{Sezioni/Ising1D.tex}
+\newpage
+
+
+
+\end{document}
+
+
+
+
+
+
+%% Struttura delle sezioni
+%\section{Argomento Principale 1}
+%In questa sezione vengono discusse le basi teoriche dell'argomento principale.
+%
+%\subsection{Definizioni e Teoremi}
+%Ecco un esempio di definizione e di teorema:
+%
+%\begin{definition}[Esempio di Definizione]
+%Una definizione descrive un concetto fondamentale che verrà utilizzato successivamente.
+%\end{definition}
+%
+%\begin{theorem}[Esempio di Teorema]
+%Se $a = b$, allora $a^2 = b^2$.
+%\end{theorem}
+%
+%\begin{proof}
+%La dimostrazione segue direttamente dalla proprietà di uguaglianza. Molto semplice!
+%\end{proof}
+%
+%\subsection{Esempi}
+%Esempio pratico:
+%\begin{itemize}
+%    \item Se $a = 3$ e $b = 3$, allora $a^2 = b^2 = 9$.
+%\end{itemize}
+%
+%\section{Argomento Principale 2}
+%Secondo argomento con approfondimenti. Può includere grafici, equazioni e riferimenti incrociati.
+%
+%\begin{figure}[h!]
+%    \centering
+%    \includegraphics[width=0.6\textwidth]{example-image} % Immagine esempio
+%    \caption{Esempio di figura.}
+%    \label{fig:example}
+%\end{figure}
+%
+%Come mostrato in \Cref{fig:example}, il grafico rappresenta un esempio pratico.
+%
+%\section{Conclusioni}
+%Breve riassunto dei risultati principali e considerazioni finali.
+%
+%% Bibliografia
+%\begin{thebibliography}{9}
+%    \bibitem{lamport94} Leslie Lamport, \textit{LaTeX: A Document Preparation System}, Addison Wesley, 1994.
+%    \bibitem{knuth84} Donald Knuth, \textit{The TeXbook}, Addison-Wesley, 1984.
+%\end{thebibliography}
+%
