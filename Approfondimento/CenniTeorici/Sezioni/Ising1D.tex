@@ -13,6 +13,50 @@ primo ed il sistema si chiude ad anello, come è possibile apprezzare in Figura 
     \label{fig: Ising1D_pbc}
 \end{figure}
 
+Sebbene il modello di Ising 1D ammetta soluzione esatta, è istruttivo lavorare inizialmente con una teoria di campo 
+medio, in cui il termine d'interazione presente nell'Hamiltoniana viene sostituito da un termine efficace (di campo 
+medio appunto), andando a trascurare le fluttuazioni degli spin.
+
+
+
+
+
+\subsection{Teoria di campo medio}
+
+Il punto di partenza di una teoria di campo medio è la semplificazione del temine d'interazione presente nell'Hamiltoniana. Nel  
+caso del modello di Ising mono-dimensionale l'interazione fra spin primi vicini può essere riscritta come
+
+\begin{equation}
+    \sigma_i \sigma_j\,=\,\left(\sigma_i\,-\,m\,+\,m\right)\left(\sigma_j\,-\,m\,+\,m\right)\,=\,-m^2\,+\,m\sigma_i\,+\,m\sigma_j\,+\,\left(\sigma_i\,-\,m\right)\left(\sigma_j\,-\,m\right),
+    \label{eq: int_mf}
+\end{equation}
+
+dove l'ultimo termine della somma misura le fluttuazioni fra spin. L'approssimazione di campo medio consiste nel trascurare 
+completamente l'ultimo termine, in modo tale che tutti gli spin risultino essere disaccoppiati fra loro e risulti più immediato il 
+calcolo della funzione di partizione. L'Hamiltoniana di campo medio risulta quindi 
+
+\begin{equation}
+    H_{MF}\,=\,-\frac{J}{2} \sum_{\left<i,j\right>} \left[-m^2\,+\,m\left(\sigma_i\,+\,\sigma_j\right)\right]\,-\,h\sum_{i}\sigma_i,
+    \label{eq: ham_mf}
+\end{equation}
+
+da cui è immediato il calcolo della funzione di partizione 
+
+\begin{equation}
+    Q_{MF}\,=\,\sum_{\left\{\sigma\right\}} e^{-\beta H_{MF}}\,=\,\exp{\left(-\frac{\beta J m^2 N n_{nn}}{2}\right)} \left\{2 \cosh{\left[\beta \left(J n_{nn} m\,+\,h\right)\right]}\right\}^N.
+    \label{eq: part_MF_Ising1D}
+\end{equation}
+
+Nella relazione precedente la quantità $n_{nn}$ è il numero il numero di coordinazione del reticolo, ossia il numero di primi vicini per la 
+geometria presa in considerazione. L'energia libera per particella è data da 
+
+\begin{equation}
+    \frac{F}{N}\,=\,-\frac{k_B T}{N} \ln{\left(Q_{MF}\right)}\,=\,\frac{JM^2n_{nn}}{2}\,-\,\frac{1}{\beta}\ln{\left\{2 \cosh{\left[\beta\left(h\,+\,Jn_{nn}m\right)\right]}\right\}}
+    \label{eq: freeE_MF_Ising1D}
+\end{equation}
+
+
+
 
 \subsection{Soluzione esatta}
 
@@ -74,7 +118,7 @@ dato che
     \label{eq: approx_Q}
 \end{equation}
 
-L'energia libera, dalla quale è possibile determinare tutta la termodinamica del sistema, risulta quindi
+L'energia libera di Helmholtz, dalla quale è possibile determinare tutta la termodinamica del sistema, risulta quindi
 
 \begin{equation}
     A\left(h,\,T\right)\,=\,-k_B T \ln{\left[Q\left(h,\,T\right)\right]}\,\simeq\,-Nk_BT \ln{\left(\lambda_1\right)}.
@@ -82,4 +126,69 @@ L'energia libera, dalla quale è possibile determinare tutta la termodinamica de
 \end{equation}
 
 
-\subsection{Teoria di Campo Medio}
+
+\subsubsection{Magnetizzazione}
+
+Dall'energia libera di Helmholtz è possibile ricavare la magnetizzazione per spin, che costituisce il parametro d'ordine del 
+sistema in analisi ed in quanto tale consente di caratterizzare le transizioni di fase. In particolare, tale quantità si 
+ottiene come derivata di $A\left(h,\,T\right)$ rispetto al campo magnetico applicato, in modo tale che
+
+\begin{equation}
+    m\,=\,-\left(\frac{\partial A/N}{\partial h}\right)_T\,=\,\frac{\sinh{\left(\beta h\right)}}{\sqrt{e^{-4\beta J}\,+\,\sinh^2\left(\beta h\right)}}
+    \label{eq: magn_Ising1D_corr}
+\end{equation}
+
+Notiamo che quando $h\,\to\,0$ la magnetizzazione tende ad un valore nullo a tutte le temperature finite. Questo evidenzia 
+come sia impossibile avere magnetizzazione spontanea, e quindi una transizione di fase, ad ogni temperatura finita T: tale risultato 
+è in contrasto con quanto previsto dalla teoria di campo medio, che oltre a fornire gli esponenti critici sbagliati, suggerisce la 
+presenza di ordine a $T\,\neq\,0$, che è un risultato non fisico come mostra la soluzione esatta. Quando si ha $T\,=\,0$ $m$ satura ad 
+uno per ogni valore del campo magnetico, il che implica perfetto ordine nel sistema; questo significa che la temperatura critica 
+$T_c$ coincide con lo zero assoluto. E' anche possibile calcolare la suscettività magnetica, la quale diverge 
+quanto $T\,\to\,0$, che è il comportamento che ci si aspetterebbe la punto critico.
+
+
+\subsubsection{Correlazioni fra spin}
+
+Consideriamo ora un modello di Ising costituito da un reticolo lineare aperto, senza più condizioni al contorno periodiche, 
+come quello in Figura \ref{fig: Ising1D_open}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Immagini/Ising1D_open.png}
+    \caption{Esempio di catena di spin per la determinazione della funzione di correlazione fra due spin.}
+    \label{fig: Ising1D_open}
+\end{figure}
+
+La funzione di correlazione fra due spin $\sigma_i$ e $\sigma_j$ è definita come
+
+\begin{equation}
+    G_{ij}\,=\,\left<\sigma_i \sigma_j\right>\,-\,\left<\sigma_i\right>\left<\sigma_j\right>
+    \label{eq: def_corr_fun_Ising1D}
+\end{equation}
+
+e consente di valutare se due spin sono correlati o meno. Nel caso del modello di Ising 1D la funzione di correlazione 
+risulta essere
+
+\begin{equation}
+    G_{i, i+r}\,=\,\left(\tanh{\beta J}\right)^r.
+    \label{eq: Ising1D_cor}
+\end{equation}
+
+Dall'equazione \eqref{eq: Ising1D_cor} è possibile determinare quale sia la lunghezza di correlazione esprimendo la 
+$G_{i, i+r}$ come una funzione esponenzialmente decadente della separazione $r$ fra gli spin in analisi. 
+
+\begin{equation}
+    G_{i, i+r}\,=\,e^{r\left[\ln{\left(\tanh{\beta J}\right)}\right]}\,=\,e^{-r/\xi},
+    \label{eq: Ising1D_corr_exp}
+\end{equation}
+
+da cui risulta che la lunghezza di correlazione è pari a 
+
+\begin{equation}
+    \xi\,=\,-\frac{1}{\ln{\left[\tanh{\left(J/k_B T\right)}\right]}}.
+    \label{eq: lungh_corr}
+\end{equation}
+
+Notiamo che la lunghezza di correlazione è sempre maggiore o uguale a zero. Inoltre, quando la temperatura tende a zero, 
+$\xi$ diverge ad infinito. Il fatto che questo accada solamente a temperatura nulla evidenzia come non si abbia correlazione 
+(e di conseguenza ordine) a lungo raggio fra gli spin per ogni $T\,\neq\,0$.

@@ -1,5 +1,0 @@
-\babel@toc {italian}{}\relax 
-\babel@toc {italian}{}\relax 
-\contentsline {section}{\numberline {1}Modello di Ising 1D}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Soluzione esatta}{2}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Teoria di Campo Medio}{3}{subsection.1.2}%
