@@ -1,0 +1,45 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{type}
+\PYG{+w}{    }\PYG{n}{PCG}\PYG{o}{*}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{tuple}\PYG{o}{[}\PYG{n}{state}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{incr}\PYG{p}{:}\PYG{+w}{ }\PYG{n}{uint64}\PYG{o}{]}\PYG{+w}{ }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZbs{}}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} The `PCG` type represents the state of a Permuted Congruential}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Generator (PCG), a family of simple fast space\PYGZhy{}efficient statistically}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} good algorithms for random number generation.}
+
+\PYG{+w}{    }\PYG{n}{RandomSetUp}\PYG{o}{*}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{tuple}\PYG{o}{[}\PYG{n}{inState}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{inSeq}\PYG{p}{:}\PYG{+w}{ }\PYG{n}{uint64}\PYG{o}{]}\PYG{+w}{ }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZbs{}}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} The `RandomSetUp` type is used to initialize a `PCG` generator.}
+
+
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{random}\PYG{o}{*}\PYG{p}{(}\PYG{n}{gen}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{PCG}\PYG{p}{):}\PYG{+w}{ }\PYG{n}{uint64}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Get a random uint64 from a `PCG`.}
+
+\PYG{+w}{    }\PYG{k+kd}{var}
+\PYG{+w}{        }\PYG{n}{oldstate}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{gen}\PYG{p}{.}\PYG{n}{state}
+\PYG{+w}{        }\PYG{n}{xorshift}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{uint32}\PYG{p}{(((}\PYG{n}{oldstate}\PYG{+w}{ }\PYG{o+ow}{shr}\PYG{+w}{ }\PYG{l+m+mi}{18}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{xor}\PYG{+w}{ }\PYG{n}{oldstate}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{shr}\PYG{+w}{ }\PYG{l+m+mi}{27}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{rot}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{int32}\PYG{p}{(}\PYG{n}{oldstate}\PYG{+w}{ }\PYG{o+ow}{shr}\PYG{+w}{ }\PYG{l+m+mi}{59}\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{n}{gen}\PYG{p}{.}\PYG{n}{state}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{oldstate}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{uint64}\PYG{p}{(}\PYG{l+m+mi}{6364136223846793005}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{gen}\PYG{p}{.}\PYG{n}{incr}
+\PYG{+w}{    }\PYG{n}{result}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{xorshift}\PYG{+w}{ }\PYG{o+ow}{shr}\PYG{+w}{ }\PYG{n}{rot}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{or}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{xorshift}\PYG{+w}{ }\PYG{o+ow}{shl}\PYG{+w}{ }\PYG{p}{((}\PYG{o}{\PYGZhy{}}\PYG{n}{rot}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{and}\PYG{+w}{ }\PYG{l+m+mi}{31}\PYG{p}{)))}
+
+
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{newRandomSetUp}\PYG{o}{*}\PYG{p}{(}\PYG{n}{rg}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{PCG}\PYG{p}{):}\PYG{+w}{ }\PYG{n}{RandomSetUp}\PYG{+w}{ }\PYG{l+s+sx}{\PYGZob{}.inline.\PYGZcb{}}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Create a new `RandomSetUp` from a `PCG`.}
+\PYG{+w}{    }\PYG{p}{(}\PYG{n}{rg}\PYG{p}{.}\PYG{n}{random}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{random}\PYG{p}{)}
+
+
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{newPCG}\PYG{o}{*}\PYG{p}{(}\PYG{n}{setUp}\PYG{p}{:}\PYG{+w}{ }\PYG{n}{RandomSetUp}\PYG{p}{):}\PYG{+w}{ }\PYG{n}{PCG}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Create a new `PCG` with the given `RandomSetUp`.}
+
+\PYG{+w}{    }\PYG{p}{(}\PYG{n}{result}\PYG{p}{.}\PYG{n}{state}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{.}\PYG{n}{incr}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{0.}\PYG{n}{uint64}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{setUp}\PYG{p}{.}\PYG{n}{inSeq}\PYG{+w}{ }\PYG{o+ow}{shl}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{or}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{+w}{    }\PYG{k}{discard}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{.}\PYG{n}{random}
+\PYG{+w}{    }\PYG{n}{result}\PYG{p}{.}\PYG{n}{state}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{n}{setUp}\PYG{p}{.}\PYG{n}{inState}
+\PYG{+w}{    }\PYG{k}{discard}\PYG{+w}{ }\PYG{n}{result}\PYG{p}{.}\PYG{n}{random}
+
+
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{rand}\PYG{o}{*}\PYG{p}{(}\PYG{n}{pcg}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{PCG}\PYG{p}{):}\PYG{+w}{ }\PYG{n+nb}{float32}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Get a random float32 uniformly distributed over the interval (0, 1)}
+\PYG{+w}{    }\PYG{n}{pcg}\PYG{p}{.}\PYG{n}{random}\PYG{p}{.}\PYG{n+nb}{float32}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{l+m+mh}{0xffffffff}\PYG{p}{.}\PYG{n+nb}{float32}
+
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{rand}\PYG{o}{*}\PYG{p}{(}\PYG{n}{pcg}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{PCG}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{float32}\PYG{p}{):}\PYG{+w}{ }\PYG{n+nb}{float32}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{} Get a random float32 uniformly distributed over the interval (a, b)}
+\PYG{+w}{    }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{pcg}\PYG{p}{.}\PYG{n}{rand}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{b}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{)}
+\end{Verbatim}

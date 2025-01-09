@@ -55,6 +55,120 @@ geometria presa in considerazione. L'energia libera per particella è data da
     \label{eq: freeE_MF_Ising1D}
 \end{equation}
 
+da cui è possibile ricavare tutta la termodinamica del sistema.
+
+
+
+\subsubsection{Magnetizzazione}
+
+La magnetizzazione si ricava a partire dall'energia libera per spin mediante una derivata rispetto al campo magnetico $h$. 
+La relazione che si ottiene è nota come \textit{equazione di Bragg-Williams}, che può essere espressa nella forma 
+
+\begin{equation}
+    \tanh^{-1}{\left(m\right)}\,=\,\frac{h\,+\,n_{nn}Jm}{k_B T}
+    \label{eq: BW_equation}
+\end{equation}
+
+Nel caso in cui il campo magnetico è identicamente nullo, è necessario distinguere due casistiche in base alla temperatura del sistema. 
+In primo luogo è necessario introdurre la temperatura critica 
+
+\begin{equation}
+    T_c\,=\,\frac{n_{nn}J}{k_B},
+    \label{eq: tc_Ising1D_MF}
+\end{equation}
+
+che consente di riscrivere il secondo membro dell'equazione di Bragg-Williams in funzione del rapporto fra $T_c$ e la temperatura 
+a cui il sistema si trova. Così facendo risulta evidente che quando $T\,>\,T_c$ l'unica soluzione possibile dell'equazione 
+\eqref{eq: BW_equation} è $m\,=\,0$, ossia mancanza di magnetizzazione finita. Nel caso opposto, ossia con $T\,<\,T_c$, si hanno 
+tre possibili valori di $m$, ossia $0,\,\pm m_0$, con $m_0$ quantità finita. L'energia libera consente di identificare quale 
+sia la soluzione fisica, poichè come è possibile osservare in Figura \ref{fig: FE_Ising1D_MF} quando la temperatura scende al 
+di sotto di quella critica $F$ passa da un regime in cui è presente un solo minimo in $m\,=\,0$ ad un regime con due minimi 
+equivalenti in $m\,=\,\pm m_0\,\neq\,0$. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Immagini/FE_Ising1D_MF.png}
+    \caption{ Energia libera per particella al variare della temperatura del sistema. Quando la temperatura è maggiore o uguale 
+    di quella critica è presente un solo minimo in $m\,=\,0$, mentre al di sotto sono presenti due minimi globali equivalenti e 
+    simmetrici rispetto ad $m\,=\,0$, che è un massimo locale. Immagine da \cite{galliFSA}.}
+    \label{fig: FE_Ising1D_MF}
+\end{figure}
+
+Questi due valori d'equilibrio della magnetizzazione sono perfettamente simmetrici in assenza di campo magnetico: una 
+rottura spontanea della simmetria per inversione di spin è necessaria per far si che il sistema realizzi uno dei due stati di 
+minimo globale dell'energia libera. 
+
+Nel caso di campo magnetico esterno diverso da zero non si osserva più la simmetria caratteristica del caso con $h\,=\,0$ e l'
+allineamento fra spin concorde con il verso di $h$ risulta essere energeticamente favorito.
+
+
+
+\subsubsection{Esponenti critici}
+
+E' possibile caratterizzare il comportamento di un certo sistema nell'intorno del punto critico in termini di leggi di potenza 
+che presentano un set di esponenti critici. La seguente analisi è rivolta a 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{11cm}|}
+    \hline
+    \textbf{Esponente} & \textbf{Significato fisico} \\ 
+    \hline
+    $\alpha$ & Descrive l'andamento del calore specifico al punto critico \\ 
+    \hline
+    $\beta$ & Descrive l'andamento del parametro d'ordine al punto critico \\ 
+    \hline
+    $\gamma$ & Descrive l'andamento della suscettività al punto critico \\ 
+    \hline
+    $\delta$ & E' legato all'equazione di stato alla temperatura critica \\ 
+    \hline
+    \end{tabular}
+    \caption{Esponenti critici e relativo significato}
+\end{table}
+
+Procediamo ora al calcolo degli esponenti critici $\beta$ e $\delta$ per il modello di Ising mono-dimensionale. L'equazione di Bragg-Williams 
+è uno strumento importante per il calcolo di $\beta$, poichè per $T\,\to\,T^-_c$ la magnetizzazione è molto minore di uno ed è possibile 
+espandere in serie la tangente iperbolica tralasciando i termini di ordine superiore al terzo 
+
+\begin{equation}
+    m\,=\,\tanh{\left(m\frac{T_c}{T}\right)}\,\simeq\,m\frac{T_c}{T}\,-\,\frac{m^3}{3}\left(\frac{T_c}{T}\right)^3
+    \label{eq: beta_fp_Ising1D_MF}
+\end{equation}
+
+in modo tale che, in seguito ad posto ad uno il fattore moltiplicativo del termine di grado 3, è possibile ricavare la 
+magnetizzazione in funzione della differenza fra la temperatura critica e quella a cui si trova il sistema. Dato che 
+
+\begin{equation}
+    m\,\simeq\,\sqrt{3\left(\frac{T_c\,-\,T}{T_c}\right)}, 
+    \label{eq: beta_sp_Ising1D_MF}
+\end{equation}
+
+l'esponente critico $\beta$ sarà pari ad un mezzo. Il calcolo di $\delta$ fa nuovamente uso dell'equazione di Bragg-Williams, che 
+a temperature confrontabili con quella critica e per piccoli valori del campo magnetico, può essere espressa come 
+
+\begin{equation}
+    m\,=\,\tanh{\left(\frac{h}{k_BT}\,+\,m\frac{T_c}{T}\right)}\,\simeq\,\frac{h}{k_B T}\,+\,m\frac{T_c}{T}\,-\,\frac{1}{3}\left(\frac{h}{k_B T}\,+\,m\frac{T_c}{T}\right)^3
+    \label{eq: delta_fp_Ising1D_MF}
+\end{equation}
+
+che porta all'equazione di stato approssimata 
+
+\begin{equation}
+    \frac{h}{k_B T}\,=\,m\frac{T\,-\,T_c}{T}\,+\,frac{m^3}{3}.
+    \label{eq: beta_sp_Ising1D_MF}
+\end{equation}
+
+Considerando l'isoterma critica, il primo termine della somma a secondo membro scompare in modo tale che magnetizzazione e 
+campo magnetico siano legati come 
+
+\begin{equation}
+    m\,\simeq\,\left(\frac{3h}{k_B T_c}\right)^{\frac{1}{3}},
+    \label{eq: beta_tp_Ising1D_MF}
+\end{equation}
+
+che di conseguenza consente di identificare come $\delta\,=\,3$.
+
+
 
 
 
@@ -138,13 +252,38 @@ ottiene come derivata di $A\left(h,\,T\right)$ rispetto al campo magnetico appli
     \label{eq: magn_Ising1D_corr}
 \end{equation}
 
-Notiamo che quando $h\,\to\,0$ la magnetizzazione tende ad un valore nullo a tutte le temperature finite. Questo evidenzia 
-come sia impossibile avere magnetizzazione spontanea, e quindi una transizione di fase, ad ogni temperatura finita T: tale risultato 
-è in contrasto con quanto previsto dalla teoria di campo medio, che oltre a fornire gli esponenti critici sbagliati, suggerisce la 
-presenza di ordine a $T\,\neq\,0$, che è un risultato non fisico come mostra la soluzione esatta. Quando si ha $T\,=\,0$ $m$ satura ad 
-uno per ogni valore del campo magnetico, il che implica perfetto ordine nel sistema; questo significa che la temperatura critica 
-$T_c$ coincide con lo zero assoluto. E' anche possibile calcolare la suscettività magnetica, la quale diverge 
-quanto $T\,\to\,0$, che è il comportamento che ci si aspetterebbe la punto critico.
+Notiamo che se $h\,\to\,0$ la magnetizzazione tende ad un valore nullo per ogni temperatura finita. Questo fatto evidenzia 
+come sia impossibile avere una transizione di fase a temperatura finita T, come invece sembrava evidente nella teoria di campo medio.
+Quando si ha $T\,=\,0$ $m$ satura ad uno per ogni valore del campo magnetico, il che implica spin totalmente allineati; questo significa 
+che la temperatura critica $T_c$ coincide con lo zero assoluto. E' anche possibile calcolare la suscettività magnetica, la quale diverge 
+quanto $T\,\to\,0$, che è il comportamento che ci si aspetterebbe al punto critico. \newline
+
+Il motivo alla base delle errate previsioni della teoria di campo medio è che tale approccio diventa esatto nel limite in cui 
+le fluttuazioni del parametro d'ordine sono molto più piccole del valore effettivo dello stesso al punto critico. Il \textit{criterio di Ginzburg} 
+afferma che per sistemi tipo Ising, il campo medio fornisce soluzioni esatte solamente per dimensioni del reticolo superiori a 
+quattro. Il miglioramento delle previsioni all'aumentare della dimensionalità risulta evidente dal confronto fra gli esponenti 
+critici calcolati in campo medio e quelli ottenuti in modo analitico o computazionale mediante simulazioni Monte-Carlo.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}  
+    \hline
+    \textbf{Esponente} & \textbf{Mean-field} & \textbf{Ising 2D} & \textbf{Ising 3D}\\ 
+    \hline
+    $\alpha$ & 0 & 0 & 0.119 $\pm$ 0.006 \\
+    \hline
+    $\beta$ & 1/2 & 1/8 & 0.326 $\pm$ 0.004 \\
+    \hline
+    $\gamma$ & 1 & 7/4 & 1.239 $\pm$ 0.003 \\
+    \hline
+    $\delta$ & 3 & ? & 4.80 $\pm$ 0.05 \\
+    \hline
+    $\nu$ & 1/2 & 1 & 0.627 $\pm$ 0.002 \\
+    \hline
+    \end{tabular}
+    \caption{Confronto fra esponenti critici calcolati in campo-medio e in modo analitico/numerico per modelli di Ising 2D e 3D.}
+\end{table}
+
 
 
 \subsubsection{Correlazioni fra spin}
@@ -155,7 +294,7 @@ come quello in Figura \ref{fig: Ising1D_open}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Immagini/Ising1D_open.png}
-    \caption{Esempio di catena di spin per la determinazione della funzione di correlazione fra due spin.}
+    \caption{Esempio di catena di spin per la determinazione della funzione di correlazione fra due spin. Immagine da \cite{galliFSA}.}
     \label{fig: Ising1D_open}
 \end{figure}
 
@@ -192,3 +331,113 @@ da cui risulta che la lunghezza di correlazione è pari a
 Notiamo che la lunghezza di correlazione è sempre maggiore o uguale a zero. Inoltre, quando la temperatura tende a zero, 
 $\xi$ diverge ad infinito. Il fatto che questo accada solamente a temperatura nulla evidenzia come non si abbia correlazione 
 (e di conseguenza ordine) a lungo raggio fra gli spin per ogni $T\,\neq\,0$.
+
+
+
+
+
+\subsection{Simulazioni Monte-Carlo}
+
+L'obiettivo di questa sezione è l'introduzione di delle tecniche Monte-Carlo che consentano di simulare un modello di Ising mono-dimensionale con 
+numero di costituenti finito e che presenti condizioni periodiche al contorno, in modo tale che gli spin posti agli estremi della catena 
+interagiscano fra loro come primi vicini. Dato che in questo modo tutti gli spin sono equivalenti fra loro ed il sistema è invariante per 
+traslazioni, stiamo in pratica simulando un sistema infinito, con un conseguente netto miglioramento della qualità dei risultati. 
+Dopo aver definito una condizione iniziale, che solitamente sono quella a temperatura nulla, con tutti gli spin allineati, oppure 
+quella a temperatura infinita caratterizzata da momenti magentici orientati casualmente, il primo passo è quello di generare una 
+nuova configurazione tentando di invertire uno spin. La differenza in energia fra lo stato di partenza e quello di arrivo determina 
+la probabilità d'accettazione della mossa, dato che per l'\textit{algoritmo di Metropolis} \cite{M(RT)2} si ha che 
+
+\begin{equation}
+    A\left(\nu\,|\,\mu\right)\,=\,\text{min}\left[1,\,e^{-\beta\left(E_{\nu}\,-\,E_{\mu}\right)}\right]
+    \label{eq: Metropolis_1D}
+\end{equation}
+
+Chiaramente se la configurazione $\nu$ ha energia inferiore di quella $\mu$, la mossa viene sempre accettata. In caso contrario, è 
+possibile che lo spin non venga invertito ed il nuovo elemento della catena di Markov generata dall'algoritmo di Metropolis è identico 
+a quello precedente. In seguito è possibile osservare l'implementazione di tale algoritmo in Nim: lo stesso calcolo viene eseguito 
+nuovamente ad ogni iterazione, scegliendo lo spin di cui provare il flip in modo casuale.
+
+
+
+\subsubsection{Generatore di numeri casuali}
+
+Dato che i metodi Monte-Carlo sono una classe di algoritmi numerici che sfruttano i numeri pseudo-casuali, è auspicabile lavorare 
+con un generatore dotato di un lungo periodo (i numeri generati non si ripetono spesso) e che sia efficiente, in modo da ridurre le 
+tempistiche computazionali. Le simulazioni che hanno portato ai risultati presenti in questa dispensa sono state effettuate con un 
+generatore della famiglia PCG \cite{pcg2014}, di cui è riportata l'implementazione
+
+
+
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10]{nim}
+type 
+    PCG* = tuple[state, incr: uint64] ##\
+    ## The `PCG` type represents the state of a Permuted Congruential 
+    ## Generator (PCG), a family of simple fast space-efficient statistically 
+    ## good algorithms for random number generation.
+
+    RandomSetUp* = tuple[inState, inSeq: uint64] ##\
+    ## The `RandomSetUp` type is used to initialize a `PCG` generator.
+
+
+proc random*(gen: var PCG): uint64 =
+    ## Get a random uint64 from a `PCG`.
+
+    var 
+        oldstate = gen.state
+        xorshift = uint32(((oldstate shr 18) xor oldstate) shr 27)
+        rot = int32(oldstate shr 59)
+
+    gen.state = oldstate * uint64(6364136223846793005) + gen.incr
+    result = ((xorshift shr rot) or (xorshift shl ((-rot) and 31)))
+
+
+proc newRandomSetUp*(rg: var PCG): RandomSetUp {.inline.} = 
+    ## Create a new `RandomSetUp` from a `PCG`.
+    (rg.random, rg.random)
+
+
+proc newPCG*(setUp: RandomSetUp): PCG = 
+    ## Create a new `PCG` with the given `RandomSetUp`.
+
+    (result.state, result.incr) = (0.uint64, (setUp.inSeq shl 1) or 1)
+    discard result.random
+    result.state += setUp.inState
+    discard result.random
+
+
+proc rand*(pcg: var PCG): float32 =
+    ## Get a random float32 uniformly distributed over the interval (0, 1)
+    pcg.random.float32 / 0xffffffff.float32
+
+proc rand*(pcg: var PCG; a, b: float32): float32 =
+    ## Get a random float32 uniformly distributed over the interval (a, b)
+    a + pcg.rand * (b - a)
+\end{minted}    
+
+I numeri pseudo-casuali vengono generati lavorando con interi senza segno, che consentono di fare operazioni fra bit molto efficienti. 
+La corretta implementazione è stata testata imponendo un particolare RandomSetUp e valutando la sequenza generata. Sebbene l'implementazione 
+del PCG sia riportata nella sezione relativa al modello di Ising mono-dimensionale, tale algoritmo è stato utilizzato anche per l'Ising 2D.
+
+
+
+\subsubsection{Termalizzazione}
+
+Una simulazione Monte-Carlo è detta all'equilibrio nel momento in cui viene correttamente campionato il peso statistico di Boltzmann 
+$p\left(\mu\right)$. Se il sistema viene inizializzato in uno dei due stati presentati in precedenza, ossia quello a temperatura 
+nulla (con spin paralleli) oppure a $T$ infinita (con spin orientati casualmente up oppure down) e si vuole performare una simulazione a 
+temperatura finita, sarà necessario del tempo computazionale prima che venga raggiunto l'equilibrio, poichè sara necessario accettare 
+alcune mosse.
+
+Un modo qualitativo per valutare la durata della termalizzazione consiste nel graficare una quantità d'interesse, 
+come può essere la magnetizzazione oppure l'energia interna del sistema. Tali osservabili presenteranno una fase di transitorio 
+iniziale in cui il sistema si scorrela dalla condizione iniziale, per poi fluttuare attorno ad un valore pressochè costante. Non è 
+sempre garantito che si raggiunga l'equilibrio, in quanto è possibile rimanere bloccati in uno stato metastabile per tempistiche 
+computazionali relativamente lunghe. Per evitare di valutare in maniera errata la durata della fase di termalizzazione è consigliabile 
+eseguire lo stesso processo per diverse condizioni iniziali e per diversi seed del generatore di numeri casuali, in modo da considerare 
+diverse traiettorie nello spazio delle fasi.  
+
+
+
+
+\subsubsection{Misure e Data-Blocking}
+

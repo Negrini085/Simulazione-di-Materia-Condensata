@@ -15,6 +15,10 @@
 \usepackage{xcolor} % Colori
 \usepackage{booktabs} % Tabelle eleganti
 \usepackage{float}
+\usepackage{array}
+\usepackage{minted} % Per evidenziare il codice
+
+
 
 % Impostazioni per link ipertestuali
 \hypersetup{
@@ -43,7 +47,7 @@
 % Intestazione e piè di pagina
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\textit{Dispense Universitarie}}
+\fancyhead[L]{\textit{Il modello di Ising}}
 \fancyhead[R]{\textit{\leftmark}}
 \fancyfoot[C]{\thepage}
 
@@ -64,7 +68,7 @@
 \input{Sezioni/Introduzione.tex}
 \input{Sezioni/Ising1D.tex}
 \newpage
-
+\input{Sezioni/Bibliografia.tex}
 
 
 \end{document}
@@ -113,10 +117,4 @@
 %
 %\section{Conclusioni}
 %Breve riassunto dei risultati principali e considerazioni finali.
-%
-%% Bibliografia
-%\begin{thebibliography}{9}
-%    \bibitem{lamport94} Leslie Lamport, \textit{LaTeX: A Document Preparation System}, Addison Wesley, 1994.
-%    \bibitem{knuth84} Donald Knuth, \textit{The TeXbook}, Addison-Wesley, 1984.
-%\end{thebibliography}
 %
