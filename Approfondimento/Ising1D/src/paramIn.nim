@@ -287,12 +287,11 @@ proc unreadToken*(inStr: var InputStream, token: Token) =
 #----------------------------------------------------------------#
 type DefMod* = object
     params*: seq[float32]
-    numVariables*: Table[string, float32]
 
 
-proc newDefMod*(par: seq[float32], numV: Table[string, float32]): DefMod {.inline.} = 
+proc newDefMod*(par: seq[float32]): DefMod {.inline.} = 
     # Procedure to initialize a new DefMod variable, needed at the end of the parsing proc
-    DefMod(params: par, numVariables: numV)
+    DefMod(params: par)
 
 
 
