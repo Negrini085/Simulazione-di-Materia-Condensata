@@ -451,3 +451,47 @@ calcolare $t_c$ consiste nello sfruttare la funzione di autocorrelazione tempora
     \chi\left(t\right)\,=\,\frac{\left<m\left(t'\right)m\left(t'\,+\,t\right)\right>_{t'}\,-\,\left<m\right>^2}{\sigma^2_m}
     \label{eq: auto_corr_m}
 \end{equation}
+
+L'autocorrelazione solitamente presenta una caduta esponenziale con tempo caratteristico pari a quello di correlazione
+
+\begin{equation}
+    \chi\left(t\right)\,\sim\,e^{-t/t_c}.
+    \label{eq: auto_corr_cad_exp}
+\end{equation}
+
+Se si considerano due campioni presi ad un $t_c$ di distanza, la funzione di autocorrelazione assume in presenza di un tale 
+intervallo temporale un valore di $1/e$, ancora particolarmente significativo. Se si vuole lavorare con quantità realmente indipendenti 
+è necessario campionare a $t\,>\,t_c$; solitamente si impone $t\,=\,t_c$ in modo che il numero di misure significative in una 
+simulazione di durata $t_{max}$ è pari a 
+
+\begin{equation}
+    n\,=\,\frac{t_{max}}{2 t_c}.
+    \label{eq: num_ind_samp}
+\end{equation}
+
+Per evitare bias nel campionamento e per ottenere dei valori d'aspettazione adeguati è possibile utilizzare la tecnica del 
+data-blocking. Le misure delle osservabili di interesse effettuate durante la simulazione, a distanze temporali del tempo di correlazione, 
+vengono divise in gruppi, per ciascuno dei quali viene calcolato il valor medio. La dispersione di questi valori medi fornisce una 
+stima dell'errore associato alla grandezza calcolata. In Figura \ref{fig: data_block_tech} è presentata visivamente la tecnica del data-
+blocking. Le quantità $g_i$ sono le medie di ciascun gruppo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Immagini/data_blocking.png}
+    \caption{Esempio di applicazione della tecnica del data-blocking. Immagine da \cite{galliLSN}.}
+    \label{fig: data_block_tech}
+\end{figure}
+
+Per determinare quale sia la lunghezza dei blocchi tale da garantire che le medie siano statisticamente indipendenti, si può 
+sfruttare il teorema del limite centrale. Nel momento in cui si aumenta la lunghezza dei blocchi, l'errore calcolabile come 
+
+\begin{equation}
+    \sigma_{\left<g\right>}\,=\,\sqrt{\frac{1}{N-1}\left(\left<g^2\right>\,-\,\left<g\right>^2\right)}
+    \label{eq: error_data_block}
+\end{equation}
+
+tende a quello puramente statistico (poichè si va a perdere la correlazione fra le stime) e dopo una certa lunghezza $L$ dei blocchi 
+non aumenta più, ma satura ad un valore costante. La lunghezza di saturazione è la minima accettabile per produrre delle stime adeguate. 
+Chiaramente maggiore è il numero di blocchi (ossia più lunga è la simulazione), migliore sarà la stima finale della osservabile 
+d'interesse.
+
