@@ -441,3 +441,13 @@ diverse traiettorie nello spazio delle fasi.
 
 \subsubsection{Misure e Data-Blocking}
 
+Una volta che il sistema ha raggiunto l'equilibrio, è possibile misurare le osservabili d'interesse senza che i valori d'aspettazione 
+siano influenzati dalla fase di transitorio. Per valutare la durata minima della simulazione che consenta di ottenere delle stime 
+statisticamente significative è necessaria una misura del tempo di correlazione $t_c$, che esplicita quale sia il numero di mosse 
+da effettuare per passare fa uno stato ad un secondo significativamente differente da quello di partenza. Il modo migliore per 
+calcolare $t_c$ consiste nello sfruttare la funzione di autocorrelazione temporale, definita per la magnetizzazione come 
+
+\begin{equation}
+    \chi\left(t\right)\,=\,\frac{\left<m\left(t'\right)m\left(t'\,+\,t\right)\right>_{t'}\,-\,\left<m\right>^2}{\sigma^2_m}
+    \label{eq: auto_corr_m}
+\end{equation}
