@@ -19,6 +19,7 @@ task build, "Compila l'eseguibile\n":
 task test, "Esegue i test delle funzioni di Ising1D":
   withDir "tests":
     exec "nim c -d:release --hints:off -r pcg.nim"
-    exec "rm pcg"
+    exec "nim c -d:release --hints:off -r paramIn.nim"
+    exec "rm pcg paramIn"
 
 
