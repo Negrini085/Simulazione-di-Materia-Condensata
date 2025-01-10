@@ -2,7 +2,7 @@
 const Ising1DVersion* = "Ising1D 0.1.0"
 
 
-import src/[pcg, paramIn]
+import src/[pcg, paramIn, metropolis]
 
 
 from std/streams import newFileStream, close, FileStream
@@ -98,6 +98,7 @@ when isMainModule:
             let msg = "Errore in apertura del file dei parametri. Controllare nome e cammino forniti in input."
             raise newException(CatchableError, msg)
 
+
         #---------------------------------------#
         #       Leggo e salvo i parametri       #
         #---------------------------------------# 
@@ -105,4 +106,14 @@ when isMainModule:
         dMod = inStr.parseDefModel()
 
         leggiParametri(dMod.params)
-        stampaParametri(dMod.params)        
+        stampaParametri(dMod.params)
+
+
+        var 
+            rg = newPCG((state, incr))
+            ene: float32
+            magn: float32
+            isingMod: seq[int]
+
+        isingMod = inizializzaIsing(rg, nspin)     
+        

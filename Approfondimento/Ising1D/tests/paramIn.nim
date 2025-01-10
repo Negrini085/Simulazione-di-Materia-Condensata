@@ -8,7 +8,7 @@ proc areClose*(x, y: float32; eps: float32 = epsilon(float32)): bool {.inline.} 
 ## `areClose` proc is used to check equivalence in floating point numbers, it's fundamental for testing
 
 
-suite "PCG":
+suite "paramIn":
 
     setup:
         var 
