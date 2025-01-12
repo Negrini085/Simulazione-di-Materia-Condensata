@@ -39,3 +39,4 @@ suite "paramIn":
         check int(dMod.params[5]) == 100
         check int(dMod.params[6]) == 0
         check int(dMod.params[7]) == 12
+        check int(dMod.params[8]) == 3000

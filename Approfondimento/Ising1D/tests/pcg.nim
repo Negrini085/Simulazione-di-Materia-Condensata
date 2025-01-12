@@ -29,7 +29,7 @@ suite "PCG":
     test "rand proc (0, 1)":
         # Checking PCG rand procedure
 
-        for i in 0..10000000:
+        for i in 0..100000000:
             check gen.rand <= 1
 
 
@@ -37,6 +37,6 @@ suite "PCG":
         # Checking PCG rand procedure
         var appo: float32
 
-        for i in 0..10000000:
+        for i in 0..100000000:
             appo = gen.rand(2, 4)
             check appo <= 4 and appo >= 2
