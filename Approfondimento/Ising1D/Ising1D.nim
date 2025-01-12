@@ -24,27 +24,27 @@ Options:
 
 var
     temp, acc, hmagn: float32
-    nspin, lsim, nblk: int
+    nspin, lsim, nblk, term: int
     state, incr: uint64
 
 
 proc leggiParametri*(par: seq[float32]) = 
     # Funzione per salvare i parametri della simulazione
 
-    if par.len != 8:
+    if par.len != 9:
         let msg = "Numero di parametri errato. Termino l'esecuzione del programma."
         raise newException(CatchableError, msg)
 
     else:
         temp = par[0]; acc = par[2]; hmagn = par[3] 
-        nspin = int(par[1]); lsim = int(par[4]); nblk = int(par[5]) 
+        nspin = int(par[1]); lsim = int(par[4]); nblk = int(par[5]); term = int(par[8]) 
         state = uint64(par[6]); incr = uint64(par[7]) 
         
 
 proc stampaParametri*(par: seq[float32]) = 
     # Funzione per stampare i parametri della simulazione
 
-    if par.len != 8:
+    if par.len != 9:
         let msg = "Numero di parametri errato. Termino l'esecuzione del programma."
         raise newException(CatchableError, msg)
 
@@ -58,6 +58,7 @@ proc stampaParametri*(par: seq[float32]) =
         echo fmt"Numero di blocchi:   {nblk} "
         echo fmt"Stato pcg:   {state} "
         echo fmt"Incremento pcg:   {incr} "
+        echo fmt"Fase di termalizzazione:   {term} "
 
 
 proc inizioStampaObs*(streamOut: FileStream, ene: float32, magn: float32) = 
@@ -149,14 +150,18 @@ when isMainModule:
             streamOut = newFileStream(fileOut, fmWrite)
 
 
-        #--------------------------------------------------------#
-        #       Inizializzazione modello di Ising e calcolo      #
-        #               delle osservabili iniziali               #
-        #--------------------------------------------------------#
+        #----------------------------------------------------------------#
+        #       Inizializzazione modello di Ising, termalizzazione       #
+        #               e calcolo delle osservabili iniziali             #
+        #----------------------------------------------------------------#
+        echo "\n\nInizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(rg, nspin)
 
-        ene = isingMod.calcolaEnergia(acc, hmagn)     
+        for i in 0..<term:
+            isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
+
         magn = isingMod.calcolaMagn()
+        ene = isingMod.calcolaEnergia(acc, hmagn)     
         streamOut.inizioStampaObs(ene, magn)
 
 
@@ -164,6 +169,8 @@ when isMainModule:
         #-------------------------------------------------------#
         #         Evoluzione del sistema con Metropolis         #
         #-------------------------------------------------------#
+        echo "\n\nInizio la simulazione del modello di Ising"
+        accettate = 0;      # Solo da qui mi interessa tener conto dell'acceptance rate
         for i in 0..<lsim:
             isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
 

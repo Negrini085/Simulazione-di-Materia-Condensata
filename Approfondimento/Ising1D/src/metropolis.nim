@@ -42,11 +42,11 @@ proc metropolisMove*(modIsing: var seq[int], rg: var PCG, temp: float32, acc: fl
 
 
     for i in 0..<len(modIsing):
-        ind = int(rg.rand(float32(0), float32(len(modIsing))))
+        ind = int(rg.rand(float32(0), float32(len(modIsing)))) mod len(modIsing)
         prev = if (ind - 1) mod len(modIsing) == -1: len(modIsing)-1 else: (ind - 1) mod len(modIsing)
         next = (ind + 1) mod len(modIsing)
 
-        appo = modIsing[ind mod len(modIsing)]
+        appo = modIsing[ind]
         diffE = 2 * acc * float32(appo) * float32(modIsing[prev] + modIsing[next]) + 2 * hmagn * float32(appo)
 
         if diffE < 0:

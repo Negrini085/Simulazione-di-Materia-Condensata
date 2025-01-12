@@ -44,7 +44,8 @@ type KeywordKind* = enum
     LSIM = 5,
     NBLK = 6,
     STATE = 7, 
-    INCR = 8
+    INCR = 8, 
+    TERM = 9
 
 
 const KEYWORDS* = {
@@ -55,7 +56,8 @@ const KEYWORDS* = {
     "lsim": KeywordKind.LSIM,
     "nblk": KeywordKind.NBLK,
     "state": KeywordKind.STATE,
-    "incr": KeywordKind.INCR
+    "incr": KeywordKind.INCR, 
+    "term": KeywordKind.TERM
 }.toTable
 
 
@@ -378,6 +380,12 @@ proc parseDefModel*(inStr: var InputStream): DefMod =
 
         # Incremento PCG 
         if tryTok.keyword == KeywordKind.INCR:
+
+            varVal = inStr.expectNumber(dMod)
+            dMod.params.add(varVal)
+
+        # Lunghezza termalizzazione 
+        if tryTok.keyword == KeywordKind.TERM:
 
             varVal = inStr.expectNumber(dMod)
             dMod.params.add(varVal)
