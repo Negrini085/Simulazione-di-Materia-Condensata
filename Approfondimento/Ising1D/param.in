@@ -1,9 +1,9 @@
 temp		0.5
-nspin		10000
+nspin		1000
 acc     	1.0
 magn    	0.02
-lsim		10
-nblk   		100
+lsim		1000
+nblk   		10
 state		30
 incr		35
 term        	3000

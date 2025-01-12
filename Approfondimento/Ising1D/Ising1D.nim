@@ -154,6 +154,9 @@ when isMainModule:
         leggiParametri(dMod.params)
         stampaParametri(dMod.params)
 
+        if lsim < nblk: 
+            let msg = "Numero di blocchi maggiore del numero di mosse costituenti la simulazione. Termino l'esecuzione del programma"
+            raise newException(CatchableError, msg)
 
         var 
             rg = newPCG((state, incr))
@@ -177,11 +180,7 @@ when isMainModule:
         for i in 0..<term:
             # confOut.stampaConf(isingMod)
             isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
-
-
-        magn = isingMod.calcolaMagn()
-        ene = isingMod.calcolaEnergia(acc, hmagn)     
-        obsOut.inizioStampaObs(ene, magn)
+    
 
 
 
@@ -190,17 +189,33 @@ when isMainModule:
         #-------------------------------------------------------#
         echo "\n\nInizio la simulazione del modello di Ising"
         accettate = 0      # Solo da qui mi interessa tener conto dell'acceptance rate
-        for i in 0..<lsim:
-            isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
+        for i in 0..<nblk:
+            for j in 0..<lenBlk:
+                isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
 
-            ene = isingMod.calcolaEnergia(acc, hmagn)     
-            magn = isingMod.calcolaMagn()
+                ene += isingMod.calcolaEnergia(acc, hmagn)/float32(lenBlk)     
+                magn += isingMod.calcolaMagn()/float32(lenBlk)
+            
 
-            obsOut.stampaObs(i, ene, magn)
+            if i != 0:
+                obsOut.stampaObs(i, ene, magn)
+            else:    
+                obsOut.inizioStampaObs(ene, magn)
+            
+            echo "-----------------------------------------------"
+            echo ""
+            echo fmt"          Numero blocco: {i+1}" 
+            echo fmt"       Acceptance rate: {int(float32(accettate)/float32(lenBlk*nspin)*10000)/100} %" 
+            echo ""
+            echo "-----------------------------------------------"
+
+
+            ene = 0
+            magn = 0
+            accettate = 0
 
             
 
 
         obsOut.close()
         # confOut.close()
-        echo fmt"Acceptance rate:  {float32(accettate)/float32(lsim)}"
