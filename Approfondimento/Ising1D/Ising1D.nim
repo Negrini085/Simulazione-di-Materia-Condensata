@@ -1,11 +1,10 @@
 ## Ising1D: a Monte Carlo simulation.
 const Ising1DVersion* = "Ising1D 0.1.0"
 
-
+import std/[streams]
 import src/[pcg, paramIn, metropolis]
 
 
-from std/streams import newFileStream, close, FileStream
 from std/strformat import fmt
 
 const Ising1DDoc* = """
@@ -24,7 +23,7 @@ Options:
 """
 
 var
-    temp, acc, magn: float32
+    temp, acc, hmagn: float32
     nspin, lsim, nblk: int
     state, incr: uint64
 
@@ -37,7 +36,7 @@ proc leggiParametri*(par: seq[float32]) =
         raise newException(CatchableError, msg)
 
     else:
-        temp = par[0]; acc = par[2]; magn = par[3] 
+        temp = par[0]; acc = par[2]; hmagn = par[3] 
         nspin = int(par[1]); lsim = int(par[4]); nblk = int(par[5]) 
         state = uint64(par[6]); incr = uint64(par[7]) 
         
@@ -54,11 +53,41 @@ proc stampaParametri*(par: seq[float32]) =
         echo fmt"Temperatura:   {temp} "
         echo fmt"Numero spin:   {nspin} "
         echo fmt"J:   {acc} "
-        echo fmt"Campo magnetico esterno:   {magn} "
+        echo fmt"Campo magnetico esterno:   {hmagn} "
         echo fmt"Lunghezza simulazione:   {lsim} "
         echo fmt"Numero di blocchi:   {nblk} "
         echo fmt"Stato pcg:   {state} "
         echo fmt"Incremento pcg:   {incr} "
+
+
+proc inizioStampaObs*(streamOut: FileStream, ene: float32, magn: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine("# Simulazione modello di Ising 1D")
+        streamOut.writeLine("# Mossa \t Energia \t Magnetizzazione")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
+proc stampaObs*(streamOut: FileStream, nmove: int, ene: float32, magn: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine(fmt"{nmove}     {ene}      {magn}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
+
+
+
+
+
 
 
 
@@ -113,7 +142,38 @@ when isMainModule:
             rg = newPCG((state, incr))
             ene: float32
             magn: float32
+            accettate: int = 0
             isingMod: seq[int]
+            lenBlk = int(lsim/nblk)
 
-        isingMod = inizializzaIsing(rg, nspin)     
-        
+            streamOut = newFileStream(fileOut, fmWrite)
+
+
+        #--------------------------------------------------------#
+        #       Inizializzazione modello di Ising e calcolo      #
+        #               delle osservabili iniziali               #
+        #--------------------------------------------------------#
+        isingMod = inizializzaIsing(rg, nspin)
+
+        ene = isingMod.calcolaEnergia(acc, hmagn)     
+        magn = isingMod.calcolaMagn()
+        streamOut.inizioStampaObs(ene, magn)
+
+
+
+        #-------------------------------------------------------#
+        #         Evoluzione del sistema con Metropolis         #
+        #-------------------------------------------------------#
+        for i in 0..<lsim:
+            isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
+
+            ene = isingMod.calcolaEnergia(acc, hmagn)     
+            magn = isingMod.calcolaMagn()
+
+            streamOut.stampaObs(i, ene, magn)
+
+            
+
+
+        streamOut.close()
+        echo fmt"Acceptance rate:  {float32(accettate)/float32(lsim)}"

@@ -38,6 +38,11 @@ suite "Metropolis":
         check areClose(calcolaEnergia(modIsing, 1, 0), -1000)
         check areClose(calcolaEnergia(modIsing, 1, 0.5), -1500)
 
+        for i in 0..<4000:
+            modIsing.add(1)
+        
+        check areClose(calcolaEnergia(modIsing, 1, 0.2), -6000, 0.4)
+
 
     test "calcolaMagn proc":
         # Controllo sul calcolo della magnetizzazione 
