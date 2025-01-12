@@ -23,7 +23,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
             sed -i "s/^state\s\+.*/state\t\t"${rgState[j-1]}"/" "$input_file"
             sed -i "s/^incr\s\+.*/incr\t\t"${rgIncr[j-1]}"/" "$input_file"
 
-            # Eseguo programma e faccio analisi su termalizzazione
+            # Eseguo programma e faccio analisi su tempo di correlazione
             ./Ising1D sim param.in analisi/tcorr/tcorr_t${t}_size${sizeIsing[i]}_seed$j.out
        	    echo ""
     	done
@@ -32,7 +32,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
 
     dim=${sizeIsing[i]}
     echo ""
-    echo "Eseguito studio termalizzazione per dimensione fissata $dim."    
+    echo "Eseguito studio tempo di correlazione per dimensione fissata $dim."    
 done
 
-echo "Studio della termalizzazione terminato."
+echo "Studio del tempo di correlazione terminato."

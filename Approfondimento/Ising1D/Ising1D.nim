@@ -4,7 +4,7 @@ const Ising1DVersion* = "Ising1D 0.1.0"
 import std/[streams]
 import src/[pcg, paramIn, metropolis]
 
-
+from std/math import sqrt
 from std/strformat import fmt
 from std/strutils import intToStr
 
@@ -62,7 +62,7 @@ proc stampaParametri*(par: seq[float32]) =
         echo fmt"Fase di termalizzazione:   {term} "
 
 
-proc inizioStampaObs*(streamOut: FileStream, ene: float32, magn: float32) = 
+proc inizioStampaObs*(streamOut: FileStream, eneblk: float32, magnblk: float32) = 
     # Funzione per intestazione del file di output
 
     if not isNil(streamOut):
@@ -74,11 +74,11 @@ proc inizioStampaObs*(streamOut: FileStream, ene: float32, magn: float32) =
         raise newException(CatchableError, msg)
 
 
-proc stampaObs*(streamOut: FileStream, nmove: int, ene: float32, magn: float32) = 
+proc stampaObs*(streamOut: FileStream, nmove: int, eneblk: float32, magnblk: float32) = 
     # Funzione per intestazione del file di output
 
     if not isNil(streamOut):
-        streamOut.writeLine(fmt"{nmove}     {ene}      {magn}")
+        streamOut.writeLine(fmt"{nmove}     {eneblk}      {magnblk}")
 
     else:
         let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
@@ -160,8 +160,12 @@ when isMainModule:
 
         var 
             rg = newPCG((state, incr))
-            ene: float32
-            magn: float32
+            ene: float32 = 0
+            ene2: float32 = 0
+            magn: float32 = 0
+            magn2: float32 = 0
+            eneblk: float32
+            magnblk: float32
             accettate: int = 0
             isingMod: seq[int]
             lenBlk = int(lsim/nblk)
@@ -193,14 +197,14 @@ when isMainModule:
             for j in 0..<lenBlk:
                 isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
 
-                ene += isingMod.calcolaEnergia(acc, hmagn)/float32(lenBlk)     
-                magn += isingMod.calcolaMagn()/float32(lenBlk)
+                eneblk += isingMod.calcolaEnergia(acc, hmagn)/float32(lenBlk)     
+                magnblk += isingMod.calcolaMagn()/float32(lenBlk)
             
 
             if i != 0:
-                obsOut.stampaObs(i, ene, magn)
+                obsOut.stampaObs(i, eneblk, magnblk)
             else:    
-                obsOut.inizioStampaObs(ene, magn)
+                obsOut.inizioStampaObs(eneblk, magnblk)
             
             echo "-----------------------------------------------"
             echo ""
@@ -209,11 +213,23 @@ when isMainModule:
             echo ""
             echo "-----------------------------------------------"
 
+            ene += eneblk/float32(nblk);
+            ene2 += eneblk*eneblk/float32(nblk);
+            magn += magnblk/float32(nblk);
+            magn2 += magnblk*magnblk/float32(nblk);
 
-            ene = 0
-            magn = 0
+            eneblk = 0
+            magnblk = 0
             accettate = 0
+        
+        var
+            errene = sqrt(ene2 - ene * ene)
+            errmagn = sqrt(magn2 - magn * magn)
 
+        echo ""
+        echo ""
+        echo fmt"Energia media: {ene} +/- {errene}"
+        echo fmt"Magnetizzazione media: {magn} +/- {errmagn}"
             
 
 
