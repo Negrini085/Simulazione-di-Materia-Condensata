@@ -2,7 +2,7 @@
 
 input_file="param.in"       # Nome del file di input
 tempIsing=(0.5 1.0 1.5 2.0)                 # Temperature a cui simulo il modello
-sizeIsing=(10000)             # Dimensioni del modello di Ising
+sizeIsing=(1000 3000 6000 10000)            # Dimensioni del modello di Ising
 rgState=(0 10 20 30)                        # Seed random generator
 rgIncr=(5 15 25 35)                         # Incr random generator
 
