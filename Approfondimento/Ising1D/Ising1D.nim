@@ -6,6 +6,7 @@ import src/[pcg, paramIn, metropolis]
 
 
 from std/strformat import fmt
+from std/strutils import intToStr
 
 const Ising1DDoc* = """
 Ising1D CLI:
@@ -84,6 +85,21 @@ proc stampaObs*(streamOut: FileStream, nmove: int, ene: float32, magn: float32) 
         raise newException(CatchableError, msg)
 
 
+proc stampaConf*(streamOut: FileStream, isingMod: seq[int]) = 
+    # Funzione per stampare la configurazione iniziale
+
+    if not isNil(streamOut):
+        var conf: string = ""
+        for i in isingMod:
+            conf = conf & intToStr(i) & "    "
+
+        streamOut.writeLine(conf)
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
 
 
 
@@ -147,7 +163,8 @@ when isMainModule:
             isingMod: seq[int]
             lenBlk = int(lsim/nblk)
 
-            streamOut = newFileStream(fileOut, fmWrite)
+            obsOut = newFileStream(fileOut, fmWrite)
+            confOut = newFileStream("confTerm.dat", fmWrite)
 
 
         #----------------------------------------------------------------#
@@ -158,11 +175,13 @@ when isMainModule:
         isingMod = inizializzaIsing(rg, nspin)
 
         for i in 0..<term:
+            confOut.stampaConf(isingMod)
             isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
+
 
         magn = isingMod.calcolaMagn()
         ene = isingMod.calcolaEnergia(acc, hmagn)     
-        streamOut.inizioStampaObs(ene, magn)
+        obsOut.inizioStampaObs(ene, magn)
 
 
 
@@ -170,17 +189,18 @@ when isMainModule:
         #         Evoluzione del sistema con Metropolis         #
         #-------------------------------------------------------#
         echo "\n\nInizio la simulazione del modello di Ising"
-        accettate = 0;      # Solo da qui mi interessa tener conto dell'acceptance rate
+        accettate = 0      # Solo da qui mi interessa tener conto dell'acceptance rate
         for i in 0..<lsim:
             isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
 
             ene = isingMod.calcolaEnergia(acc, hmagn)     
             magn = isingMod.calcolaMagn()
 
-            streamOut.stampaObs(i, ene, magn)
+            obsOut.stampaObs(i, ene, magn)
 
             
 
 
-        streamOut.close()
+        obsOut.close()
+        confOut.close()
         echo fmt"Acceptance rate:  {float32(accettate)/float32(lsim)}"
