@@ -164,7 +164,7 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            confOut = newFileStream("confTerm.dat", fmWrite)
+            # confOut = newFileStream("confTerm.dat", fmWrite)
 
 
         #----------------------------------------------------------------#
@@ -175,7 +175,7 @@ when isMainModule:
         isingMod = inizializzaIsing(rg, nspin)
 
         for i in 0..<term:
-            confOut.stampaConf(isingMod)
+            # confOut.stampaConf(isingMod)
             isingMod.metropolisMove(rg, temp, acc, hmagn, accettate)
 
 
@@ -202,5 +202,5 @@ when isMainModule:
 
 
         obsOut.close()
-        confOut.close()
+        # confOut.close()
         echo fmt"Acceptance rate:  {float32(accettate)/float32(lsim)}"
