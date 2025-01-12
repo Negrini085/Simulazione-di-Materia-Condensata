@@ -2,8 +2,8 @@ temp		2.0
 nspin		10000
 acc     	1.0
 magn    	0.02
-lsim		3000
+lsim		50000
 nblk   		100
 state		30
 incr		35
-term        3000
+term        	3000
