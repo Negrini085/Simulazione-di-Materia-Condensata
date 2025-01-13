@@ -4,6 +4,6 @@ acc     	1.0
 magn    	0.02
 lsim		50000
 nblk   		50000
-state		30
-incr		35
-term        3000
+state		40
+incr		80
+term        	3000
