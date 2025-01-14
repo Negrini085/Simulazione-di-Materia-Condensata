@@ -1,7 +1,6 @@
 temp    0.5
 nspin   200
 acc     1.0
-magn    0.2
 lsim    1000000
 nblk    100
 state   0

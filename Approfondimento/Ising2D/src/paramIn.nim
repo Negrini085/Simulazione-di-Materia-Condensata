@@ -40,19 +40,17 @@ type KeywordKind* = enum
     TEMP = 1,
     NSPIN = 2,
     ACC = 3,
-    MAGN = 4,
-    LSIM = 5,
-    NBLK = 6,
-    STATE = 7, 
-    INCR = 8, 
-    TERM = 9
+    LSIM = 4,
+    NBLK = 5,
+    STATE = 6, 
+    INCR = 7, 
+    TERM = 8
 
 
 const KEYWORDS* = {
     "temp": KeywordKind.TEMP,
     "nspin": KeywordKind.NSPIN,
     "acc": KeywordKind.ACC,    
-    "magn": KeywordKind.MAGN,
     "lsim": KeywordKind.LSIM,
     "nblk": KeywordKind.NBLK,
     "state": KeywordKind.STATE,
@@ -350,12 +348,6 @@ proc parseDefModel*(inStr: var InputStream): DefMod =
 
         # Parametro J 
         if tryTok.keyword == KeywordKind.ACC:
-
-            varVal = inStr.expectNumber(dMod)
-            dMod.params.add(varVal)
-
-        # Campo magnetico esterno
-        if tryTok.keyword == KeywordKind.MAGN:
 
             varVal = inStr.expectNumber(dMod)
             dMod.params.add(varVal)

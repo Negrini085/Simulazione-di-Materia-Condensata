@@ -34,9 +34,8 @@ suite "paramIn":
         check areClose(dMod.params[0], 0.5)
         check int(dMod.params[1]) == 200
         check areClose(dMod.params[2], 1.0)
-        check areClose(dMod.params[3], 0.2)
-        check int(dMod.params[4]) == 1000000
-        check int(dMod.params[5]) == 100
-        check int(dMod.params[6]) == 0
-        check int(dMod.params[7]) == 12
-        check int(dMod.params[8]) == 3000
+        check int(dMod.params[3]) == 1000000
+        check int(dMod.params[4]) == 100
+        check int(dMod.params[5]) == 0
+        check int(dMod.params[6]) == 12
+        check int(dMod.params[7]) == 3000
