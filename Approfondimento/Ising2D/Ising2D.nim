@@ -122,7 +122,7 @@ when isMainModule:
     
 
     #-----------------------------------------#
-    #   Vera e propria simulazione Ising 1D   #
+    #   Vera e propria simulazione Ising 2D   #
     #-----------------------------------------#
     elif args["sim"]:
         let fileIn = $args["<fileParam>"]
