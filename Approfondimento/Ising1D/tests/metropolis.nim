@@ -35,13 +35,13 @@ suite "Metropolis":
         for i in 0..<1000:
             modIsing.add(1)
         
-        check areClose(calcolaEnergia(modIsing, 1, 0), -1000)
-        check areClose(calcolaEnergia(modIsing, 1, 0.5), -1500)
+        check areClose(calcolaEnergia(modIsing, 1, 0), -1.0)
+        check areClose(calcolaEnergia(modIsing, 1, 0.5), -1.5)
 
         for i in 0..<4000:
             modIsing.add(1)
         
-        check areClose(calcolaEnergia(modIsing, 1, 0.2), -6000, 0.4)
+        check areClose(calcolaEnergia(modIsing, 1, 0.2), -1.2, 0.004)
 
 
     test "calcolaMagn proc":

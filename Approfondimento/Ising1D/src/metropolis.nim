@@ -29,7 +29,7 @@ proc calcolaMagn*(modIsing: seq[int]): float32 =
     for i in 0..<len(modIsing):
         magn += modIsing[i]
 
-    return float32(magn)/float32(modIsing.len())
+    return float32(magn)
 
 
 proc metropolisMove*(modIsing: var seq[int], rg: var PCG, temp: float32, acc: float32, hmagn: float32, accettate: var int) = 
