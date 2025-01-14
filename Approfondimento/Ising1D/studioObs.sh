@@ -2,7 +2,7 @@
 
 input_file="param.in"                                                           # Nome del file di input
 tempIsing=(0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0)     # Temperature a cui simulo il modello
-sizeIsing=(1000 3000 6000 10000)                                                # Dimensioni del modello di Ising
+sizeIsing=(6000 10000)                                                # Dimensioni del modello di Ising
 
 
 #---------------------------------------------------------------------#

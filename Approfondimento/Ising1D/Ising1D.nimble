@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "Negrini085"
-description   = "Simulazione Monte-Carlo del modello di Ising 1D"
+description   = "Simulazione Monte-Carlo del modello di Ising 1D in Nim"
 license       = "GPL-3.0-or-later"
 bin           = @["Ising1D"]
 
