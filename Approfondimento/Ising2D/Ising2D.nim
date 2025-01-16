@@ -210,7 +210,6 @@ when isMainModule:
         accettate = 0      # Solo da qui mi interessa tener conto dell'acceptance rate
         for i in 0..<lsim:
             isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
-            echo fmt"Effettuata la mossa: {i+1}"
 
             # Energia             
             eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
