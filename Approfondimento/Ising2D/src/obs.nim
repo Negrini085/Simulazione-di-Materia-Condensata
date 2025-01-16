@@ -1,5 +1,3 @@
-
-
 proc calcolaEnergia*(modIsing: seq[seq[int]], nspin: int, acc: float32): float32 = 
     # Funzione per calcolare l'energia del modello di Ising
 
