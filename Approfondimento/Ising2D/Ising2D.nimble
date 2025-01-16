@@ -19,4 +19,6 @@ task test, "Esegue i test delle funzioni di Ising2D":
   withDir "tests":
     exec "nim c -d:release --hints:off -r pcg.nim"
     exec "nim c -d:release --hints:off -r paramIn.nim"
-    exec "rm pcg paramIn"
+    #exec "nim c -d:release --hints:off -r obs.nim"
+    exec "nim c -d:release --hints:off -r evolutionMethods.nim"
+    exec "rm pcg paramIn evolutionMethods"
