@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param.in"      				    # Nome del file di input
-tempIsing=(1.0 1.5 2.0 2.5 3.0 3.5)         # Temperature a cui simulo il modello
-sizeIsing=(300 400) 		                # Dimensioni del modello di Ising
+input_file="param.in"                      # Nome del file di input
+tempIsing=(2.1 2.2 2.3 2.4)                 # Temperature a cui simulo il modello
+sizeIsing=(100 200 400)                     # Dimensioni del modello di Ising
 rgState=(0 10 20 30)                        # Seed random generator
 rgIncr=(5 15 25 35)                         # Incr random generator
 
@@ -23,14 +23,16 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
             sed -i "s/^state\s\+.*/state\t\t"${rgState[j-1]}"/" "$input_file"
             sed -i "s/^incr\s\+.*/incr\t\t"${rgIncr[j-1]}"/" "$input_file"
 
-            # Eseguo programma e faccio analisi su termalizzazione
-            ./Ising2D sim param.in analisi/metro/term/term_t${t}_size${sizeIsing[i]}_seed$j.out
-        done
+            # Eseguo programma e faccio analisi su tempo di correlazione
+            ./termTc sim param.in analisi/metro/term/pcrit/tcorr_t${t}_size${sizeIsing[i]}_seed$j.out
+       	    echo ""
+    	done
     
     done
 
     dim=${sizeIsing[i]}
-    echo "Eseguito studio termalizzazione per dimensione fissata $dim."    
+    echo ""
+    echo "Eseguito studio tempo di correlazione per dimensione fissata $dim."    
 done
 
-echo "Studio della termalizzazione terminato."
+echo "Studio del tempo di correlazione terminato."
