@@ -2,7 +2,7 @@
 const Ising2DVersion* = "Ising2D 0.1.0"
 
 import std/[streams]
-import src/[pcg, paramIn]
+import src/[pcg, paramIn, obs, evolutionMethods]
 
 from std/strformat import fmt
 from std/strutils import intToStr
@@ -58,6 +58,30 @@ proc stampaParametri*(par: seq[float32]) =
         echo fmt"Stato pcg:   {state} "
         echo fmt"Incremento pcg:   {incr} "
         echo fmt"Fase di termalizzazione:   {term} "
+
+
+proc inizioStampaTerm*(streamOut: FileStream; eneblk, magnblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine("# Simulazione modello di Ising 1D")
+        streamOut.writeLine("# Mossa \t Energia \t Magnetizzazione")
+        streamOut.writeLine(fmt"1     {eneblk}      {magnblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
+proc stampaTerm*(streamOut: FileStream, nmove: int, eneblk, magnblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine(fmt"{nmove}     {eneblk}      {magnblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
 
 
 proc inizioStampaObs*(streamOut: FileStream; eneblk, magnblk, cpblk, chiblk: float32) = 
@@ -160,22 +184,42 @@ when isMainModule:
         var 
             rg = newPCG((state, incr))
             appo: float32
-            cpblk: float32
-            chiblk: float32
             eneblk: float32 = 0
-            ene2blk: float32 = 0
             magnblk: float32 = 0
-            magn2blk: float32 = 0
             accettate: int = 0
-            isingMod: seq[int]
+            isingMod: seq[seq[int]]
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
             # confOut = newFileStream("confTerm.dat", fmWrite)
 
-        for i in 1..100:
-            echo rg.rand()
 
+
+        #----------------------------------------------------------------#
+        #       Inizializzazione modello di Ising, termalizzazione       #
+        #               e calcolo delle osservabili iniziali             #
+        #----------------------------------------------------------------#
+        echo "\n\nInizio la termalizzazione del modello di Ising"
+        isingMod = inizializzaIsing(rg, nspin)    
+
+
+        #-------------------------------------------------------#
+        #         Evoluzione del sistema con Metropolis         #
+        #-------------------------------------------------------#
+        # echo "\n\nInizio la simulazione del modello di Ising"
+        accettate = 0      # Solo da qui mi interessa tener conto dell'acceptance rate
+        for i in 0..<lsim:
+            isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
+
+            # Energia             
+            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(isingMod.len())
+            magnblk = isingMod.calcolaMagn(nspin)/float32(isingMod.len())
+
+            if i == 0:
+                obsOut.iniziostampaTerm(eneblk, magnblk)
+            else:
+                obsOut.stampaTerm(i+1, eneblk, magnblk)
         
+
         obsOut.close()
         # confOut.close()
