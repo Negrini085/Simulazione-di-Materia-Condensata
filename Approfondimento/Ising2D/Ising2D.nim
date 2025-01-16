@@ -200,7 +200,7 @@ when isMainModule:
         #               e calcolo delle osservabili iniziali             #
         #----------------------------------------------------------------#
         echo "\n\nInizio la termalizzazione del modello di Ising"
-        isingMod = inizializzaIsing(rg, nspin)    
+        isingMod = inizializzaIsing(nspin)    
 
 
         #-------------------------------------------------------#
@@ -219,6 +219,10 @@ when isMainModule:
                 obsOut.iniziostampaTerm(eneblk, magnblk)
             else:
                 obsOut.stampaTerm(i+1, eneblk, magnblk)
+
+            if (i mod 500 == 0) and (i > 0):
+                echo fmt"Nmove: {i}     AR: {accettate/(500 * nspin * nspin)}"
+                accettate = 0
         
 
         obsOut.close()

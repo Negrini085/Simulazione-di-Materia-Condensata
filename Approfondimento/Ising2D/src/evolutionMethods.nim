@@ -1,6 +1,5 @@
 from std/sequtils import newSeqWith
 from std/math import floor, exp
-from std/strformat import fmt
 
 import pcg
 
@@ -64,6 +63,3 @@ proc metropolisMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, ac
         elif rg.rand() < exp(-diffE/temp):
             modIsing[xcoor][ycoor] = -appo
             accettate += 1
-        
-    echo fmt"AR: {int(accettate/(nspin * nspin)*10000)/100}"
-    accettate = 0
