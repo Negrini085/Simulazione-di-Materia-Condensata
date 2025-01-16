@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param.in"       # Nome del file di input
+input_file="param1.in"                      # Nome del file di input
 tempIsing=(0.5 1.0 1.5 2.0)                 # Temperature a cui simulo il modello
-sizeIsing=(1000 3000 6000 10000)             # Dimensioni del modello di Ising
+sizeIsing=(1000 3000 6000 10000)            # Dimensioni del modello di Ising
 rgState=(0 10 20 30)                        # Seed random generator
 rgIncr=(5 15 25 35)                         # Incr random generator
 
@@ -24,7 +24,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
             sed -i "s/^incr\s\+.*/incr\t\t"${rgIncr[j-1]}"/" "$input_file"
 
             # Eseguo programma e faccio analisi su tempo di correlazione
-            ./Ising1D sim param.in analisi/tcorr/tcorr_t${t}_size${sizeIsing[i]}_seed$j.out
+            ./Ising1D sim param1.in analisi/magn0.0/tcorr/tcorr_t${t}_size${sizeIsing[i]}_seed$j.out
        	    echo ""
     	done
     
