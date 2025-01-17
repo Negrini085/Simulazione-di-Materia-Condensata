@@ -25,10 +25,47 @@ evidenza ulteriore di una transizione di fase.
 
 \subsection{Domain walls}
 
-Mentre il modello di Ising 1D non presenta transizione di fase a temperatura finita, nel modello di Ising 2D è possibile la manifestazione 
-di ordine a lungo raggio al di sotto di una certa temperatura critica $T_c$. Consideriamo ora il mapping riportato in Figura 
-\ref{fig: map_2to1_Ising}, in cui i siti reticolari di un modello bi-dimensione vengono mappati su una catena lineare (mantendo 
-l'interazione con i primi vicini di partenza).
+
+Consideriamo ora un domain walls in $d$ dimensioni in un sistema di dimensione lineare $La$, dove $L$ è un numero reale ed $a$ invece 
+è il passo reticolare. In analogia con quanto osservato per il modello di Ising 1D, la variazione di energia legata a questo difetto 
+nell'orientamento del sistema è pari a 
+
+\begin{equation}
+    \Delta E\,=\,2JL^{d-1}
+    \label{eq: ene_dw_IsingdD}
+\end{equation}
+
+L'entropia del domain wall è legata al numero di modi in cui si può costruire tale interfaccia. Per un singolo domain wall si può 
+stimare che 
+
+\begin{equation}
+    S \gtrsim k_B \ln{\left(L\right)}
+    \label{eq: entr_dw_IsingdD}
+\end{equation}
+
+L'energia libera associata alla presenza dell'interfaccia è pari a 
+
+\begin{equation}
+    A \simeq 2JL^{d-1}\,-\,k_B T\ln{\left(L\right)},
+    \label{eq: freeE_dw_IsingdD}
+\end{equation}
+
+che è dominata dal termine energetico per ogni dimensione del reticolo $d\,\geq 2$, poichè nel limite termodinamico il termine 
+logaritmico è trascurabile. Per provare l'esistenza di ferromagnetismo in modo più quantitativo, basta mostrare che il valor medio 
+dello spin sia diverso da zero. Nel caso del modello di Ising 2D è possibile mostrare che se gli spin che fanno parte della cornice 
+esterna del retico sono positivi, la probabilità di avere uno spin negativo nel centro del sistema è pari a 
+
+\begin{equation}
+    p_{-}\,<\,\frac{1}{2}\frac{\exp{\left(-2\beta J\right)}}{4 \left(1\,-\,3\exp{\left(-2\beta J\right)}\right)^4}.
+    \label{eq: probm_Ising2D}
+\end{equation}
+
+Il secondo membro della relazione \eqref{eq: probm_Ising2D} può essere reso minore di $1/2$ scegliendo una temperatura opportuna ed 
+in modo indipendente dalla dimensione del reticolo (ossia del parametro $N$ introdotto in precedenza). Questo evidenzia come possa 
+presentarsi long range order e di conseguenza magnetizzazione finita per $0\,\leq T\,<\,T_c$. Per sottolineare ulteriormente le 
+differenze fra il modello di Ising 1D e quello bi-dimensionale consideriamo ora il mapping riportato in Figura \ref{fig: map_2to1_Ising}, 
+in cui i siti reticolari di un modello bi-dimensione vengono mappati su una catena lineare (mantendo l'interazione con i primi 
+vicini di partenza).
 
 \begin{figure}[H]
     \centering
@@ -45,6 +82,9 @@ spirali concentriche con cui si visitano tutti i siti reticolari tale lunghezza 
 spin ottenuta a partire da un reticolo quadrato anche i domain walls interagiscono fra loro con un potenziale di tipo long-range, andando 
 ad invalidare il discorso fatto in precedenza e rendendo possibile una magnetizzazione non nulla anche per una catena di spin. 
 
-\subsection{Scale free fenomena}
+
+
+\subsection{Fenomeni ad invarianza di scala}
+
 
 
