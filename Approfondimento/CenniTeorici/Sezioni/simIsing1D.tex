@@ -1,0 +1,38 @@
+\section{Simulazioni modello di Ising 1D}
+
+Le simulazioni del modello di Ising 1D sono state effettuate con l'algoritmo di Metropolis, la cui 
+implementazione è riportata in seguito. Per ogni mossa Monte-Carlo, viene tentato un numero di flip di 
+spin pari alla lunghezza della catena da simulare.
+
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10, breaklines = true]{nim}
+    proc metropolisMove*(modIsing: var seq[int], rg: var PCG, temp: float32, acc: float32, hmagn: float32, accettate: var int) = 
+    # Algoritmo di Metropolis per evolvere il modello di Ising
+    # Per ogni MC-move, provo a fare nspin inversioni degli spin
+    # Ogni volta lo spin viene selezionato in modo casuale
+
+    # Indice per selezionare lo spin
+    var 
+        diffE: float32
+        ind, prev, next, appo: int
+
+
+    for i in 0..<len(modIsing):
+        ind = int(rg.rand(float32(0), float32(len(modIsing)))) mod len(modIsing)
+        prev = (ind + len(modIsing) - 1) mod len(modIsing)
+        next = (ind + 1) mod len(modIsing)
+
+        appo = modIsing[ind]
+        diffE = 2 * acc * float32(appo) * float32(modIsing[prev] + modIsing[next]) + 2 * hmagn * float32(appo)
+
+        if diffE < 0:
+            modIsing[ind] = -appo
+            accettate += 1
+
+        elif rg.rand() < exp(-diffE/temp):
+            modIsing[ind] = -appo
+            accettate += 1
+\end{minted}   
+
+\input{Sezioni/subsec/Ising1D_m0.02.tex}
+\newpage
+\input{Sezioni/subsec/Ising1D_m0.0.tex}

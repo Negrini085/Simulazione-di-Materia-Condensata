@@ -1,5 +1,48 @@
 \section{Modello di Ising 2D}
 
-Il modello di Ising 2D consiste in un reticolo quadrato bidimensionale costituito da $N \times N$ spin 
+Il modello di Ising 2D consiste in un reticolo quadrato bidimensionale di spin, i quali possono assumere solamente i valori 
+$\pm 1$. Nel limite termodinamico, tale modello presenta una transizione di fase in prossimità di una temperatura critica Tc.
+Per $T\,>\,Tc$ il sistema si comporta in modo paramagnetico, altrimenti si ha una magnetizzazione spontanea, evidenza 
+di ordine nel reticolo di spin. Il modello presenta soluzione analitica solamente per il caso con campo magnetico $h\,=\,0$, 
+determinata da Onsager nel 1944. La magnetizzazione 
 
-\input{Sezioni/subsec/Ising2D_metro.tex}
+\begin{equation}
+    m\left(\beta,\,h=0\right)\,=\,
+    \begin{cases}
+    \left[1\,-\,\dfrac{1}{\sinh^4{\left(2\beta J\right)}}\right]^{\frac{1}{8}} \qquad \qquad T\,<\,T_c \\
+    0 \qquad \qquad \qquad \qquad \qquad \qquad \,\,\,\, T\,>\,T_c
+    \end{cases}
+    \label{eq: magn_Onsager_1944}
+\end{equation}
+presenta una discontinuità alla temperatura critica 
+
+\begin{equation}
+    T_c\,=\,\frac{2J}{\ln{\left(1\,+\,\sqrt{2}\right)}}\,,
+    \label{eq: tc_Ising2D_Ons}
+\end{equation}
+evidenza ulteriore di una transizione di fase. L'energia interna per unità di spin è data da 
+
+\begin{equation}
+    u_l(0, T) = -2J \tanh(2\beta J) + \frac{k}{2\pi} \frac{dk}{d\beta} \int_{0}^{\pi} 
+    \frac{\sin^2(\phi)}{\Delta (1 + \Delta)} d\phi
+    \label{eq: ene_Onsager_1944}
+\end{equation}
+dove
+
+\begin{equation}
+    k\,=\,\frac{2 \sinh{\left(2 \beta J\right)}}{\cosh^2{\left(2\beta J\right)}}
+    \label{eq: k_Ising2D_Ons}
+\end{equation}
+
+\begin{equation}
+    \Delta = \sqrt{1 - k^2 \sin^2(\phi)}.
+    \label{eq: Delta_Ising2D_Ons}
+\end{equation}
+
+
+
+\subsection{Domain walls}
+
+\subsection{Scale free fenomena}
+
+
