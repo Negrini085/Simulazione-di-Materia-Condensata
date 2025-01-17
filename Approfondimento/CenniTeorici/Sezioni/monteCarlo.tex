@@ -1,4 +1,4 @@
-\subsection{Simulazioni Monte-Carlo}
+\section{Simulazioni Monte-Carlo}
 
 L'obiettivo di questa sezione è l'introduzione di delle tecniche Monte-Carlo che consentano di simulare un modello di Ising mono-dimensionale con 
 numero di costituenti finito e che presenti condizioni periodiche al contorno, in modo tale che gli spin posti agli estremi della catena 
@@ -21,7 +21,7 @@ nuovamente ad ogni iterazione, scegliendo lo spin di cui provare il flip in modo
 
 
 
-\subsubsection{Generatore di numeri casuali}
+\subsection{Generatore di numeri casuali}
 
 Dato che i metodi Monte-Carlo sono una classe di algoritmi numerici che sfruttano i numeri pseudo-casuali, è auspicabile lavorare 
 con un generatore dotato di un lungo periodo (i numeri generati non si ripetono spesso) e che sia efficiente, in modo da ridurre le 
@@ -82,7 +82,7 @@ del PCG sia riportata nella sezione relativa al modello di Ising mono-dimensiona
 
 
 
-\subsubsection{Termalizzazione}
+\subsection{Termalizzazione}
 
 Una simulazione Monte-Carlo è detta all'equilibrio nel momento in cui viene correttamente campionato il peso statistico di Boltzmann 
 $p\left(\mu\right)$. Se il sistema viene inizializzato in uno dei due stati presentati in precedenza, ossia quello a temperatura 
@@ -101,7 +101,7 @@ diverse traiettorie nello spazio delle fasi.
 
 
 
-\subsubsection{Misure e Data-Blocking}
+\subsection{Misure e Data-Blocking}
 
 Una volta che il sistema ha raggiunto l'equilibrio, è possibile misurare le osservabili d'interesse senza che i valori d'aspettazione 
 siano influenzati dalla fase di transitorio. Per valutare la durata minima della simulazione che consenta di ottenere delle stime 

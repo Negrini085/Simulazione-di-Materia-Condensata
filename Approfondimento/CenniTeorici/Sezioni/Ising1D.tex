@@ -331,3 +331,49 @@ da cui risulta che la lunghezza di correlazione è pari a
 Notiamo che la lunghezza di correlazione è sempre maggiore o uguale a zero. Inoltre, quando la temperatura tende a zero, 
 $\xi$ diverge ad infinito. Il fatto che questo accada solamente a temperatura nulla evidenzia come non si abbia correlazione 
 (e di conseguenza ordine) a lungo raggio fra gli spin per ogni $T\,\neq\,0$.
+
+
+
+\subsubsection{Domain walls}
+
+I domain walls sono i bordi che delimitano due domini magnetici caratterizzati da orientamenti differenti dei momenti magnetici. 
+Studiare quale sia l'effetto di queste interfacce sull'energia libera consente di comprende perchè nel modello di Ising 1D vinca il 
+disordine (in assenza di campo magnetico) ad ogni temperatura finita. Consideriamo un sistema aperto (quindi senza pbc) a $T\,=\,0$ 
+e campo magnetico nullo. Esso si trova nel suo ground state, ossia tutti gli spin presentano lo stesso orientamento. La più semplice 
+eccitazione di un sistema di questo genere consiste nella formazione di una singola interfaccia, come riportato in Figura 
+\ref{fig: dw_Ising1D}, che separi totalmente spin up e spin down.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Immagini/dw_Ising1D.png}
+    \caption{Esempio di eccitazione elementare per un modello di Ising 1D. Immagine da \cite{galliFSA}.}
+    \label{fig: dw_Ising1D}
+\end{figure}
+
+La differenza in energia fra i due stati sopracitati è pari a $2 J$, quindi nel caso di un sistema che presenti una concentrazione 
+$x\,=\,M/N$ di domain walls la variazione di energia libera sarà pari a 
+
+\begin{equation}
+    \Delta A\,=\,\Delta E\,-\,TS\,=\,2JM\,-\,k_bT\ln{\left(\frac{N!}{M!\left(N\,-\,M\right)!}\right)}
+    \label{eq: freeE_dw1_Ising1D}
+\end{equation}
+
+Utilizzando la formula di Stirling per espandere i fattoriali, è possibile ottenere la seguente relazione in funzione della concentrazione 
+$x$ introdotta in precedenza
+
+\begin{equation}
+    \Delta A\,\simeq\,N\left\{2Jx\,+\,k_B T \left[x\ln{\left(x\right)}\,+\,\left(1\,-\,x\right)\ln{\left(1\,-\,x\right)}\right]\right\}
+    \label{eq: freeE_dw1_Ising1D}
+\end{equation}
+
+Per determinare quale sia la concentrazione all'equilibrio termodinamico si deve minimizzare l'energia libera, ossia la derivata prima 
+della stessa rispetto ad $x$ deve essere posta pari a zero. Questo porta a 
+
+\begin{equation}
+    x\,=\,\frac{1}{1\,+\,\exp{\left(2 \beta J\right)}}, 
+    \label{eq: con_dw_Ising1D}
+\end{equation}
+
+ossia una quantità finita per ogni $T \neq 0$. Questo evidenzia come non sia possibile long range order dell'orientazione degli spin e 
+di conseguenza la magnetizzazione è identicamente nulla. In 1D, il contributo entropico all'energia libera domina quello energetico, 
+favorendo stati di disordine con spin orientati casualmente.
