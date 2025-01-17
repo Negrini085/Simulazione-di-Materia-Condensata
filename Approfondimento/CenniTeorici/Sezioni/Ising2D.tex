@@ -84,7 +84,54 @@ ad invalidare il discorso fatto in precedenza e rendendo possibile una magnetizz
 
 
 
+
+
 \subsection{Fenomeni ad invarianza di scala}
 
+La transizione di fase che avviene alla temperatura critica $T_c$ \eqref{eq: tc_Ising2D_Ons} è una transizione di fase continua. Una delle 
+conseguenze della criticità è la perdita di un parametro di scala, nel senso che il sistema presenta cluster di spin di tutte le dimensioni. 
+Chiaramente nel caso di una simulazione questa distribuzione sarà influenzata dalle dimensioni finite del reticolo considerato, dato che 
+non è computazionalmente possibile lavorare nel limite termodinamico. Inoltre al punto critico il comportamento di un sistema è 
+solitamente indipendente dai dettagli microscopici del sistema, in quanto è determinato da poche caratteristiche quali
+
+\begin{itemize}[label=$\diamond$] 
+    \item la dimensionalità $d$ del sistema (per il modello di Ising 2D avremo $d\,=\,2$)
+    \item il numero di componenti $n$ del parametro d'ordine
+    \item il range delle interazioni microscopiche presenti fra i costituenti del sistema
+\end{itemize}
+
+Dato che il comportamento critico del sistema non ha alcuna dipendenza sui gradi di libertà microscopici dello stessto, è possibile mediante 
+una tecnica di coarse graining rimuovere quelli irrilevanti fino a quando si giunge alla lunghezza di correlazione. Tale metodo consiste 
+nel dividere il reticolo in blocchi di dimensione inferiore rispetto a quella reticolare e sommare gli spin all'interno dei singoli blocchi. 
+Se il risultato dell'operazione precedente è positivo, il blocco verrà sostituito da un singolo spin orientato verso l'alto (+1), 
+altrimenti da uno che punta verso il basso. Il modello risultante avrà di conseguenza un differente passo reticolare. Bisogna ora  
+distinguere tre possibili scenari in base alla temperatura alla quale viene effettuata la simulazione.
 
 
+
+\subsubsection{$T\,<\,T_c$}
+
+Al di sotto della temperatura critica, il sistema è dotato di ordine a lungo raggio, ma dato che $T \neq 0$ sono presenti anche cluster 
+di grandi dimensioni con spin orientati nella direzione opposta. Applicando in modo iterativo il metodo riportato in precedenza, la 
+dimensione della cella unitaria aumenta e le fluttauazioni che sono di dimensione inferiore rispetto al passo reticolare scompaiono. 
+Questo implica che il sistema diventa via via più ordinato e tende ad una configurazione con spin totalmente allineati tipica di 
+$T\,=\,0$.
+
+
+
+\subsubsection{$T\,>\,T_c$}
+
+Al di sopra della temperatura critica, il sistema è disordinato e gli spin formano randomicamente cluster con orientazione verso 
+l'alto oppure verso il basso. Ogni volta che viene effettuata una trasformazione, la lunghezza di correlazione diminuisce e i cluster 
+diventano di dimensioni inferiori come se la temperatura stesse aumentando. Il sistema tende alla condizione di temperatura infinita, 
+con cluster che coinvolgono un numero esiguo di momenti magnetici.
+
+
+
+\subsubsection{$T\,=\,T_c$}
+
+Alla temperatura critica, i cluster sono di tutte le dimensioni, partendo da singoli spin per giungere ad un numero macroscopico di 
+momenti magnetici coinvolti. In questo caso la lunghezza di correlazione è infinita e per iterazioni successive del metodo introdotto 
+in precedenza non si ha alcun cambio nella distrubuzione delle dimensioni dei cluster. Il reticolo rimane a $T_c$, che risulta essere 
+un punto fisso della funzione di coearse-graining. Chiaramente, gli altri punti fissi sono $T\,=\,0$ e $T\,=\,\infty$ a cui tendono 
+tutti i sistemi che non si trovano in partenza al punto critico.
