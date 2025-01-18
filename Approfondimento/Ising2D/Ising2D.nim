@@ -181,13 +181,19 @@ when isMainModule:
             let msg = "Numero di blocchi maggiore del numero di mosse costituenti la simulazione. Termino l'esecuzione del programma"
             raise newException(CatchableError, msg)
 
+
         var 
+            tc = 2.27
             rg = newPCG((state, incr))
             appo: float32
+            cpblk: float32
+            chiblk: float32
             eneblk: float32 = 0
+            ene2blk: float32 = 0
             magnblk: float32 = 0
+            magn2blk: float32 = 0
             accettate: int = 0
-            isingMod: seq[seq[int]]
+            isingMod: seq[int]
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
@@ -202,27 +208,57 @@ when isMainModule:
         echo "\n\nInizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(nspin)    
 
+        for i in 0..term:
+            isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
+    
+
 
         #-------------------------------------------------------#
         #         Evoluzione del sistema con Metropolis         #
         #-------------------------------------------------------#
-        # echo "\n\nInizio la simulazione del modello di Ising"
+        echo "\n\nInizio la simulazione del modello di Ising"
         accettate = 0      # Solo da qui mi interessa tener conto dell'acceptance rate
-        for i in 0..<lsim:
-            isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
+        for i in 0..<nblk:
 
-            # Energia             
-            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
-            magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
+            #---------------------------------------------------#
+            #       Studio osservabili nel singolo blocco       #
+            #---------------------------------------------------#
+            for j in 0..<lenBlk:
+                isingMod.metropolisMove(rg, temp, acc, accettate)
 
-            if i == 0:
-                obsOut.iniziostampaTerm(eneblk, magnblk)
-            else:
-                obsOut.stampaTerm(i+1, eneblk, magnblk)
+                # Energia 
+                appo = isingMod.calcolaEnergia(acc, nspin)
+                eneblk += appo/float32(lenBlk)
+                ene2blk += appo*appo/float32(lenBlk)
 
-            if (i mod 500 == 0) and (i > 0):
-                echo fmt"Nmove: {i}     AR: {accettate/(500 * nspin * nspin)}"
-                accettate = 0
+                # Magnetizzazione
+                appo = isingMod.calcolaMagn(nspin)
+                magnblk += appo/float32(lenBlk)
+                magn2blk += appo*appo/float32(lenBlk)
+            
+            eneblk = eneblk/float32(isingMod.len())
+            magnblk = magnblk/float32(isingMod.len())
+
+            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk * float32(nspin), 2))/float32(nspin)
+            chiblk = 1/(temp) * (magn2blk - pow(magnblk * float32(nspin), 2))/float32(nspin)
+
+            if i != 0:
+                obsOut.stampaObs(i+1, eneblk, magnblk, cpblk, chiblk)
+            else:    
+                obsOut.inizioStampaObs(eneblk, magnblk, cpblk, chiblk)
+            
+            echo "-----------------------------------------------"
+            echo ""
+            echo fmt"          Numero blocco: {i+1}" 
+            echo fmt"       Acceptance rate: {int(float32(accettate)/float32(lenBlk*nspin)*10000)/100} %" 
+            echo ""
+            echo "-----------------------------------------------"
+
+            eneblk = 0
+            ene2blk = 0
+            magnblk = 0
+            magn2blk = 0
+            accettate = 0
         
 
         obsOut.close()
