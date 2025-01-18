@@ -217,7 +217,7 @@ when isMainModule:
             magnblk = magnblk/float32(isingMod.len())
 
             cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk * float32(nspin), 2))/float32(nspin)
-            chiblk = 1/(temp * temp) * (magn2blk - pow(magnblk * float32(nspin), 2))/float32(nspin)
+            chiblk = 1/(temp) * (magn2blk - pow(magnblk * float32(nspin), 2))/float32(nspin)
 
             if i != 0:
                 obsOut.stampaObs(i+1, eneblk, magnblk, cpblk, chiblk)
