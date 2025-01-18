@@ -4,6 +4,7 @@ const Ising2DVersion* = "Ising2D 0.1.0"
 import std/[streams]
 import src/[pcg, paramIn, obs, evolutionMethods]
 
+from std/math import pow
 from std/strformat import fmt
 from std/strutils import intToStr
 
@@ -193,7 +194,7 @@ when isMainModule:
             magnblk: float32 = 0
             magn2blk: float32 = 0
             accettate: int = 0
-            isingMod: seq[int]
+            isingMod: seq[seq[int]]
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
@@ -224,10 +225,10 @@ when isMainModule:
             #       Studio osservabili nel singolo blocco       #
             #---------------------------------------------------#
             for j in 0..<lenBlk:
-                isingMod.metropolisMove(rg, temp, acc, accettate)
+                isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
 
                 # Energia 
-                appo = isingMod.calcolaEnergia(acc, nspin)
+                appo = isingMod.calcolaEnergia(nspin, acc)
                 eneblk += appo/float32(lenBlk)
                 ene2blk += appo*appo/float32(lenBlk)
 
