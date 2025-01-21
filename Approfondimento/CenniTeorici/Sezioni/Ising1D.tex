@@ -14,10 +14,8 @@ primo ed il sistema si chiude ad anello, come è possibile apprezzare in Figura 
 \end{figure}
 
 Sebbene il modello di Ising 1D ammetta soluzione esatta, è istruttivo lavorare inizialmente con una teoria di campo 
-medio, in cui il termine d'interazione presente nell'Hamiltoniana viene sostituito da un termine efficace (di campo 
-medio appunto), andando a trascurare le fluttuazioni degli spin.
-
-
+medio, che presuppone la sostituzione del termine d'interazione fra spin con un termine efficace (di campo medio) in cui 
+sono trascurate le fluttuazioni degli spin.
 
 
 
@@ -32,7 +30,7 @@ caso del modello di Ising mono-dimensionale l'interazione fra spin primi vicini 
 \end{equation}
 
 dove l'ultimo termine della somma misura le fluttuazioni fra spin. L'approssimazione di campo medio consiste nel trascurare 
-completamente l'ultimo termine, in modo tale che tutti gli spin risultino essere disaccoppiati fra loro e risulti più immediato il 
+completamente l'ultimo termine, in modo tale che tutti gli spin risultino essere disaccoppiati fra loro e sia più immediato il 
 calcolo della funzione di partizione. L'Hamiltoniana di campo medio risulta quindi 
 
 \begin{equation}
@@ -47,8 +45,8 @@ da cui è immediato il calcolo della funzione di partizione
     \label{eq: part_MF_Ising1D}
 \end{equation}
 
-Nella relazione precedente la quantità $n_{nn}$ è il numero il numero di coordinazione del reticolo, ossia il numero di primi vicini per la 
-geometria presa in considerazione. L'energia libera per particella è data da 
+Nella relazione precedente la quantità $n_{nn}$ è il numero di coordinazione del reticolo, ossia la quantità di primi vicini che ha un 
+generico spin (nel caso in considerazione sarà quindi pari a due). L'energia libera per particella è data da 
 
 \begin{equation}
     \frac{F}{N}\,=\,-\frac{k_B T}{N} \ln{\left(Q_{MF}\right)}\,=\,\frac{JM^2n_{nn}}{2}\,-\,\frac{1}{\beta}\ln{\left\{2 \cosh{\left[\beta\left(h\,+\,Jn_{nn}m\right)\right]}\right\}}
@@ -61,8 +59,8 @@ da cui è possibile ricavare tutta la termodinamica del sistema.
 
 \subsubsection{Magnetizzazione}
 
-La magnetizzazione si ricava a partire dall'energia libera per spin mediante una derivata rispetto al campo magnetico $h$. 
-La relazione che si ottiene è nota come \textit{equazione di Bragg-Williams}, che può essere espressa nella forma 
+La magnetizzazione si ricava derivando rispetto al campo magnetico $h$ l'energia libera per spin. La relazione che si ottiene è nota 
+come \textit{equazione di Bragg-Williams}, che può essere espressa nella forma 
 
 \begin{equation}
     \tanh^{-1}{\left(m\right)}\,=\,\frac{h\,+\,n_{nn}Jm}{k_B T}
@@ -78,8 +76,15 @@ In primo luogo è necessario introdurre la temperatura critica
 \end{equation}
 
 che consente di riscrivere il secondo membro dell'equazione di Bragg-Williams in funzione del rapporto fra $T_c$ e la temperatura 
-a cui il sistema si trova. Così facendo risulta evidente che quando $T\,>\,T_c$ l'unica soluzione possibile dell'equazione 
-\eqref{eq: BW_equation} è $m\,=\,0$, ossia mancanza di magnetizzazione finita. Nel caso opposto, ossia con $T\,<\,T_c$, si hanno 
+a cui il sistema si trova. 
+
+\begin{equation}
+    \tanh^{-1}{\left(m\right)}\,=\,\frac{T_c}{T}
+    \label{eq: BW_equation_h0}
+\end{equation}
+
+Così facendo risulta evidente che quando $T\,>\,T_c$ l'unica soluzione possibile dell'equazione 
+\eqref{eq: BW_equation_h0} è $m\,=\,0$, ossia mancanza di magnetizzazione (e quindi ordine nel sisstema). Nel caso opposto, ossia con $T\,<\,T_c$, si hanno 
 tre possibili valori di $m$, ossia $0,\,\pm m_0$, con $m_0$ quantità finita. L'energia libera consente di identificare quale 
 sia la soluzione fisica, poichè come è possibile osservare in Figura \ref{fig: FE_Ising1D_MF} quando la temperatura scende al 
 di sotto di quella critica $F$ passa da un regime in cui è presente un solo minimo in $m\,=\,0$ ad un regime con due minimi 
@@ -89,7 +94,7 @@ equivalenti in $m\,=\,\pm m_0\,\neq\,0$.
     \centering
     \includegraphics[width=0.7\textwidth]{Immagini/FE_Ising1D_MF.png}
     \caption{ Energia libera per particella al variare della temperatura del sistema. Quando la temperatura è maggiore o uguale 
-    di quella critica è presente un solo minimo in $m\,=\,0$, mentre al di sotto sono presenti due minimi globali equivalenti e 
+    di quella critica è presente un solo minimo in $m\,=\,0$, mentre al di sotto di $T_c$ sono presenti due minimi globali equivalenti e 
     simmetrici rispetto ad $m\,=\,0$, che è un massimo locale. Immagine da \cite{galliFSA}.}
     \label{fig: FE_Ising1D_MF}
 \end{figure}
@@ -105,8 +110,9 @@ allineamento fra spin concorde con il verso di $h$ risulta essere energeticament
 
 \subsubsection{Esponenti critici}
 
-E' possibile caratterizzare il comportamento di un certo sistema nell'intorno del punto critico in termini di leggi di potenza 
-che presentano un set di esponenti critici. La seguente analisi è rivolta a 
+E' possibile caratterizzare il comportamento di un sistema nell'intorno del punto critico studiando le leggi leggi di potenza con 
+cui scalano le osservabili caratteristiche. Gli esponenti di queste leggi di potenza sono detti \textit{esponenti critici}. I 
+principali sono riportati nella seguente Tabella \ref{tab: crit_exp}.
 
 \begin{table}[h!]
     \centering
@@ -123,6 +129,7 @@ che presentano un set di esponenti critici. La seguente analisi è rivolta a
     $\delta$ & E' legato all'equazione di stato alla temperatura critica \\ 
     \hline
     \end{tabular}
+    \label{tab: crit_exp}
     \caption{Esponenti critici e relativo significato}
 \end{table}
 
@@ -135,7 +142,7 @@ espandere in serie la tangente iperbolica tralasciando i termini di ordine super
     \label{eq: beta_fp_Ising1D_MF}
 \end{equation}
 
-in modo tale che, in seguito ad posto ad uno il fattore moltiplicativo del termine di grado 3, è possibile ricavare la 
+in modo tale che, ponendo ad uno il fattore moltiplicativo del termine di grado 3, sia possibile ricavare la 
 magnetizzazione in funzione della differenza fra la temperatura critica e quella a cui si trova il sistema. Dato che 
 
 \begin{equation}
@@ -154,7 +161,7 @@ a temperature confrontabili con quella critica e per piccoli valori del campo ma
 che porta all'equazione di stato approssimata 
 
 \begin{equation}
-    \frac{h}{k_B T}\,=\,m\frac{T\,-\,T_c}{T}\,+\,frac{m^3}{3}.
+    \frac{h}{k_B T}\,=\,m\frac{T\,-\,T_c}{T}\,+\,\frac{m^3}{3}.
     \label{eq: beta_sp_Ising1D_MF}
 \end{equation}
 
@@ -166,7 +173,10 @@ campo magnetico siano legati come
     \label{eq: beta_tp_Ising1D_MF}
 \end{equation}
 
-che di conseguenza consente di identificare come $\delta\,=\,3$.
+che di conseguenza consente di identificare come $\delta\,=\,3$. Sebbene una teoria di campo medio sia matematicamente più abbordabile 
+rispetto alla risoluzione analitica del modello, alcune delle previsioni della stessa sono errate. Si vedrà nella prossima sezione che è 
+impossibile per il modello di Ising 1D presentare magnetizzazione non nulla a temperatura finita ed in assenza di campo magnetico, 
+fatto che nell'approccio di campo medio risultava essere evidente.
 
 
 
@@ -175,15 +185,15 @@ che di conseguenza consente di identificare come $\delta\,=\,3$.
 \subsection{Soluzione esatta}
 
 Considerare un sistema con condizioni periodiche al contorno, come (b) in Figura \ref{fig: Ising1D_pbc}, consente 
-di scrivere l'Hamiltoniana in forma simmetrica come 
+di scrivere l'Hamiltoniana in forma simmetrica 
 
 \begin{equation}
     H\,=\,-J\sum_{i} \sigma_i \sigma_{i+1}\,-\,\frac{h}{2}\sum_{i} \left(\sigma_i\,+\,\sigma_{i+1}\right),
     \label{eq: ising_ham_sim}
 \end{equation}
 
-dato che $\sigma_{N+1}\,=\,\sigma_1$. La funzione di partizione del sistema è data dalla somma su tutte le possibili 
-configurazioni del sistema, che si traduce in 
+dato che $\sigma_{N+1}\,=\,\sigma_1$. La funzione di partizione è data dalla somma su tutte le possibili configurazioni del sistema, 
+che si traduce in 
 
 \begin{equation}
     Q\left(h,\,T\right)\,=\,\sum_{\sigma_1=\pm 1} \cdots \sum_{\sigma_N=\pm 1} \exp{\left\{\beta\left[J\sum_i \sigma_i \sigma_{i+1}\,+\,\frac{h}{2}\sum_i \left(\sigma_i\,+\,\sigma_{i+1}\right)\right]\right\}}
@@ -354,11 +364,12 @@ La differenza in energia fra i due stati sopracitati è pari a $2 J$, quindi nel
 $x\,=\,M/N$ di domain walls la variazione di energia libera sarà pari a 
 
 \begin{equation}
-    \Delta A\,=\,\Delta E\,-\,TS\,=\,2JM\,-\,k_bT\ln{\left(\frac{N!}{M!\left(N\,-\,M\right)!}\right)}
+    \Delta A\,=\,\Delta E\,-\,TS\,=\,2JM\,-\,k_bT\ln{\left[\frac{N!}{M!\left(N\,-\,M\right)!}\right]},
     \label{eq: freeE_dw1_Ising1D}
 \end{equation}
 
-Utilizzando la formula di Stirling per espandere i fattoriali, è possibile ottenere la seguente relazione in funzione della concentrazione 
+dove ad argomento del logaritmo troviamo il numero di modi possibili in cui posizionare il domain wall. Utilizzando la 
+formula di Stirling per espandere i fattoriali, è possibile ottenere la seguente relazione in funzione della concentrazione 
 $x$ introdotta in precedenza
 
 \begin{equation}
@@ -374,6 +385,6 @@ della stessa rispetto ad $x$ deve essere posta pari a zero. Questo porta a
     \label{eq: con_dw_Ising1D}
 \end{equation}
 
-ossia una quantità finita per ogni $T \neq 0$. Questo evidenzia come non sia possibile long range order dell'orientazione degli spin e 
-di conseguenza la magnetizzazione è identicamente nulla. In 1D, il contributo entropico all'energia libera domina quello energetico, 
+ossia una quantità finita per ogni $T \neq 0$. Questo evidenzia come non sia possibile long range order e 
+di conseguenza la magnetizzazione sia identicamente nulla. In 1D, il contributo entropico all'energia libera domina su quello energetico, 
 favorendo stati di disordine con spin orientati casualmente.
