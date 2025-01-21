@@ -1,36 +1,24 @@
 \section{Simulazioni Monte-Carlo}
 
-L'obiettivo di questa sezione è l'introduzione di delle tecniche Monte-Carlo che consentano di simulare un modello di Ising mono-dimensionale con 
-numero di costituenti finito e che presenti condizioni periodiche al contorno, in modo tale che gli spin posti agli estremi della catena 
+L'obiettivo di questa sezione è l'introduzione di tecniche Monte-Carlo che consentano di simulare un modello di Ising con 
+numero di costituenti finito dotato di condizioni periodiche al contorno, in modo tale che gli spin posti agli estremi del reticolo  
 interagiscano fra loro come primi vicini. Dato che in questo modo tutti gli spin sono equivalenti fra loro ed il sistema è invariante per 
 traslazioni, stiamo in pratica simulando un sistema infinito, con un conseguente netto miglioramento della qualità dei risultati. 
-Dopo aver definito una condizione iniziale, che solitamente sono quella a temperatura nulla, con tutti gli spin allineati, oppure 
-quella a temperatura infinita caratterizzata da momenti magentici orientati casualmente, il primo passo è quello di generare una 
-nuova configurazione tentando di invertire uno spin. La differenza in energia fra lo stato di partenza e quello di arrivo determina 
-la probabilità d'accettazione della mossa, dato che per l'\textit{algoritmo di Metropolis} \cite{M(RT)2} si ha che 
 
-\begin{equation}
-    A\left(\nu\,|\,\mu\right)\,=\,\text{min}\left[1,\,e^{-\beta\left(E_{\nu}\,-\,E_{\mu}\right)}\right]
-    \label{eq: Metropolis_1D}
-\end{equation}
 
-Chiaramente se la configurazione $\nu$ ha energia inferiore di quella $\mu$, la mossa viene sempre accettata. In caso contrario, è 
-possibile che lo spin non venga invertito ed il nuovo elemento della catena di Markov generata dall'algoritmo di Metropolis è identico 
-a quello precedente. In seguito è possibile osservare l'implementazione di tale algoritmo in Nim: lo stesso calcolo viene eseguito 
-nuovamente ad ogni iterazione, scegliendo lo spin di cui provare il flip in modo casuale.
 
 
 
 \subsection{Generatore di numeri casuali}
 
-Dato che i metodi Monte-Carlo sono una classe di algoritmi numerici che sfruttano i numeri pseudo-casuali, è auspicabile lavorare 
-con un generatore dotato di un lungo periodo (i numeri generati non si ripetono spesso) e che sia efficiente, in modo da ridurre le 
+Dato che i metodi Monte-Carlo sono una classe di algoritmi numerici che si basano sull'utilizzo di numeri pseudo-casuali, è auspicabile lavorare 
+con un generatore dotato di un lungo periodo di generazione (i numeri generati non si ripetono spesso) e che sia efficiente, in modo da ridurre le 
 tempistiche computazionali. Le simulazioni che hanno portato ai risultati presenti in questa dispensa sono state effettuate con un 
-generatore della famiglia PCG \cite{pcg2014}, di cui è riportata l'implementazione
+generatore della famiglia PCG \cite{pcg2014}, di cui è riportata l'implementazione. Il linguaggio utilizzato è il Nim, che compila 
+direttamente in codice macchina (alte prestazioni), ma presenta una sintassi molto semplice, che ricorda quella del Python.
 
 
-
-\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10]{nim}
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10, breaklines = true]{nim}
 type 
     PCG* = tuple[state, incr: uint64] ##\
     ## The `PCG` type represents the state of a Permuted Congruential 
@@ -77,8 +65,121 @@ proc rand*(pcg: var PCG; a, b: float32): float32 =
 \end{minted}    
 
 I numeri pseudo-casuali vengono generati lavorando con interi senza segno, che consentono di fare operazioni fra bit molto efficienti. 
-La corretta implementazione è stata testata imponendo un particolare RandomSetUp e valutando la sequenza generata. Sebbene l'implementazione 
-del PCG sia riportata nella sezione relativa al modello di Ising mono-dimensionale, tale algoritmo è stato utilizzato anche per l'Ising 2D.
+La corretta implementazione è stata testata imponendo un particolare RandomSetUp e valutando la sequenza generata. 
+
+
+
+
+
+\subsection{Inizializzazione}
+
+Il primo step della simulazione consiste nel definire una condizione iniziale. Solitamente le scelte più comuni sono la configurazione 
+a temperatura nulla (con tutti gli spin allineati) oppure quella a temperatura infinita (con momenti magnetici orientati casualmente). 
+Chiaramente tale condizione iniziale non è all'equilibrio per la temperatura alla quale si vuole simulare il sistema. Sarà necessaria 
+una fase di termalizzazione in cui il reticolo si rilassa fino a giungere all'equilibrio termodinamico, dopo la quale sarà poi possibile 
+iniziare a misurare le osservabili di nostro interesse. Per procedere nello studio del modello è quindi necessario introdurre dei metodi 
+che consentano di generare una nuova configurazione e quindi di evolvere il sistema. Le simulazioni riportate in questa dispensa 
+hanno fatto uso dell'\textit{algoritmo di Metropolis} e dell'\textit{algoritmo di Wolff}.
+
+
+
+
+
+\subsection{Algoritmo di Metropolis}
+
+Una mossa dell'algoritmo di Metropolis consiste nel selezionare casualmente uno spin del reticolo con l'obiettivo di generare una 
+nuova configurazione invertendolo. La differenza in energia fra lo stato di partenza e quello di arrivo determina 
+la probabilità d'accettazione della mossa, dato che per l'\textit{algoritmo di Metropolis} \cite{M(RT)2} si ha che 
+
+\begin{equation}
+    A\left(\nu\,|\,\mu\right)\,=\,\text{min}\left[1,\,e^{-\beta\left(E_{\nu}\,-\,E_{\mu}\right)}\right]
+    \label{eq: Metropolis_1D}
+\end{equation}
+
+Chiaramente se la configurazione $\nu$ ha energia inferiore di quella $\mu$, la mossa viene sempre accettata. In caso contrario, è 
+possibile che lo spin non venga invertito e che il nuovo elemento della catena di Markov generata dall'algoritmo di Metropolis sia identico 
+a quello precedente. Eseguire $N_{spin}$ volte il ciclo precedente, ossia tentare in media un'inversione per spin, equivale ad aver 
+completato uno \textit{sweep} del reticolo. Per le successive fasi conviene studiare le osservabili del sistema in funzione degli sweep e 
+non delle singole mosse dell'algoritmo di Metropolis: per questo motivo le implementazioni dell'algoritmo di Metropolis che riporto in seguito 
+eseguono uno sweep a chiamata, ossia tentano ogni volta $N_{spin}$ sweeps. Anche in questo caso il codice riportato è in Nim.
+
+
+
+\subsubsection{Metropolis Ising 1D}
+
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10, breaklines = true]{nim}
+    proc metropolisMove*(modIsing: var seq[int], rg: var PCG, temp: float32, acc: float32, hmagn: float32, accettate: var int) = 
+    # Algoritmo di Metropolis per evolvere il modello di Ising
+
+    # Indice per selezionare lo spin
+    var 
+        diffE: float32
+        ind, prev, next, appo: int
+
+
+    for i in 0..<len(modIsing):
+        ind = int(rg.rand(float32(0), float32(len(modIsing)))) mod len(modIsing)
+        prev = if (ind - 1) mod len(modIsing) == -1: len(modIsing)-1 else: (ind - 1) mod len(modIsing)
+        next = (ind + 1) mod len(modIsing)
+
+        appo = modIsing[ind]
+        diffE = 2 * acc * float32(appo) * float32(modIsing[prev] + modIsing[next]) + 2 * hmagn * float32(appo)
+
+        if diffE < 0:
+            modIsing[ind] = -appo
+            accettate += 1
+
+        elif rg.rand() < exp(-diffE/temp):
+            modIsing[ind] = -appo
+            accettate += 1
+\end{minted}    
+
+
+
+\subsubsection{Metropolis Ising 2D}
+
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10, breaklines = true]{nim}
+    proc metropolisMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, acc: float32, nspin: int, accettate: var int) = 
+    # Algoritmo di Metropolis per evolvere il modello di Ising 2D
+
+    # Indice per selezionare lo spin
+    var 
+        nmove = int(nspin * nspin)
+        diffE: float32
+        xcoor, ycoor, appo: int
+        up, down, left, right: int
+
+
+    for i in 0..<nmove:
+
+        # Seleziono casualmente uno spin facente parte del modello
+        xcoor = int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin
+        ycoor = int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin
+
+        # Determino quali sono i primi vicini in questo caso (facendo attenzione a bc)
+        down = (ycoor + 1) mod nspin
+        right = (xcoor + 1) mod nspin
+        up = (ycoor - 1 + nspin) mod nspin
+        left = (xcoor - 1 + nspin) mod nspin
+
+        # Calcolo i contributi energetici
+        appo = modIsing[xcoor][ycoor]
+        diffE = 2 * acc * float32(appo) * float32((modIsing[right][ycoor] + modIsing[left][ycoor] + modIsing[xcoor][up] + modIsing[xcoor][down]))
+
+        if diffE < 0:
+            modIsing[xcoor][ycoor] = -appo
+            accettate += 1
+
+        elif rg.rand() < exp(-diffE/temp):
+            modIsing[xcoor][ycoor] = -appo
+            accettate += 1
+\end{minted}    
+
+L'unica differenza fra le due implementazioni riportate in precedenza è la gestione delle condizioni al 
+contorno, chiaramente più complessa in due dimensioni dato che il numero di primi vicini duplica, passando 
+da due a quattro. La struttura in sè dell'algoritmo rimane la stessa. 
+
+
 
 
 
@@ -156,3 +257,56 @@ tende a quello puramente statistico (poichè si va a perdere la correlazione fra
 non aumenta più, ma satura ad un valore costante. La lunghezza di saturazione è la minima accettabile per produrre delle stime adeguate. 
 Chiaramente maggiore è il numero di blocchi (ossia più lunga è la simulazione), migliore sarà la stima finale della osservabile 
 d'interesse.
+
+
+
+
+
+\subsection{Algoritmo di Wolff}
+
+L'algoritmo di Metropolis, anche grazie alla sua semplicità, è il più performante al di fuori della regione 
+critica. Tuttavia, quando la temperatura del sistema tende a $T_c$, gli spin tendono a raggrupparsi in 
+grandi cluster che contribuiscono significativamente alla magnetizzazione ed all'energia, e nel momento in 
+cui cambia l'orientamento degli spin si producono grandi fluttuazioni, note come \textit{fluttuazioni critiche}. 
+Questo aspetto, insito nella natura del modello di Ising, comporta un aumento dell'errore statistico 
+associato ai valori d'aspettazione degli osservabili, ma è indipendente dall'algoritmo considerato. Un secondo aspetto è legato 
+all'aumento della lunghezza di correlazione $\xi$, che nel limite termodinamico diverge alla temperatura critica. Sappiamo che $\xi$ 
+è legato al tempo di correlazione dalla relazione 
+
+\begin{equation}
+    \tau \propto \xi^z
+    \label{eq: tcorr_lcorr}
+\end{equation}
+
+Maggiore è $z$, peggio l'algoritmo riesce a generare configurazioni indipendenti fra loro. Per Metropolis, il valore universalmente 
+riconosciuto per l'esponente è $z\,=\,2.1665 \pm 0.0012$, che è piuttosto alto \cite{MCM}. Al punto critico, l'algoritmo di Metropolis è vittima 
+di \textit{critical slowing down}, dovuto al fatto che è un algoritmo locale (tenta di invertire uno spin alla volta) e quindi non 
+riesce a far fronte all'aumento incontrollato della lunghezza di correlazione. Un modo per cercare di ridurre il valore di $z$ è quello 
+di lavorare su cluster di spin, in modo tale da invertire contemporaneamente un numero maggiore di spin. L'algoritmo di Wolff, che nelle 
+simulazioni qui riportate è stato utilizzato per studiare il punto critico del modello di Ising 2D, sfrutta questa idea e per questo 
+motivo fa parte della famiglia degli \textit{algoritmi di clustering}. Uno dei punti cruciali dell'algoritmo consiste nell'identificazione 
+del cluster di spin da invertire. La dimensione del blocco dovrebbe dipendere dalla temperatura a cui stiamo simulando il modello, perchè 
+per esempio per $T \gg T_c$ gli spin tendono ad essere fra loro scorrelati, evidenziando come dovrebbero essere considerati solo pochi 
+momenti magnetici alla volta. L'opposto si può dire del caso a bassa temperatura. Per questo motivo nel momento in cui due spin adiacenti 
+hanno lo stesso orientamento non è automatico che essi appartengano allo stesso cluster, ma è presente una certa probabilità di aggiunta 
+che aumenta al diminuire della temperatura. Nel caso dell'algoritmo di Wolff, tale probabilità è pari a 
+
+\begin{equation}
+    P_{add}\,=\,1\,-\,\exp{\left(-2\beta J\right)}
+    \label{eq: padd_cluster}
+\end{equation}
+
+L'algoritmo nella sua interezza è costituito dai seguenti passi:
+
+\begin{itemize}[label=$\diamond$] 
+    \item si seleziona casualmente uno spin facente parte del reticolo
+    \item si prendono in considerazione i primi vicini di quello spin. Se essi sono rivolti nella stessa direzione dello spin 
+    selezionato in partenza, aggiungerli al cluster con probabilità data da \eqref{eq:padd_cluster}
+    \item per ogni spin che è stato aggiunto allo step precedente, si considerano i primi vicini e si procede con la stessa metodologia. 
+    Si continua fino a quando tutti i primi vicini degli spin facenti parte il cluster sono stati presi in considerazione per una possibile 
+    inclusione.
+    \item si invertono tutti gli spin che costituiscono il cluster. Questo processo avviene con probabilità uno, ossia viene sempre effettuato.
+\end{itemize}
+
+Questo algoritmo rispetta sia il bilancio dettagliato che l'ergodicità. La sua particolarità di lavorare su più spin alla volta consente di 
+ridurre l'esponente $z$ di un fattore 10, dato che per il modello di Ising 2D è pari a $z\,=\,0.25 \pm 0.01$ \cite{MCM}.
