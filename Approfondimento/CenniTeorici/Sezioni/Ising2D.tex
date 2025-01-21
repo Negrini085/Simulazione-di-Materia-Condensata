@@ -1,34 +1,55 @@
 \section{Modello di Ising 2D}
 
-Il modello di Ising 2D consiste in un reticolo quadrato bidimensionale di spin, i quali possono assumere solamente i valori 
-$\pm 1$. Nel limite termodinamico, tale modello presenta una transizione di fase in prossimità di una temperatura critica Tc.
-Per $T\,>\,Tc$ il sistema si comporta in modo paramagnetico, altrimenti si ha una magnetizzazione spontanea, evidenza 
-di ordine nel reticolo di spin. Il modello presenta soluzione analitica solamente con campo magnetico nullo $h\,=\,0$, 
-determinata da Onsager nel 1944. La magnetizzazione 
+Il modello di Ising 2D è un reticolo quadrato bidimensionale di spin che possono assumere solamente i valori $\pm 1$. L'Hamiltoniana 
+del sistema è la stessa riportata in precedenza
+
+\begin{equation}
+    H\,=\,-J\sum_{\left<ij\right>} \sigma_i \sigma_j\,-\,h\sum_{i} \sigma_i,
+    \label{eq: ising2D_ham}
+\end{equation}
+
+con la differenza che in questo caso ogni momento magnetico presenta quattro primi vicini. Il modello presenta soluzione analitica 
+solamente nel caso di campo magnetico nullo. In tali condizioni, la magnetizzazione risulta essere 
 
 \begin{equation}
     m\left(\beta,\,h=0\right)\,=\,
     \begin{cases}
     \left[1\,-\,\dfrac{1}{\sinh^4{\left(2\beta J\right)}}\right]^{\frac{1}{8}} \qquad \qquad T\,<\,T_c \\
-    0 \qquad \qquad \qquad \qquad \qquad \qquad \,\,\,\, T\,>\,T_c
+    0 \qquad \qquad \qquad \qquad \qquad \qquad \,\,\,\, T\,>\,T_c.
     \end{cases}
     \label{eq: magn_Onsager_1944}
 \end{equation}
-presenta una discontinuità alla temperatura critica 
+
+dove $T_c$ è pari a 
 
 \begin{equation}
-    T_c\,=\,\frac{2J}{\ln{\left(1\,+\,\sqrt{2}\right)}}\,,
+    T_c\,=\,\frac{2J}{\ln{\left(1\,+\,\sqrt{2}\right)}}.
     \label{eq: tc_Ising2D_Ons}
 \end{equation}
-evidenza ulteriore di una transizione di fase.
+
+Come risulta evidente in Figura \ref{fig: magn_Ising2D}, la magnetizzazione passa rapidamente da un valore unitario a zero nell'intorno 
+della temperatura critica. Dato che la magnetizzazione costituisce il parametro d'ordine per il modello di Ising, questo comportamento è
+un'evidenza della transizione di fase che il reticolo di spin subisce.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/magn_Ising2D.png}
+    \caption{Magnetizzazione per il modello di Ising 2D in assenza di campo magnetico. E' possibile osservare come a $T\,=\,T_c$ la 
+    magnetizzazione passa rapidamente da un valore unitario a zero. }
+    \label{fig: magn_Ising2D}
+\end{figure}
+
+Al di sopra della temperatura critica il sistema è di natura paramagnetica e la magnetizzazione è nulla. Invece per $T\,<\,T_c$ gli 
+spin sono ordinati ed il sistema presenta magnetizzazione spontanea.
+
 
 
 \subsection{Domain walls}
 
 
-Consideriamo ora un domain walls in $d$ dimensioni in un sistema di dimensione lineare $La$, dove $L$ è un numero reale ed $a$ invece 
-è il passo reticolare. In analogia con quanto osservato per il modello di Ising 1D, la variazione di energia legata a questo difetto 
-nell'orientamento del sistema è pari a 
+Consideriamo ora un sistema di dimensione lineare $La$, dove $L$ è un numero reale ed $a$ invece il passo reticolare, in uno spazio a $d$ dimensioni. 
+Supponiamo inoltre che tale reticolo presenti un domain wall. In analogia con quanto osservato per il modello di Ising 1D, la 
+variazione di energia legata a questa struttura è pari a 
 
 \begin{equation}
     \Delta E\,=\,2JL^{d-1}
@@ -43,25 +64,25 @@ stimare che
     \label{eq: entr_dw_IsingdD}
 \end{equation}
 
-L'energia libera associata alla presenza dell'interfaccia è pari a 
+L'energia libera associata alla presenza dell'interfaccia è dunque pari a 
 
 \begin{equation}
     A \simeq 2JL^{d-1}\,-\,k_B T\ln{\left(L\right)},
     \label{eq: freeE_dw_IsingdD}
 \end{equation}
 
-che è dominata dal termine energetico per ogni dimensione del reticolo $d\,\geq 2$, poichè nel limite termodinamico il termine 
+che è dominata dal termine energetico per ogni dimensione maggiore di due, dato che nel limite termodinamico il termine 
 logaritmico è trascurabile. Per provare l'esistenza di ferromagnetismo in modo più quantitativo, basta mostrare che il valor medio 
 dello spin sia diverso da zero. Nel caso del modello di Ising 2D è possibile mostrare che se gli spin che fanno parte della cornice 
-esterna del retico sono positivi, la probabilità di avere uno spin negativo nel centro del sistema è pari a 
+esterna del retico sono positivi, la probabilità di avere uno spin negativo al centro del sistema è pari a 
 
 \begin{equation}
     p_{-}\,<\,\frac{1}{2}\frac{\exp{\left(-2\beta J\right)}}{4 \left(1\,-\,3\exp{\left(-2\beta J\right)}\right)^4}.
     \label{eq: probm_Ising2D}
 \end{equation}
 
-Il secondo membro della relazione \eqref{eq: probm_Ising2D} può essere reso minore di $1/2$ scegliendo una temperatura opportuna ed 
-in modo indipendente dalla dimensione del reticolo (ossia del parametro $N$ introdotto in precedenza). Questo evidenzia come possa 
+Il secondo membro della relazione \eqref{eq: probm_Ising2D} può essere reso minore di $1/2$ in modo indipendente dalla dimensione del reticolo 
+(ossia del parametro $L$ introdotto in precedenza) scegliendo una temperatura opportuna. Questo evidenzia come possa 
 presentarsi long range order e di conseguenza magnetizzazione finita per $0\,\leq T\,<\,T_c$. Per sottolineare ulteriormente le 
 differenze fra il modello di Ising 1D e quello bi-dimensionale consideriamo ora il mapping riportato in Figura \ref{fig: map_2to1_Ising}, 
 in cui i siti reticolari di un modello bi-dimensione vengono mappati su una catena lineare (mantendo l'interazione con i primi 
@@ -92,7 +113,7 @@ La transizione di fase che avviene alla temperatura critica $T_c$ \eqref{eq: tc_
 conseguenze della criticità è la perdita di un parametro di scala, nel senso che il sistema presenta cluster di spin di tutte le dimensioni. 
 Chiaramente nel caso di una simulazione questa distribuzione sarà influenzata dalle dimensioni finite del reticolo considerato, dato che 
 non è computazionalmente possibile lavorare nel limite termodinamico. Inoltre al punto critico il comportamento di un sistema è 
-solitamente indipendente dai dettagli microscopici del sistema, in quanto è determinato da poche caratteristiche quali
+solitamente indipendente dai dettagli microscopici dello stesso, in quanto è determinato da poche caratteristiche quali
 
 \begin{itemize}[label=$\diamond$] 
     \item la dimensionalità $d$ del sistema (per il modello di Ising 2D avremo $d\,=\,2$)
@@ -100,9 +121,9 @@ solitamente indipendente dai dettagli microscopici del sistema, in quanto è det
     \item il range delle interazioni microscopiche presenti fra i costituenti del sistema
 \end{itemize}
 
-Dato che il comportamento critico del sistema non ha alcuna dipendenza sui gradi di libertà microscopici dello stessto, è possibile mediante 
-una tecnica di coarse graining rimuovere quelli irrilevanti fino a quando si giunge alla lunghezza di correlazione. Tale metodo consiste 
-nel dividere il reticolo in blocchi di dimensione inferiore rispetto a quella reticolare e sommare gli spin all'interno dei singoli blocchi. 
+Dato che il comportamento critico del sistema non ha alcuna dipendenza sui gradi di libertà microscopici dello stesso, è possibile mediante 
+una tecnica di coarse graining rimuovere i gdL irrilevanti fino a quando si giunge alla lunghezza di correlazione. Tale metodo consiste 
+nel dividere il reticolo in blocchi di dimensione inferiore rispetto a quella reticolare e sommare gli spin all'interno dei singoli cluster. 
 Se il risultato dell'operazione precedente è positivo, il blocco verrà sostituito da un singolo spin orientato verso l'alto (+1), 
 altrimenti da uno che punta verso il basso. Il modello risultante avrà di conseguenza un differente passo reticolare. Bisogna ora  
 distinguere tre possibili scenari in base alla temperatura alla quale viene effettuata la simulazione.
@@ -133,5 +154,5 @@ con cluster che coinvolgono un numero esiguo di momenti magnetici.
 Alla temperatura critica, i cluster sono di tutte le dimensioni, partendo da singoli spin per giungere ad un numero macroscopico di 
 momenti magnetici coinvolti. In questo caso la lunghezza di correlazione è infinita e per iterazioni successive del metodo introdotto 
 in precedenza non si ha alcun cambio nella distrubuzione delle dimensioni dei cluster. Il reticolo rimane a $T_c$, che risulta essere 
-un punto fisso della funzione di coearse-graining. Chiaramente, gli altri punti fissi sono $T\,=\,0$ e $T\,=\,\infty$ a cui tendono 
+un punto fisso della funzione di coarse-graining. Chiaramente, gli altri punti fissi sono $T\,=\,0$ e $T\,=\,\infty$ a cui tendono 
 tutti i sistemi che non si trovano in partenza al punto critico.
