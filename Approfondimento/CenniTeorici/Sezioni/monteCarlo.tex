@@ -1,9 +1,10 @@
 \section{Simulazioni Monte-Carlo}
 
 L'obiettivo di questa sezione è l'introduzione di tecniche Monte-Carlo che consentano di simulare un modello di Ising con 
-numero di costituenti finito dotato di condizioni periodiche al contorno, in modo tale che gli spin posti agli estremi del reticolo  
-interagiscano fra loro come primi vicini. Dato che in questo modo tutti gli spin sono equivalenti fra loro ed il sistema è invariante per 
-traslazioni, stiamo in pratica simulando un sistema infinito, con un conseguente netto miglioramento della qualità dei risultati. 
+numero di costituenti finito. I reticoli considerati sono dotati di condizioni periodiche al contorno, in modo tale che gli spin 
+posti agli estremi interagiscano fra loro come primi vicini. Dato che in questo modo tutti gli spin sono equivalenti fra loro ed 
+il sistema è invariante per traslazioni, stiamo in pratica simulando un sistema infinito, con un conseguente netto miglioramento 
+nella qualità dei risultati. 
 
 
 
@@ -12,7 +13,7 @@ traslazioni, stiamo in pratica simulando un sistema infinito, con un conseguente
 \subsection{Generatore di numeri casuali}
 
 Dato che i metodi Monte-Carlo sono una classe di algoritmi numerici che si basano sull'utilizzo di numeri pseudo-casuali, è auspicabile lavorare 
-con un generatore dotato di un lungo periodo di generazione (i numeri generati non si ripetono spesso) e che sia efficiente, in modo da ridurre le 
+con un generatore dotato di un lungo periodo di generazione. Inoltre il generatore deve essere efficiente, in modo da mantenere contenute le 
 tempistiche computazionali. Le simulazioni che hanno portato ai risultati presenti in questa dispensa sono state effettuate con un 
 generatore della famiglia PCG \cite{pcg2014}, di cui è riportata l'implementazione. Il linguaggio utilizzato è il Nim, che compila 
 direttamente in codice macchina (alte prestazioni), ma presenta una sintassi molto semplice, che ricorda quella del Python.
@@ -100,8 +101,8 @@ Chiaramente se la configurazione $\nu$ ha energia inferiore di quella $\mu$, la 
 possibile che lo spin non venga invertito e che il nuovo elemento della catena di Markov generata dall'algoritmo di Metropolis sia identico 
 a quello precedente. Eseguire $N_{spin}$ volte il ciclo precedente, ossia tentare in media un'inversione per spin, equivale ad aver 
 completato uno \textit{sweep} del reticolo. Per le successive fasi conviene studiare le osservabili del sistema in funzione degli sweep e 
-non delle singole mosse dell'algoritmo di Metropolis: per questo motivo le implementazioni dell'algoritmo di Metropolis che riporto in seguito 
-eseguono uno sweep a chiamata, ossia tentano ogni volta $N_{spin}$ sweeps. Anche in questo caso il codice riportato è in Nim.
+non delle singole mosse dell'algoritmo di Metropolis: per questo motivo le implementazioni dell'algoritmo riportato in seguito 
+eseguono uno sweep a chiamata, ossia tentano ogni volta $N_{spin}$ inversione. Anche in questo caso il codice riportato è in Nim.
 
 
 
@@ -197,17 +198,24 @@ iniziale in cui il sistema si scorrela dalla condizione iniziale, per poi fluttu
 sempre garantito che si raggiunga l'equilibrio, in quanto è possibile rimanere bloccati in uno stato metastabile per tempistiche 
 computazionali relativamente lunghe. Per evitare di valutare in maniera errata la durata della fase di termalizzazione è consigliabile 
 eseguire lo stesso processo per diverse condizioni iniziali e per diversi seed del generatore di numeri casuali, in modo da considerare 
-diverse traiettorie nello spazio delle fasi.  
+diverse traiettorie nello spazio delle fasi. In Figura \ref{fig: term_Ising1D} è riportato la termalizzazione di un modello di Ising 
+1D da 3000 spin a temperatura $T\,=\,0.5$: in questo caso dopo circa 500 sweep della catena viene raggiunto l'equilibrio termodinamico.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Immagini/MC_meth/term_3000_0.5.pdf}
+    \caption{Termalizzazione per un modello di Ising 1D da 3000 spin a temperatura $T\,=\,0.5$}
+    \label{fig: data_block_tech}
+\end{figure}
 
 
 
-
-\subsection{Misure e Data-Blocking}
+\subsection{Autocorrelazione}
 
 Una volta che il sistema ha raggiunto l'equilibrio, è possibile misurare le osservabili d'interesse senza che i valori d'aspettazione 
 siano influenzati dalla fase di transitorio. Per valutare la durata minima della simulazione che consenta di ottenere delle stime 
-statisticamente significative è necessaria una misura del tempo di correlazione $t_c$, che esplicita quale sia il numero di mosse 
-da effettuare per passare fa uno stato ad un secondo significativamente differente da quello di partenza. Il modo migliore per 
+statisticamente significative è necessaria una misura del tempo di correlazione $t_c$, che esplicita quale sia il numero di sweep 
+da effettuare per passare da uno stato ad un altro significativamente differente da quello di partenza. Il modo migliore per 
 calcolare $t_c$ consiste nello sfruttare la funzione di autocorrelazione temporale, definita per la magnetizzazione come 
 
 \begin{equation}
@@ -224,19 +232,33 @@ L'autocorrelazione solitamente presenta una caduta esponenziale con tempo caratt
 
 Se si considerano due campioni presi ad un $t_c$ di distanza, la funzione di autocorrelazione assume in presenza di un tale 
 intervallo temporale un valore di $1/e$, ancora particolarmente significativo. Se si vuole lavorare con quantità realmente indipendenti 
-è necessario campionare a $t\,>\,t_c$; solitamente si impone $t\,=\,t_c$ in modo che il numero di misure significative in una 
-simulazione di durata $t_{max}$ è pari a 
+è necessario campionare a $t\,>\,t_c$; solitamente si impone $t\,=\,2t_c$ in modo che il numero di misure significative in una 
+simulazione di durata $t_{max}$ sia pari a 
 
 \begin{equation}
     n\,=\,\frac{t_{max}}{2 t_c}.
     \label{eq: num_ind_samp}
 \end{equation}
 
+In Figura \ref{fig: autocorr_Ising_ex} è riportato un esempio di calcolo della funzione di autocorrelazione per un reticolo di spin 
+$500 \times 500$ a temperatura pari a due. In questo caso specifico i valori della magnetizzazione sono scorrelati dopo circa 50 sweeps.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Immagini/MC_meth/auto_500_2.0.pdf}
+    \caption{Autocorrelazione per un modello di Ising 2D di dimensione $500 \times 500$ a temperatura $T\,=\,2.0$}
+    \label{fig: autocorr_Ising_ex}
+\end{figure}
+
+
+
+\subsection{Data-blocking}
+
 Per evitare bias nel campionamento e per ottenere dei valori d'aspettazione adeguati è possibile utilizzare la tecnica del 
-data-blocking. Le misure delle osservabili di interesse effettuate durante la simulazione, a distanze temporali del tempo di correlazione, 
+data-blocking. Le misure delle osservabili di interesse effettuate durante la simulazione, a distanze temporali inferiori del tempo di correlazione, 
 vengono divise in gruppi, per ciascuno dei quali viene calcolato il valor medio. La dispersione di questi valori medi fornisce una 
-stima dell'errore associato alla grandezza calcolata. In Figura \ref{fig: data_block_tech} è presentata visivamente la tecnica del data-
-blocking. Le quantità $g_i$ sono le medie di ciascun gruppo.
+stima dell'errore associato alla grandezza calcolata. In Figura \ref{fig: data_block_tech} è presentata visivamente la tecnica del 
+data-blocking. Le quantità $g_i$ sono le medie di ciascun gruppo.
 
 \begin{figure}[H]
     \centering
@@ -253,10 +275,18 @@ sfruttare il teorema del limite centrale. Nel momento in cui si aumenta la lungh
     \label{eq: error_data_block}
 \end{equation}
 
-tende a quello puramente statistico (poichè si va a perdere la correlazione fra le stime) e dopo una certa lunghezza $L$ dei blocchi 
-non aumenta più, ma satura ad un valore costante. La lunghezza di saturazione è la minima accettabile per produrre delle stime adeguate. 
-Chiaramente maggiore è il numero di blocchi (ossia più lunga è la simulazione), migliore sarà la stima finale della osservabile 
-d'interesse.
+tende a quello puramente statistico (poichè si va a perdere la correlazione fra le stime) ed oltre una certa lunghezza $L$ dei blocchi 
+satura ad un valore costante. La lunghezza di saturazione è la minima accettabile per produrre delle stime adeguate. 
+Chiaramente maggiore è il numero di blocchi (della corretta dimensione), migliore sarà la stima finale della osservabile 
+d'interesse. In Figura \ref{fig: lblk_exe} è riportato un esempio di stima della dimensione dei blocchi per un reticolo di spin 
+$500 \times 500$ a temperatura pari a due. In questo caso specifico possiamo lavorare con blocchi di lunghezza 150 sweeps.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Immagini/MC_meth/err_500_2.0.pdf}
+    \caption{Studio delle dimensioni dei blocchi per un modello di Ising 2D di dimensione $500 \times 500$ a temperatura $T\,=\,2.0$}
+    \label{fig: lblk_exe}
+\end{figure}
 
 
 
@@ -301,7 +331,7 @@ L'algoritmo nella sua interezza è costituito dai seguenti passi:
 \begin{itemize}[label=$\diamond$] 
     \item si seleziona casualmente uno spin facente parte del reticolo
     \item si prendono in considerazione i primi vicini di quello spin. Se essi sono rivolti nella stessa direzione dello spin 
-    selezionato in partenza, aggiungerli al cluster con probabilità data da \eqref{eq:padd_cluster}
+    selezionato in partenza, aggiungerli al cluster con probabilità data da \eqref{eq: padd_cluster}
     \item per ogni spin che è stato aggiunto allo step precedente, si considerano i primi vicini e si procede con la stessa metodologia. 
     Si continua fino a quando tutti i primi vicini degli spin facenti parte il cluster sono stati presi in considerazione per una possibile 
     inclusione.
