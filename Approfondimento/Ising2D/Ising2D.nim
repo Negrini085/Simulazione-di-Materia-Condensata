@@ -13,7 +13,8 @@ Ising2D CLI:
 
 Usage: 
     ./Ising2D help
-    ./Ising2D sim <fileParam> [<fileOut> <confOut>]
+    ./Ising2D metro <fileParam> [<fileOut> <confOut>]
+    ./Ising2D wolff <fileParam> [<fileOut> <confOut>]
 
 Options:
     -h | --help         Display the Ising2D CLI helper screen.
@@ -110,6 +111,30 @@ proc stampaObs*(streamOut: FileStream, nmove: int, eneblk, magnblk, cpblk, chibl
         raise newException(CatchableError, msg)
 
 
+proc inizioStampaWolffObs*(streamOut: FileStream; eneblk, magnblk, cpblk, chiblk, dimclblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine("# Simulazione modello di Ising 1D")
+        streamOut.writeLine("# Mossa \t Energia \t Magnetizzazione \t Calore specifico \t Suscettività \t Dimensione cluster")
+        streamOut.writeLine(fmt"1     {eneblk}      {magnblk}     {cpblk}     {chiblk}     {dimclblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
+proc stampaWolffObs*(streamOut: FileStream, nmove: int, eneblk, magnblk, cpblk, chiblk, dimclblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine(fmt"{nmove}     {eneblk}      {magnblk}     {cpblk}     {chiblk}     {dimclblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
 proc stampaConf*(streamOut: FileStream, isingMod: seq[seq[int]], nspin: int) = 
     # Funzione per stampare la configurazione iniziale
 
@@ -147,12 +172,20 @@ when isMainModule:
     #-----------------------------------------#
     if args["help"]:
         echo Ising2DDoc
-    
 
-    #-----------------------------------------#
-    #   Vera e propria simulazione Ising 2D   #
-    #-----------------------------------------#
-    elif args["sim"]:
+
+
+
+
+
+
+
+
+
+    #-----------------------------------------------#
+    #   Simulazione Ising 2D algoritmo metropolis   #
+    #-----------------------------------------------#
+    elif args["metro"]:
         let fileIn = $args["<fileParam>"]
 
         var
@@ -207,7 +240,7 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            confOut = newFileStream(confFile, fmWrite)
+            #confOut = newFileStream(confFile, fmWrite)
 
 
 
@@ -215,15 +248,15 @@ when isMainModule:
         #       Inizializzazione modello di Ising, termalizzazione       #
         #               e calcolo delle osservabili iniziali             #
         #----------------------------------------------------------------#
-        echo "\n\nInizio la termalizzazione del modello di Ising"
+        echo "\n\nStudio con algoritmo di Metropolis"
+        echo "Inizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(nspin)    
 
         for i in 0..term:
             isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
-            echo fmt"Eseguita mossa di termalizzazione {i+1}" 
     
         # Stampa della configurazione termalizzata
-        confOut.stampaConf(isingMod, nspin) 
+        # confOut.stampaConf(isingMod, nspin) 
 
 
         #-------------------------------------------------------#
@@ -248,12 +281,13 @@ when isMainModule:
                 appo = isingMod.calcolaMagn(nspin)
                 magnblk += appo/float32(lenBlk)
                 magn2blk += appo*appo/float32(lenBlk)
+          
             
-            eneblk = eneblk/float32(isingMod.len())
-            magnblk = magnblk/float32(isingMod.len())
+            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk, 2))/float32(nspin * nspin)
+            chiblk = 1/(temp) * (magn2blk - pow(magnblk, 2))/float32(nspin * nspin)
 
-            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk * float32(nspin), 2))/float32(nspin)
-            chiblk = 1/(temp) * (magn2blk - pow(magnblk * float32(nspin), 2))/float32(nspin)
+            eneblk = eneblk/float32(nspin * nspin)
+            magnblk = magnblk/float32(nspin * nspin)
 
             if i != 0:
                 obsOut.stampaObs(i+1, eneblk, magnblk, cpblk, chiblk)
@@ -272,6 +306,140 @@ when isMainModule:
             magnblk = 0
             magn2blk = 0
             accettate = 0
+        
+
+        obsOut.close()
+        #confOut.close()
+
+
+
+
+
+
+
+
+
+    #-------------------------------------------------#
+    #   Simulazione Ising 2D con algoritmo di Wolff   #
+    #-------------------------------------------------#
+    elif args["wolff"]:
+        let fileIn = $args["<fileParam>"]
+
+        var
+            dMod: DefMod
+            fileOut: string
+            confFile: string
+            fStr: FileStream
+            inStr: InputStream
+
+        if args["<fileOut>"]: 
+            fileOut = $args["<fileOut>"]
+        else: 
+            fileOut = "obs.out"
+
+        if args["<confOut>"]: 
+            confFile = $args["<confOut>"]
+        else: 
+            confFile = "conf.out"
+                
+        fStr = newFileStream(fileIn, fmRead)
+        if fStr == nil:
+            let msg = "Errore in apertura del file dei parametri. Controllare nome e cammino forniti in input."
+            raise newException(CatchableError, msg)
+
+
+        #---------------------------------------#
+        #       Leggo e salvo i parametri       #
+        #---------------------------------------# 
+        inStr = newInputStream(fStr, fileIn, 4)
+        dMod = inStr.parseDefModel()
+
+        leggiParametri(dMod.params)
+        stampaParametri(dMod.params)
+
+        if lsim < nblk: 
+            let msg = "Numero di blocchi maggiore del numero di mosse costituenti la simulazione. Termino l'esecuzione del programma"
+            raise newException(CatchableError, msg)
+
+
+        var 
+            tc = 2.27
+            rg = newPCG((state, incr))
+            appo: float32
+            cpblk: float32
+            chiblk: float32
+            dimclblk: int = 0
+            eneblk: float32 = 0
+            ene2blk: float32 = 0
+            magnblk: float32 = 0
+            magn2blk: float32 = 0
+            isingMod: seq[seq[int]]
+            lenBlk = int(lsim/nblk)
+
+            obsOut = newFileStream(fileOut, fmWrite)
+            confOut = newFileStream(confFile, fmWrite)
+
+
+
+        #----------------------------------------------------------------#
+        #       Inizializzazione modello di Ising, termalizzazione       #
+        #               e calcolo delle osservabili iniziali             #
+        #----------------------------------------------------------------#
+        echo "\n\nStudio con algoritmo di Wolff"
+        echo "Inizio la termalizzazione del modello di Ising"
+        isingMod = inizializzaIsing(nspin)    
+
+        for i in 0..term:
+            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+
+        # Stampa della configurazione termalizzata
+        # confOut.stampaConf(isingMod, nspin) 
+
+        #--------------------------------------------------#
+        #         Evoluzione del sistema con Wolff         #
+        #--------------------------------------------------#
+        echo "\n\nInizio la simulazione del modello di Ising"
+        for i in 0..<nblk:
+            
+            dimclblk = 0
+            #---------------------------------------------------#
+            #       Studio osservabili nel singolo blocco       #
+            #---------------------------------------------------#
+            for j in 0..<lenBlk:
+                dimclblk += isingMod.wolffMove(rg, temp, acc, nspin)
+
+                # Energia 
+                appo = isingMod.calcolaEnergia(nspin, acc)
+                eneblk += appo/float32(lenBlk)
+                ene2blk += appo*appo/float32(lenBlk)
+
+                # Magnetizzazione
+                appo = isingMod.calcolaMagn(nspin)
+                magnblk += appo/float32(lenBlk)
+                magn2blk += appo*appo/float32(lenBlk)
+
+
+            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk, 2))/float32(nspin * nspin)
+            chiblk = 1/(temp) * (magn2blk - pow(magnblk, 2))/float32(nspin * nspin)
+
+            eneblk = eneblk/float32(nspin * nspin)
+            magnblk = magnblk/float32(nspin * nspin)
+
+            if i != 0:
+                obsOut.stampaWolffObs(i+1, eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
+            else:    
+                obsOut.inizioStampaWolffObs(eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
+            
+            echo "-----------------------------------------------"
+            echo ""
+            echo fmt"          Numero blocco: {i+1}" 
+            echo ""
+            echo "-----------------------------------------------"
+
+            eneblk = 0
+            ene2blk = 0
+            magnblk = 0
+            magn2blk = 0
         
 
         obsOut.close()
