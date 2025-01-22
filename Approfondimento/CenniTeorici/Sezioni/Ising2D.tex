@@ -90,7 +90,7 @@ vicini di partenza).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{Immagini/map_2to1_Ising.png}
+    \includegraphics[width=0.35\textwidth]{Immagini/map_2to1_Ising.png}
     \caption{Mapping di un modello di Ising 2D su un modello di Ising 1D. Immagine da \cite{galliFSA}.}
     \label{fig: map_2to1_Ising}
 \end{figure}
@@ -136,7 +136,10 @@ Al di sotto della temperatura critica, il sistema è dotato di ordine a lungo ra
 di grandi dimensioni con spin orientati nella direzione opposta. Applicando in modo iterativo il metodo riportato in precedenza, la 
 dimensione della cella unitaria aumenta e le fluttauazioni che sono di dimensione inferiore rispetto al passo reticolare scompaiono. 
 Questo implica che il sistema diventa via via più ordinato e tende ad una configurazione con spin totalmente allineati tipica di 
-$T\,=\,0$.
+$T\,=\,0$. In Figura \ref{fig: cg_2.0} è riportato un esempio di coarse graining applicato ad un reticolo di $10000 \times 10000$ 
+spin, in cui per ogni mossa i sotto-blocchi che vengono presi in considerazione sono di dimensione $10 \times 10$. Si può osservare 
+che applicando iterativamente l'algoritmo, le poche eccitazioni presenti nello stato di partenza vengono eliminate, giungendo ad un 
+modello con spin completamente allineati. 
 
 
 
@@ -145,7 +148,10 @@ $T\,=\,0$.
 Al di sopra della temperatura critica, il sistema è disordinato e gli spin formano randomicamente cluster con orientazione verso 
 l'alto oppure verso il basso. Ogni volta che viene effettuata una trasformazione, la lunghezza di correlazione diminuisce e i cluster 
 diventano di dimensioni inferiori come se la temperatura stesse aumentando. Il sistema tende alla condizione di temperatura infinita, 
-con cluster che coinvolgono un numero esiguo di momenti magnetici.
+con cluster che coinvolgono un numero esiguo di momenti magnetici. In Figura \ref{fig: cg_3.0} è riportato un esempio di coarse graining 
+applicato ad un reticolo di $10000 \times 10000$ spin, in cui per ogni mossa i sotto-blocchi che vengono presi in considerazione sono 
+di dimensione $10 \times 10$. Si può osservare che applicando iterativamente l'algoritmo il reticolo continua a mantenere le caratteristiche 
+tipiche dell'alta temperatura, ossia cluster di spin di piccole dimensioni.
 
 
 
@@ -156,3 +162,74 @@ momenti magnetici coinvolti. In questo caso la lunghezza di correlazione è infi
 in precedenza non si ha alcun cambio nella distrubuzione delle dimensioni dei cluster. Il reticolo rimane a $T_c$, che risulta essere 
 un punto fisso della funzione di coarse-graining. Chiaramente, gli altri punti fissi sono $T\,=\,0$ e $T\,=\,\infty$ a cui tendono 
 tutti i sistemi che non si trovano in partenza al punto critico.
+
+
+\vspace*{\fill}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_10000_2.0.png}
+      \caption{Stato iniziale}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_1000_2.0.png}
+      \caption{Prima iterazione}
+    \end{minipage}
+    \vskip\baselineskip 
+  
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_100_2.0.png}
+      \caption{Seconda iterazione}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_10_2.0.png}
+      \caption{Terza iterazione}
+    \end{minipage}
+
+    \caption{Esempio di coarse-graining per un reticolo di $10000 \times 10000$ spin in equilibrio termodinamico alla 
+    temperatura $T\,=\,2.0$. Ogni iterazione dell'algoritmo riduce di un fattore 10 il numero degli spin costituenti i lati 
+    del quadrato.}
+    \label{fig: cg_2.0}
+\end{figure}
+
+\vspace*{\fill}
+
+\vspace*{\fill}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_10000_3.0.png}
+      \caption{Stato iniziale}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_1000_3.0.png}
+      \caption{Prima iterazione}
+    \end{minipage}
+    \vskip\baselineskip 
+  
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_100_3.0.png}
+      \caption{Seconda iterazione}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing2D/cg/cg_10_3.0.png}
+      \caption{Terza iterazione}
+    \end{minipage}
+
+    \caption{Esempio di coarse-graining per un reticolo di $10000 \times 10000$ spin in equilibrio termodinamico alla 
+    temperatura $T\,=\,3.0$. Ogni iterazione dell'algoritmo riduce di un fattore 10 il numero degli spin costituenti i lati 
+    del quadrato.}
+    \label{fig: cg_3.0}
+\end{figure}
+
+\vspace*{\fill}
