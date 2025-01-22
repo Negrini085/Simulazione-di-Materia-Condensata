@@ -13,7 +13,7 @@ Ising2D CLI:
 
 Usage: 
     ./Ising2D help
-    ./Ising2D sim <fileParam> [<fileOut>]
+    ./Ising2D sim <fileParam> [<fileOut> <confOut>]
 
 Options:
     -h | --help         Display the Ising2D CLI helper screen.
@@ -21,6 +21,7 @@ Options:
 
     <fileParam>         File dove sono definiti i parametri caratteristici della simulazione
     <fileOut>           Nome del file di output, dove verranno stampati i valori d'aspettazione
+    <confOut>           Nome del file di output per la stampa della configurazione
 """
 
 var
@@ -109,15 +110,17 @@ proc stampaObs*(streamOut: FileStream, nmove: int, eneblk, magnblk, cpblk, chibl
         raise newException(CatchableError, msg)
 
 
-proc stampaConf*(streamOut: FileStream, isingMod: seq[int]) = 
+proc stampaConf*(streamOut: FileStream, isingMod: seq[seq[int]], nspin: int) = 
     # Funzione per stampare la configurazione iniziale
 
     if not isNil(streamOut):
-        var conf: string = ""
-        for i in isingMod:
-            conf = conf & intToStr(i) & "    "
+        var conf: string
+        for i in 0..<nspin:
+            conf = ""
+            for j in 0..<nspin:
+                conf = conf & intToStr(isingMod[i][j]) & "    "
 
-        streamOut.writeLine(conf)
+            streamOut.writeLine(conf)
 
     else:
         let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
@@ -155,6 +158,7 @@ when isMainModule:
         var
             dMod: DefMod
             fileOut: string
+            confFile: string
             fStr: FileStream
             inStr: InputStream
 
@@ -162,6 +166,11 @@ when isMainModule:
             fileOut = $args["<fileOut>"]
         else: 
             fileOut = "obs.out"
+
+        if args["<confOut>"]: 
+            confFile = $args["<confOut>"]
+        else: 
+            confFile = "conf.out"
                 
         fStr = newFileStream(fileIn, fmRead)
         if fStr == nil:
@@ -198,7 +207,7 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            # confOut = newFileStream("confTerm.dat", fmWrite)
+            confOut = newFileStream(confFile, fmWrite)
 
 
 
@@ -211,7 +220,10 @@ when isMainModule:
 
         for i in 0..term:
             isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
+            echo fmt"Eseguita mossa di termalizzazione {i+1}" 
     
+        # Stampa della configurazione termalizzata
+        confOut.stampaConf(isingMod, nspin) 
 
 
         #-------------------------------------------------------#
@@ -251,7 +263,7 @@ when isMainModule:
             echo "-----------------------------------------------"
             echo ""
             echo fmt"          Numero blocco: {i+1}" 
-            echo fmt"       Acceptance rate: {int(float32(accettate)/float32(lenBlk*nspin)*10000)/100} %" 
+            echo fmt"       Acceptance rate: {int(float32(accettate)/float32(lenBlk*nspin*nspin)*10000)/100} %" 
             echo ""
             echo "-----------------------------------------------"
 
@@ -263,4 +275,4 @@ when isMainModule:
         
 
         obsOut.close()
-        # confOut.close()
+        confOut.close()
