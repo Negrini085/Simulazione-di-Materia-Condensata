@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param.in"                      # Nome del file di input
-tempIsing=(2.1 2.2 2.3 2.4)                 # Temperature a cui simulo il modello
-sizeIsing=(100 200 400)                     # Dimensioni del modello di Ising
+input_file="param.in"                       # Nome del file di input
+tempIsing=(2.75)                 	    # Temperature a cui simulo il modello
+sizeIsing=(100 200 300 400 500)             # Dimensioni del modello di Ising
 rgState=(0 10 20 30)                        # Seed random generator
 rgIncr=(5 15 25 35)                         # Incr random generator
 
