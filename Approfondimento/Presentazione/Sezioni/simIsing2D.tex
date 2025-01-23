@@ -58,6 +58,7 @@
 \end{frame}
 
 
+
 %-----------------------------------------%
 %		        Seconda slide	    	  %
 %	      Caratterizzazione wolff   	  %
@@ -85,4 +86,45 @@
             \end{block}        
         \end{column}
     \end{columns}
+\end{frame}
+
+
+
+%-----------------------------------------%
+%			  Terza slide				  %
+%	   Studio della magnetizzazione   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Magnetizzazione}
+    \framesubtitle{}
+
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+
+            \centering
+            \includegraphics[width=\textwidth]{Immagini/simIsing2D/magn.png}
+
+        \end{column}
+    
+        \begin{column}{0.4\textwidth}
+
+                \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                    \item Magnetizzazione spontanea per $T\,<\,T_c$
+                    \item Transizione di fase a $T_c$
+                \end{itemize}
+            
+        \end{column}
+    \end{columns}
+
+    \centering
+    \begin{tikzpicture}[thick, scale=1.2]
+        \draw[->, line width=1mm] (0, 0) -- (10, 0);
+        
+        \node[below] at (0, 0) {Ferromagnetico};
+        \node[below] at (10, 0) {Paramagnetico};
+        
+        \draw[fill=black] (5, 0) circle (2pt); 
+        \node[above] at (5, 0) {$T_c$}; 
+    \end{tikzpicture}
+
 \end{frame}
