@@ -40,12 +40,20 @@ un'evidenza della transizione di fase che il reticolo di spin subisce.
 \end{figure}
 
 Al di sopra della temperatura critica il sistema è di natura paramagnetica e la magnetizzazione è nulla. Invece per $T\,<\,T_c$ gli 
-spin sono ordinati ed il sistema presenta magnetizzazione spontanea.
+spin sono ordinati ed il sistema presenta magnetizzazione spontanea. Per quanto riguarda l'energia interna, essa 
+è data da
+
+\begin{equation}
+    U\,=\,-NJ\coth{\left(2\beta J\right)}\left\{1\,+\,\frac{2}{\pi}\left[2\tanh^2\left(2\beta J\right)\,-\,1\right]\int_0^{\pi/2}\frac{d\phi}{\sqrt{1\,-\,k^2\sin^2{\left(\phi\right)}}}\right\},
+    \label{eq: ene_Onsager_1944}
+\end{equation}
+
+dove $k\,=\,2\sinh{\left(2\beta J\right)}/2\cosh^2{\left(2\beta J\right)}$ e l'integrale che compare nella relazione 
+precedente è un integrale ellittico completo del primo ordine.
 
 
 
 \subsection{Domain walls}
-
 
 Consideriamo ora un sistema di dimensione lineare $La$, dove $L$ è un numero reale ed $a$ invece il passo reticolare, in uno spazio a $d$ dimensioni. 
 Supponiamo inoltre che tale reticolo presenti un domain wall. In analogia con quanto osservato per il modello di Ising 1D, la 
