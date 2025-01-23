@@ -45,6 +45,7 @@
 \end{frame}
 
 
+
 %-----------------------------------------%
 %		       Seconda slide		      %
 %       Termalizzazione del modello       %
@@ -66,11 +67,53 @@
 
 
         \begin{column}{0.4\textwidth}
-
+            
             \begin{itemize}[itemsep=0.5em, label=$\diamond$]
                 \item Giungere all'equilibrio termodinamico
                 \item Attenzione a stati metastabili
                 \item Dipendenza dalla condizione iniziale
+            \end{itemize}
+            
+        \end{column}
+      \end{columns}
+  
+\end{frame}
+
+
+
+%-------------------------------------------%
+%		        Terza slide	        	    %
+%  Autocorrelazione e tempi caratteristici  %
+%-------------------------------------------%
+\begin{frame}
+    \frametitle{Auto-correlazione}
+    \framesubtitle{}
+
+    \begin{columns}
+
+        \begin{column}{0.55\textwidth}
+
+            \centering
+            \includegraphics[width=\textwidth]{Immagini/metodiNumerici/auto_500_2.0.pdf}
+            \newline
+            {\scriptsize Autocorrelazione per modello di Ising 2D.}
+
+        \end{column}
+
+
+        \begin{column}{0.45\textwidth}
+
+            \begin{block}{Definizione}
+                \centering
+                $\chi\left(t\right)\,=\,\frac{\left<m\left(t'\right)m\left(t'\,+\,t\right)\right>_{t'}\,-\,\left<m\right>^2}{\sigma^2_m}$
+            \end{block}
+
+            \vspace{0.7cm}
+
+            \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                \item $\chi\left(t\right)\,\propto\,e^{-t/t_c}$
+                \item Indipendenza statistica fra configurazioni
+                \item $n_{max}\,=\,\frac{t_{max}}{2t_c}$
             \end{itemize}
             
         \end{column}
