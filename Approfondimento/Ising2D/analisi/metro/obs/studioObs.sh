@@ -1,6 +1,5 @@
 #!/bin/bash
 
-input_file="param.in"                        # Nome del file di input
 tempIsing=(1.0 1.5 2.0 2.5 3.0 3.5)		     # Temperature a cui simulo il modello
 sizeIsing=(100 200 300 400 500)              # Dimensioni del modello di Ising
 
@@ -10,18 +9,13 @@ sizeIsing=(100 200 300 400 500)              # Dimensioni del modello di Ising
 #---------------------------------------------------------------------#
 
 # Ciclo per aggiornare la dimensione
-for ((i=0; i<${#sizeIsing[@]}; i++)); do
-    sed -i "s/^nspin\s\+.*/nspin\t\t"${sizeIsing[i]}"/" "$input_file"
+for dim in "${sizeIsing[@]}"; do
 
     for t in "${tempIsing[@]}"; do
-        sed -i "s/^temp\s\+.*/temp\t\t"$t"/" "$input_file"
-
-        # Eseguo programma per determinazione osservabili
-        ./Ising2D sim param.in analisi/metro/pcrit/term/termC_size${sizeIsing[i]}_t${t}.out
-    
+        # Eseguo programma per filtrare gli osservabili
+        LC_NUMERIC=C awk -v d="$dim" 'NR==1{print "Simulazione modello di Ising2D"}NR==2{print "# mossa   Energia    Magnetizzazione"}NR>2{print $1, $2/d, $3/d}' obs_size${dim}_t${t}.out > appo_size${dim}_t${t}.out
     done
 
-    dim=${sizeIsing[i]}
     echo "Eseguito studio termalizzazione per dimensione fissata $dim."    
 done
 
