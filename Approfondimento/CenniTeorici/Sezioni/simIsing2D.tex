@@ -1,29 +1,15 @@
 \section{Simulazioni modello di Ising 2D}
 
-Per il modello di Ising 2D ho lavorato sia con l'algoritmo di Metropolis che con quello di Wolff, nettamente più efficace rispetto al 
-precedente nella caratterizzazione del punto critico. In entrambi i casi, la prima fase dello studio del modello di Ising 2D è incentrata 
-sulla determinazione dei parametri ottimali per ottenere dei valori d'aspettazione statisticamente rilevanti.
-In questa fase preliminare ho lavorato con cinque dimensioni reticolari $N\,\in\,\left\{100,\,200,\,300,\,400,\,500\right\}$ e 
-cinque temperature $T\,\in\,\left\{1.0,\,1.5,\,2.0,\,2.5,\,3.0,\,3.5\right\}$. Per ognuna di queste coppie dimensione-temperatura 
-ho considerato quattro seed differenti del generatore di numeri casuali in modo da poter analizzare il comportamento del sistema 
-lungo differenti traiettorie nello spazio delle fasi. La seconda fase consiste invece nel calcolo dei valori d'aspettazione, da confrontare 
-poi con quanto noto in letteratura.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/simIsing2D/magn.png}
+    \caption{Magnetizzazione modello di Ising 2D: h = 0.0.}
+    \label{fig: magn_Ising2D}
+\end{figure}
 
-
-
-
-
-
-
-Il sistema viene inizializzato con tutti gli spin orientati up (ossia con valore pari ad 1), poichè questo consente di avere delle 
-termalizzazioni di durata inferiore. Come è possibile osservare nelle figure riportate in seguito, la fase di transitorio è praticamente 
-istantanea per temperature minori della temperatura critica o nettamente superiori. Nell'intorno di $T_c$ si osservano termalizzazioni 
-più lunghe, che risultano essere di circa 500 mosse Monte-Carlo per $T\,=\,2.5$. Sebbene l'algoritmo di Metropolis non sia adeguato 
-per caratterizzare il punto critico, potrebbe essere comunque interessante valutare cosa accada per $T\,\in\,\left\{2.1,\,2.2,\,2.3,\,2.4\right\}$, 
-perchè il confronto con i risultati prodotti con l'algoritmo di Wolff sarebbe comunque significativo. Per questo motivo, oltre allo 
-studio della termalizzazione sul range di temperature "ampio" riportato in precedenza, ho effettuato uno studio più focalizzato sull'
-intorno del punto critico, osservando come per $T\,\to\,T_c^+$ la durata della fase di transitorio risulti essere nettamente maggiore, 
-richiedendo oltre 10000 mosse Monte-Carlo. Inoltre, nell'intorno del punto critico, le fluttuazioni nella magnetizzazione, parametro 
-d'ordine per il modello di Ising, persistono per un numero considerevole di mosse MC, il che implica con ogni probabilità che saranno 
-necessari dei blocchi di dimensioni maggiori nell'intorno del punto critico. Le simulazioni successive sono state svolte con 500 mosse 
-Monte-Carlo di termalizzazione, tranne quelle nell'intorno di $T_c$ le quali hanno richiesto una termalizzaione di 10000 mosse MC.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Immagini/simIsing2D/ene.png}
+    \caption{Energia modello di Ising 2D: h = 0.0.}
+    \label{fig: ene_Ising2D}
+\end{figure}
