@@ -1,8 +1,0 @@
-temp		3.5
-nspin		500
-acc     	1.0
-lsim		600000
-nblk   		1000
-state		30
-incr		35
-term        	500

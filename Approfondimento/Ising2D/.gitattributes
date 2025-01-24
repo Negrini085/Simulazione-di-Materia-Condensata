@@ -1,0 +1,2 @@
+analisi/cg/conf_t* filter=lfs diff=lfs merge=lfs -text
+analisi/wolff/term/ filter=lfs diff=lfs merge=lfs -text

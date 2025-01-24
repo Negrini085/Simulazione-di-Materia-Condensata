@@ -1,20 +1,7 @@
 from std/sequtils import newSeqWith
 from std/math import floor, exp
 
-import pcg
-
-# Definisco un tipo per rappresentare le coordinate di uno spin appartenente al reticolo
-type IsingCoord = tuple[xcoor, ycoor: int]
-
-
-# Funzione per generare casualmente una nuova coordinata
-proc newRandomCoord(rg: var PCG, nspin: int): IsingCoord = 
-    return (int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin, int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin)
-
-
-# Funzione per generare una nuova coordinata
-proc newCoord(xcoord, ycoord: int): IsingCoord = 
-    return (xcoord, ycoord)
+import pcg, obs
 
 
 proc inizializzaIsing*(rg: var PCG, nspin: int): seq[seq[int]] = 

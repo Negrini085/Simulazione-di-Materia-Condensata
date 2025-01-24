@@ -87,6 +87,30 @@ proc stampaTerm*(streamOut: FileStream, nmove: int, eneblk, magnblk: float32) =
         raise newException(CatchableError, msg)
 
 
+proc inizioStampaWolffTerm*(streamOut: FileStream; eneblk, magnblk, dimclblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine("# Simulazione modello di Ising 1D")
+        streamOut.writeLine("# Mossa \t Energia \t Magnetizzazione \t Dimensione cluster")
+        streamOut.writeLine(fmt"1     {eneblk}      {magnblk}       {dimclblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
+proc stampaWolffTerm*(streamOut: FileStream, nmove: int, eneblk, magnblk, dimclblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine(fmt"{nmove}     {eneblk}      {magnblk}     {dimclblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
 proc inizioStampaObs*(streamOut: FileStream; eneblk, magnblk, cpblk, chiblk: float32) = 
     # Funzione per intestazione del file di output
 
@@ -372,12 +396,14 @@ when isMainModule:
             eneblk: float32 = 0
             ene2blk: float32 = 0
             magnblk: float32 = 0
+            labels: seq[seq[int]]
             magn2blk: float32 = 0
             isingMod: seq[seq[int]]
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            confOut = newFileStream(confFile, fmWrite)
+            # blkOut = newFileStream("blk_mod.conf", fmWrite)
+            # confOut = newFileStream(confFile, fmWrite)
 
 
 
@@ -389,11 +415,35 @@ when isMainModule:
         echo "Inizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(nspin)    
 
-        for i in 0..term:
+        #for i in 0..term:
+        #    dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+        
+        var 
+            conta: int = 0
+            limit: int = 0
+
+        while limit < 3000 * nspin * nspin:
             dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+            limit += dimclblk
+
+            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
+            magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
+            
+            if conta != 0:
+                obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
+                conta += 1           
+                if conta mod 500 == 0:
+                    echo fmt"Effettata mossa termalissazione: {conta}"
+            else:
+                conta = 1
+                obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
 
         # Stampa della configurazione termalizzata
         # confOut.stampaConf(isingMod, nspin) 
+
+        # Stampa della mappa delle labels
+        # labels = isingMod.individuaClust(nspin)
+        # blkOut.stampaConf(labels, nspin)
 
         #--------------------------------------------------#
         #         Evoluzione del sistema con Wolff         #
@@ -443,4 +493,5 @@ when isMainModule:
         
 
         obsOut.close()
-        confOut.close()
+        # blkOut.close()
+        # confOut.close()

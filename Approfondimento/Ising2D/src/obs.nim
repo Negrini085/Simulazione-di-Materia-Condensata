@@ -1,4 +1,21 @@
+from std/math import floor
+
 import std/sequtils
+import pcg
+
+# Definisco un tipo per rappresentare le coordinate di uno spin appartenente al reticolo
+type IsingCoord* = tuple[xcoor, ycoor: int]
+
+
+# Funzione per generare casualmente una nuova coordinata
+proc newRandomCoord*(rg: var PCG, nspin: int): IsingCoord = 
+    return (int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin, int(floor(rg.rand(float32(0), float32(nspin)))) mod nspin)
+
+
+# Funzione per generare una nuova coordinata
+proc newCoord*(xcoord, ycoord: int): IsingCoord = 
+    return (xcoord, ycoord)
+
 
 proc calcolaEnergia*(modIsing: seq[seq[int]], nspin: int, acc: float32): float32 = 
     # Funzione per calcolare l'energia del modello di Ising
@@ -27,7 +44,7 @@ proc calcolaMagn*(modIsing: seq[seq[int]], nspin: int): float32 =
     return float32(magn)
 
 
-proc individuaClust*(modIsing: seq[seq[int]], nspin: int): seq[int] = 
+proc individuaClust*(modIsing: seq[seq[int]], nspin: int): seq[seq[int]] = 
     # Funzione per calcolare la dimensione dei cluster (e distinguere i cluster)
 
     var
