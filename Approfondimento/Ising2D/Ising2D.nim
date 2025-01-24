@@ -4,7 +4,7 @@ const Ising2DVersion* = "Ising2D 0.1.0"
 import std/[streams]
 import src/[pcg, paramIn, obs, evolutionMethods]
 
-from std/math import pow
+from std/math import pow, ln, sqrt
 from std/strformat import fmt
 from std/strutils import intToStr
 
@@ -13,7 +13,7 @@ Ising2D CLI:
 
 Usage: 
     ./Ising2D help
-    ./Ising2D metro <fileParam> [<fileOut> <confOut>]
+    ./Ising2D metro <fileParam> [<fileOut> <confOut> <labelsOut>]
     ./Ising2D wolff <fileParam> [<fileOut> <confOut>]
 
 Options:
@@ -23,6 +23,7 @@ Options:
     <fileParam>         File dove sono definiti i parametri caratteristici della simulazione
     <fileOut>           Nome del file di output, dove verranno stampati i valori d'aspettazione
     <confOut>           Nome del file di output per la stampa della configurazione
+    <labelsOut>           Nome del file di output per la stampa delle labels (determinazione cluster distr)
 """
 
 var
@@ -216,6 +217,7 @@ when isMainModule:
             dMod: DefMod
             fileOut: string
             confFile: string
+            labelsFile: string
             fStr: FileStream
             inStr: InputStream
 
@@ -227,7 +229,12 @@ when isMainModule:
         if args["<confOut>"]: 
             confFile = $args["<confOut>"]
         else: 
-            confFile = "conf.out"
+            confFile = "conf1.out"
+
+        if args["<labelsOut>"]: 
+            labelsFile = $args["<labelsOut>"]
+        else: 
+            labelsFile = "lab.out"
                 
         fStr = newFileStream(fileIn, fmRead)
         if fStr == nil:
@@ -250,7 +257,7 @@ when isMainModule:
 
 
         var 
-            tc = 2.27
+            tc = 2 * acc/ln(1 + sqrt(2.0))
             rg = newPCG((state, incr))
             appo: float32
             cpblk: float32
@@ -261,10 +268,13 @@ when isMainModule:
             magn2blk: float32 = 0
             accettate: int = 0
             isingMod: seq[seq[int]]
+            labels: seq[seq[int]]
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            #confOut = newFileStream(confFile, fmWrite)
+            confOut = newFileStream(confFile, fmWrite)
+            blkOut = newFileStream(labelsFile, fmWrite)
+
 
 
 
@@ -278,9 +288,17 @@ when isMainModule:
 
         for i in 0..term:
             isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
+            echo fmt"Eseguito sweep numero: {i+1}"
     
         # Stampa della configurazione termalizzata
-        # confOut.stampaConf(isingMod, nspin) 
+        echo "Stampa della configurazione termalizzata"
+        confOut.stampaConf(isingMod, nspin) 
+
+        echo "Individuo cluster"
+        labels = isingMod.individuaClust(nspin)
+        echo fmt"Dimensioni matrice delle labels {len(labels)}"
+        echo "Stampo matrice delle labels"
+        blkOut.stampaConf(labels, nspin)
 
 
         #-------------------------------------------------------#
@@ -333,8 +351,8 @@ when isMainModule:
         
 
         obsOut.close()
-        #confOut.close()
-
+        blkOut.close()
+        confOut.close()
 
 
 
@@ -387,7 +405,7 @@ when isMainModule:
 
 
         var 
-            tc = 2.27
+            tc = 2 * acc/ln(1 + sqrt(2.0))
             rg = newPCG((state, incr))
             appo: float32
             cpblk: float32
@@ -402,8 +420,8 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            # blkOut = newFileStream("blk_mod.conf", fmWrite)
-            # confOut = newFileStream(confFile, fmWrite)
+            blkOut = newFileStream("blk_mod.conf", fmWrite)
+            confOut = newFileStream(confFile, fmWrite)
 
 
 
@@ -415,35 +433,45 @@ when isMainModule:
         echo "Inizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(nspin)    
 
-        #for i in 0..term:
-        #    dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+        temp = tc
+        for i in 0..term:
+            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+            eneblk = isingMod.calcolaEnergia(nspin, acc)
+            magnblk = isingMod.calcolaMagn(nspin)
+
+            obsOut.stampaTerm(i+1, eneblk, magnblk)
+            echo fmt"Eseguita mossa termalizzazione: {i+1}"
         
         var 
             conta: int = 0
             limit: int = 0
 
-        while limit < 3000 * nspin * nspin:
-            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
-            limit += dimclblk
-
-            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
-            magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
-            
-            if conta != 0:
-                obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
-                conta += 1           
-                if conta mod 500 == 0:
-                    echo fmt"Effettata mossa termalissazione: {conta}"
-            else:
-                conta = 1
-                obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
+        # while limit < 3000 * nspin * nspin:
+        #     dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+        #     limit += dimclblk
+# 
+        #     eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
+        #     magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
+        #     
+        #     if conta != 0:
+        #         obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
+        #         conta += 1           
+        #         if conta mod 500 == 0:
+        #             echo fmt"Effettata mossa termalissazione: {conta}"
+        #     else:
+        #         conta = 1
+        #         obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
 
         # Stampa della configurazione termalizzata
-        # confOut.stampaConf(isingMod, nspin) 
+        echo "Stampo configurazione termalizzata"
+        confOut.stampaConf(isingMod, nspin) 
 
         # Stampa della mappa delle labels
-        # labels = isingMod.individuaClust(nspin)
-        # blkOut.stampaConf(labels, nspin)
+        echo "Calcolo dimensioni dei cluster"
+        labels = isingMod.individuaClust(nspin)
+        echo fmt"Dimensioni matrice delle labels {len(labels)}"
+        echo "Stampo matrice delle labels"
+        blkOut.stampaConf(labels, nspin)
 
         #--------------------------------------------------#
         #         Evoluzione del sistema con Wolff         #
@@ -493,5 +521,5 @@ when isMainModule:
         
 
         obsOut.close()
-        # blkOut.close()
-        # confOut.close()
+        blkOut.close()
+        confOut.close()

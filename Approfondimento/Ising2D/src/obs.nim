@@ -78,7 +78,7 @@ proc individuaClust*(modIsing: seq[seq[int]], nspin: int): seq[seq[int]] =
                     appo = stack.pop()
 
                     # Aggiungo al cluster in base all'orientamento e in base alla label
-                    if modIsing[appo.xcoor][appo.ycoor] == modIsing[i][j] and labels[appo.xcoor][appo.ycoor] == 0:
+                    if modIsing[appo.xcoor][appo.ycoor] == modIsing[i][j]:
                     
                         # Aggiorno la label del modello
                         labels[appo.xcoor][appo.ycoor] = current_lab
@@ -90,9 +90,12 @@ proc individuaClust*(modIsing: seq[seq[int]], nspin: int): seq[seq[int]] =
                         rightNeigh = newCoord((appo.xcoor + nspin - 1) mod nspin, appo.ycoor)
 
                         # Aggiungo i primi vicini alla stack
-                        stack.add(upNeigh); stack.add(downNeigh); stack.add(leftNeigh); stack.add(rightNeigh)
-
+                        if labels[upNeigh.xcoor][upNeigh.ycoor] == 0: stack.add(upNeigh)
+                        if labels[downNeigh.xcoor][downNeigh.ycoor] == 0: stack.add(downNeigh)
+                        if labels[leftNeigh.xcoor][leftNeigh.ycoor] == 0: stack.add(leftNeigh)
+                        if labels[rightNeigh.xcoor][rightNeigh.ycoor] == 0: stack.add(rightNeigh)
 
                 # Una volta terminato il ciclo, e quindi l'individuazione del cluster, aggiorniamo il valore della label
                 current_lab += 1
             
+    return labels

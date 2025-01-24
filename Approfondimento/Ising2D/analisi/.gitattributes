@@ -1,0 +1,2 @@
+cg/conf_2.0.out filter=lfs diff=lfs merge=lfs -text
+cg/conf_3.0.out filter=lfs diff=lfs merge=lfs -text
