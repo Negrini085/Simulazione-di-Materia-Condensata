@@ -1,9 +1,7 @@
 #!/bin/bash
 
-input_file="param.in"                            # Nome del file di input
-tempIsing=(1.0 1.5 2.0 2.5 3.0 3.5)		 # Temperature a cui simulo il modello
-sizeIsing=(100 200 300 400 500)                  # Dimensioni del modello di Ising
-
+tempIsing=(2.1 2.15 2.2 2.25 2.3 2.35)		     # Temperature a cui simulo il modello
+sizeIsing=(100 200 300)                          # Dimensioni del modello di Ising
 
 #---------------------------------------------------------------------#
 #       Ciclo sulla dimensione ed eseguo il programma a varie t       #
@@ -11,14 +9,20 @@ sizeIsing=(100 200 300 400 500)                  # Dimensioni del modello di Isi
 
 # Ciclo per aggiornare la dimensione
 for ((i=0; i<${#sizeIsing[@]}; i++)); do
-    sed -i "s/^nspin\s\+.*/nspin\t\t"${sizeIsing[i]}"/" "$input_file"
-
     for t in "${tempIsing[@]}"; do
-        sed -i "s/^temp\s\+.*/temp\t\t"$t"/" "$input_file"
+        for ((j=1; j<=4; j++)); do
 
-        # Eseguo programma per determinazione osservabili
-        ./Ising2D sim param.in analisi/metro/pcrit/term/termC_size${sizeIsing[i]}_t${t}.out
-    
+            # Determino dimensione media del cluster
+            nspin=${sizeIsing[i]}
+            dimcl=$(LC_NUMERIC=C awk -v nspin="$nspin" 'NR>2{a = a + $4; n++;} END {print (a/n) / (nspin * nspin)}' term_t${t}_size${sizeIsing[i]}_seed${j}.out)
+
+            # Divido il numero di mosse per l'opportuno fattore
+            LC_NUMERIC=C awk -v dim="$dimcl" 'NR<=2{print}NR>2{print $1*dim, $2, $3, $4}' term_t${t}_size${sizeIsing[i]}_seed${j}.out >  appo_t${t}_size${sizeIsing[i]}_seed${j}.out
+        
+            # Sostituisco il file degli osservabili con quello modificato
+            rm term_t${t}_size${sizeIsing[i]}_seed${j}.out
+            mv appo_t${t}_size${sizeIsing[i]}_seed${j}.out term_t${t}_size${sizeIsing[i]}_seed${j}.out
+        done
     done
 
     dim=${sizeIsing[i]}
