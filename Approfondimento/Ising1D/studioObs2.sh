@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param.in"                                            # Nome del file di input
-tempIsing=(1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0)     	      	 # Temperature a cui simulo il modello
-sizeIsing=(6000)   	                                     	 # Dimensioni del modello di Ising
+input_file="param2.in"                                                 	# Nome del file di input
+tempIsing=(1.7 1.8 1.9 2.0)     	      			        # Temperature a cui simulo il modello
+sizeIsing=(10000)   	                                     		# Dimensioni del modello di Ising
 
 
 #---------------------------------------------------------------------#
@@ -17,7 +17,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
         sed -i "s/^temp\s\+.*/temp\t\t"$t"/" "$input_file"
 
         # Eseguo programma per determinazione osservabili
-        ./Ising1D sim param.in analisi/magn0.0/obs/obs_lc_size${sizeIsing[i]}_t${t}.out
+        ./Ising1D sim param2.in analisi/magn0.0/obs/obs_lc_size${sizeIsing[i]}_t${t}.out
     
     done
 

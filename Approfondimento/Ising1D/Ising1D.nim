@@ -213,8 +213,8 @@ when isMainModule:
                 magnblk += appo/float32(lenBlk)
                 magn2blk += appo*appo/float32(lenBlk)
             
-            eneblk = eneblk/float32(isingMod.len())
-            magnblk = magnblk/float32(isingMod.len())
+            eneblk = eneblk/float32(nspin)
+            magnblk = magnblk/float32(nspin)
 
             cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk * float32(nspin), 2))/float32(nspin)
             chiblk = 1/(temp) * (magn2blk - pow(magnblk * float32(nspin), 2))/float32(nspin)
