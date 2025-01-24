@@ -10,7 +10,7 @@
 #    	gnuplot home:     http://www.gnuplot.info
 #    	faq, bugs, etc:   type "help FAQ"
 #    	immediate help:   type "help"  (plot window: hit 'h')
-# set terminal qt 0 font "Sans,9"
+# set terminal qt 0 font "Sans,12"
 # set output
 unset clip points
 set clip one
@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Autocorrelazione m: 1000 spin, T = 2.0" 
+set title "Autocorrelazione m: 1000 spin, T = 1.5" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -129,7 +129,7 @@ set timestamp  font "" textcolor lt -1 norotate
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "# mosse" 
+set xlabel "# sweeps" 
 set xlabel  font ",15" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
@@ -176,5 +176,5 @@ GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
 ## Last datafile plotted: "term_t0.5_size1000_seed4.out"
-p 'tcorr_t2.0_size1000_seed1.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t2.0_size1000_seed2.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t2.0_size1000_seed3.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t2.0_size1000_seed4.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 4'
+p 'tcorr_t1.5_size1000_seed1.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t1.5_size1000_seed2.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t1.5_size1000_seed3.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t1.5_size1000_seed4.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 4'
 #    EOF

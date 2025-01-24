@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Termalizzazione: 1000 spin, T = 1.5" 
+set title "Termalizzazione: 10000 spin, T = 0.5" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -129,7 +129,7 @@ set timestamp  font "" textcolor lt -1 norotate
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "# mosse" 
+set xlabel "# sweeps" 
 set xlabel  font ",15" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
@@ -176,5 +176,5 @@ GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
 ## Last datafile plotted: "term_t0.5_size1000_seed4.out"
-p 'term_t1.5_size1000_seed1.out' u 1:3 w l lw 2 t 'Traiettoria 1', 'term_t1.5_size1000_seed2.out' u 1:3 w l lw 2 t 'Traiettoria 2', 'term_t1.5_size1000_seed3.out' u 1:3 w l lw 2 t 'Traiettoria 3', 'term_t1.5_size1000_seed4.out' u 1:3 w l lw 2 t 'Traiettoria 4', 0.0505 w l lw 3 t 'Valor vero'
+p 'term_t0.5_size10000_seed1.out' u 1:3 w l lw 2 t 'Traiettoria 1', 'term_t0.5_size10000_seed2.out' u 1:3 w l lw 2 t 'Traiettoria 2', 'term_t0.5_size10000_seed3.out' u 1:3 w l lw 2 t 'Traiettoria 3', 'term_t0.5_size10000_seed4.out' u 1:3 w l lw 2 t 'Traiettoria 4', 0.9093 w l lw 3 t 'Valor vero'
 #    EOF

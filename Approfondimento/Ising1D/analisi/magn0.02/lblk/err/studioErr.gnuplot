@@ -10,7 +10,7 @@
 #    	gnuplot home:     http://www.gnuplot.info
 #    	faq, bugs, etc:   type "help FAQ"
 #    	immediate help:   type "help"  (plot window: hit 'h')
-# set terminal qt 0 font "Sans,9"
+# set terminal qt 0 font "Sans,12"
 # set output
 unset clip points
 set clip one
@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Dimensione blocco: 10000 spin, T = 2.0" 
+set title "Dimensione blocco: 3000 spin, T = 1.0" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -176,5 +176,5 @@ GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
 ## Last datafile plotted: "term_t1.0_size10000_seed4.out"
-p 'errM_size10000_t2.0.dat' u (($0+1)*5):1 w l lw 2 t 'Traiettoria 1', '' u (($0+1)*5):2 w l lw 2 t 'Traiettoria 2', '' u (($0+1)*5):3 w l lw 2 t 'Traiettoria 3', '' u (($0+1)*5):4 w l lw 2 t 'Traiettoria 4'
+p 'errM_size3000_t1.0.dat' u (($0+1)*5):1 w l lw 2 t 'Traiettoria 1', '' u (($0+1)*5):2 w l lw 2 t 'Traiettoria 2', '' u (($0+1)*5):3 w l lw 2 t 'Traiettoria 3', '' u (($0+1)*5):4 w l lw 2 t 'Traiettoria 4'
 #    EOF
