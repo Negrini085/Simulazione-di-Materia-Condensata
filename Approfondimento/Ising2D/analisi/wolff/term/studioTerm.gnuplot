@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Termalizzazione: N = 500 spin, T = 2.5" 
+set title "Termalizzazione: 300 x 300, T = 2.4" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -135,7 +135,7 @@ set x2label ""
 set x2label  font "" textcolor lt -1 norotate
 set xrange [ * : * ] noreverse writeback
 set x2range [ * : * ] noreverse writeback
-set ylabel "Magnetizzazione" 
+set ylabel "Energia" 
 set ylabel  font ",15" textcolor lt -1 rotate
 set y2label "" 
 set y2label  font "" textcolor lt -1 rotate
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t2.5_size500_seed4.out"
-p 'term_t2.5_size500_seed1.out' u 1:3 w l lw 2 t 'Traiettoria 1', 'term_t2.5_size500_seed2.out' u 1:3 w l lw 2 t 'Traiettoria 2', 'term_t2.5_size500_seed3.out' u 1:3 w l lw 2 t 'Traiettoria 3', 'term_t2.5_size500_seed4.out' u 1:3 w l lw 2 t 'Traiettoria 4', 0.0 w l lw 3 t 'Valor vero'
+## Last datafile plotted: "term_t2.4_size300_seed4.out"
+p 'term_t2.4_size300_seed1.out' u 1:2 w l lw 2 t 'Traiettoria 1', 'term_t2.4_size300_seed2.out' u 1:2 w l lw 2 t 'Traiettoria 2', 'term_t2.4_size300_seed3.out' u 1:2 w l lw 2 t 'Traiettoria 3', 'term_t2.4_size300_seed4.out' u 1:2 w l lw 2 t 'Traiettoria 4', -1.20397 w l lw 3 t 'Valor vero'
 #    EOF

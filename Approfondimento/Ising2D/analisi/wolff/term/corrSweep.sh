@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tempIsing=(2.1 2.15 2.2 2.25 2.3 2.35)		     # Temperature a cui simulo il modello
+tempIsing=(2.4)	                        	     # Temperature a cui simulo il modello
 sizeIsing=(100 200 300)                          # Dimensioni del modello di Ising
 
 #---------------------------------------------------------------------#
