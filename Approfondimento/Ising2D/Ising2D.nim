@@ -14,7 +14,7 @@ Ising2D CLI:
 Usage: 
     ./Ising2D help
     ./Ising2D metro <fileParam> [<fileOut> <confOut> <labelsOut>]
-    ./Ising2D wolff <fileParam> [<fileOut> <confOut>]
+    ./Ising2D wolff <fileParam> [<fileOut> <confOut> <labelsOut>]
 
 Options:
     -h | --help         Display the Ising2D CLI helper screen.
@@ -288,17 +288,16 @@ when isMainModule:
 
         for i in 0..term:
             isingMod.metropolisMove(rg, temp, acc, nspin, accettate)
-            echo fmt"Eseguito sweep numero: {i+1}"
     
         # Stampa della configurazione termalizzata
-        echo "Stampa della configurazione termalizzata"
-        confOut.stampaConf(isingMod, nspin) 
-
-        echo "Individuo cluster"
-        labels = isingMod.individuaClust(nspin)
-        echo fmt"Dimensioni matrice delle labels {len(labels)}"
-        echo "Stampo matrice delle labels"
-        blkOut.stampaConf(labels, nspin)
+        # echo "Stampa della configurazione termalizzata"
+        # confOut.stampaConf(isingMod, nspin) 
+# 
+        # echo "Individuo cluster"
+        # labels = isingMod.individuaClust(nspin)
+        # echo fmt"Dimensioni matrice delle labels {len(labels)}"
+        # echo "Stampo matrice delle labels"
+        # blkOut.stampaConf(labels, nspin)
 
 
         #-------------------------------------------------------#
@@ -371,6 +370,7 @@ when isMainModule:
             dMod: DefMod
             fileOut: string
             confFile: string
+            labelsFile: string
             fStr: FileStream
             inStr: InputStream
 
@@ -383,6 +383,11 @@ when isMainModule:
             confFile = $args["<confOut>"]
         else: 
             confFile = "conf.out"
+
+        if args["<labelsOut>"]: 
+            labelsFile = $args["<labelsOut>"]
+        else: 
+            labelsFile = "lab.out"
                 
         fStr = newFileStream(fileIn, fmRead)
         if fStr == nil:
@@ -420,7 +425,7 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            blkOut = newFileStream("blk_mod.conf", fmWrite)
+            blkOut = newFileStream(labelsFile, fmWrite)
             confOut = newFileStream(confFile, fmWrite)
 
 
@@ -446,21 +451,21 @@ when isMainModule:
             conta: int = 0
             limit: int = 0
 
-        # while limit < 3000 * nspin * nspin:
-        #     dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
-        #     limit += dimclblk
-# 
-        #     eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
-        #     magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
-        #     
-        #     if conta != 0:
-        #         obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
-        #         conta += 1           
-        #         if conta mod 500 == 0:
-        #             echo fmt"Effettata mossa termalissazione: {conta}"
-        #     else:
-        #         conta = 1
-        #         obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
+#        while limit < 3000 * nspin * nspin:
+#            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+#            limit += dimclblk
+#
+#            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
+#            magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
+#            
+#            if conta != 0:
+#                obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
+#                conta += 1           
+#                if conta mod 1000 == 0:
+#                    echo fmt"Effettata mossa termalissazione: {conta}"
+#            else:
+#                conta = 1
+#                obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
 
         # Stampa della configurazione termalizzata
         echo "Stampo configurazione termalizzata"

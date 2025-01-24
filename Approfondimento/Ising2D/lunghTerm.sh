@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param1.in"      		                    # Nome del file di input
-tempIsing=(2.1 2.15 2.2 2.25 2.3 2.35 2.4)          # Temperature a cui simulo il modello
-sizeIsing=(100 200 300 400 500)                     # Dimensioni del modello di Ising
+input_file="param.in"      		            # Nome del file di input
+tempIsing=(2.3 2.35 2.4)                            # Temperature a cui simulo il modello
+sizeIsing=(400)                                 # Dimensioni del modello di Ising
 rgState=(0 10 20 30)                                # Seed random generator
 rgIncr=(5 15 25 35)                                 # Incr random generator
 
@@ -24,7 +24,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
             sed -i "s/^incr\s\+.*/incr\t\t"${rgIncr[j-1]}"/" "$input_file"
 
             # Eseguo programma e faccio analisi su termalizzazione
-            ./Ising2D wolff param1.in analisi/wolff/term/term_t${t}_size${sizeIsing[i]}_seed$j.out
+            ./termW wolff param.in analisi/wolff/term/term_t${t}_size${sizeIsing[i]}_seed$j.out
         done
     
     done

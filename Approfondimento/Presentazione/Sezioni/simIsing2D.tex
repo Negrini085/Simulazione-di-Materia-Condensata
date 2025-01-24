@@ -163,3 +163,103 @@
     $U\,=\,-NJ\coth{\left(2\beta J\right)}\left\{1\,+\,\frac{2}{\pi}\left[2\tanh^2\left(2\beta J\right)\,-\,1\right]\int_0^{\pi/2}\frac{d\phi}{\sqrt{1\,-\,k^2\sin^2{\left(\phi\right)}}}\right\}$
 
 \end{frame}
+
+
+
+%-----------------------------------------%
+%			  Quinta slide				  %
+%	   Studio del calore specifico   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Calore specifico}
+    \framesubtitle{}
+
+\end{frame}
+
+
+
+%-----------------------------------------%
+%		   	   Sesta slide				  %
+%	    Studio della suscettività   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Suscettività}
+    \framesubtitle{}
+
+\end{frame}
+
+
+
+%-----------------------------------------%
+%		   	  Settima slide				  %
+%	     Studio con coarse graining   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Coarse graining}
+    \framesubtitle{}
+
+    \centering
+    \begin{tikzpicture}
+        \node (img1) at (-1,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_10000_Tc.png}};
+        
+        \node (img2) at (7,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_1000_Tc.png}};
+        
+        \draw[->,thick] (img1.east)  -- node[above] {CG} (img2.west);
+    \end{tikzpicture}
+    
+\end{frame}
+
+
+
+%-----------------------------------------%
+%		   	   Ottava slide				  %
+%	     Studio con coarse graining   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Dimensioni cluster}
+    \framesubtitle{}
+
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+
+            \centering
+            \includegraphics[width=\textwidth]{Immagini/simIsing2D/dimCl_Tc.png}
+
+        \end{column}
+    
+        \begin{column}{0.4\textwidth}
+
+
+                \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                    \item $P\left(s\right) \propto s^{-\alpha}$
+                    \item $\alpha \simeq 2$
+                    \item perdita di un parametro di scala
+                \end{itemize}
+            
+        \end{column}
+    \end{columns}
+
+    \centering
+    \begin{tikzpicture}[thick, scale=1.2]
+        \draw[->, line width=1mm] (0, 0) -- (10, 0);
+        
+        \node[below] at (0, 0) {grandi cluster};
+        \node[below] at (10, 0) {piccoli cluster};
+        
+        \draw[fill=black] (5, 0) circle (2pt); 
+        \node[above] at (5, 0) {$T_c$}; 
+    \end{tikzpicture}
+    
+\end{frame}
+
+
+
+%-----------------------------------------%
+%		   	    Nona slide				  %
+%	     Studio con coarse graining   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Esponenti critici}
+    \framesubtitle{}
+    
+\end{frame}

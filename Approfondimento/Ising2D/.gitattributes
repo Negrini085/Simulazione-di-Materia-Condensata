@@ -1,6 +1,0 @@
-analisi/cg/conf_t* filter=lfs diff=lfs merge=lfs -text
-analisi/wolff/term/ filter=lfs diff=lfs merge=lfs -text
-analisi/wolff/term/term_t2.4_size300_seed1.out filter=lfs diff=lfs merge=lfs -text
-analisi/wolff/term/term_t2.4_size300_seed2.out filter=lfs diff=lfs merge=lfs -text
-analisi/wolff/term/term_t2.4_size300_seed3.out filter=lfs diff=lfs merge=lfs -text
-analisi/wolff/term/term_t2.4_size300_seed4.out filter=lfs diff=lfs merge=lfs -text
