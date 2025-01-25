@@ -4,7 +4,7 @@
 #    	G N U P L O T
 #    	Version 5.4 patchlevel 2    last modified 2021-06-01 
 #    
-#    	Copyright (C) 1986-1993, 1998, 3004, 3007-2021
+#    	Copyright (C) 1986-1993, 1998, 4004, 4007-2021
 #    	Thomas Williams, Colin Kelley and many others
 #    
 #    	gnuplot home:     http://www.gnuplot.info
@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Termalizzazione: 300 x 300, T = 2.4" 
+set title "Termalizzazione: 500 x 500, T = 2.35" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t2.4_size300_seed4.out"
-p 'term_t2.4_size300_seed1.out' u 1:2 w l lw 2 t 'Traiettoria 1', 'term_t2.4_size300_seed2.out' u 1:2 w l lw 2 t 'Traiettoria 2', 'term_t2.4_size300_seed3.out' u 1:2 w l lw 2 t 'Traiettoria 3', 'term_t2.4_size300_seed4.out' u 1:2 w l lw 2 t 'Traiettoria 4', -1.20397 w l lw 3 t 'Valor vero'
+## Last datafile plotted: "term_t2.35_size400_seed4.out"
+p 'term_t2.35_size400_seed1.out' u 1:2 w l lw 2 t 'Traiettoria 1', 'term_t2.35_size400_seed2.out' u 1:2 w l lw 2 t 'Traiettoria 2', 'term_t2.35_size400_seed3.out' u 1:2 w l lw 2 t 'Traiettoria 3', 'term_t2.35_size400_seed4.out' u 1:2 w l lw 2 t 'Traiettoria 4', -1.26539 w l lw 3 t 'Valor vero'
 #    EOF
