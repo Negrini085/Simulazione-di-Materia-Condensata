@@ -1,0 +1,11 @@
+1.0
+100
+1.0
+1000
+1
+
+  ReadInput >> temp;
+  ReadInput >> nspin;
+  ReadInput >> J;
+  ReadInput >> nblk;
+  ReadInput >> nstep;
