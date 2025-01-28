@@ -5,6 +5,7 @@ int main(){
     // Lettura parametri ed inizializzazione modello
     ModelloXY sistema = ModelloXY("input.dat");
     sistema.stampa_par();
+    sistema.stampa_mat();
 
     // Termalizzazione del modello
     // for(int i=0; i<3000; i++) {  }

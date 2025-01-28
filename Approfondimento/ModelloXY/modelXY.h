@@ -46,9 +46,27 @@ class ModelloXY{
         fileIn >> m_nstep;
 
         fileIn.close();
+
+        //Inizializzazione della matrice (parto con tutti gli spin verso l'alto)
+        m_lattice = new double*[m_nspin];
+        for(int i=0; i<m_nspin; i++){
+            m_lattice[i] = new double[m_nspin];
+        }
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                m_lattice[i][j] = M_PI/2;
+            }
+        }
+
     }
     //Distruttore
-    ~ModelloXY() {;}
+    ~ModelloXY() {
+        for(int i=0; i<m_nspin; i++){
+            delete[] m_lattice[i];
+        }
+        delete[] m_lattice;
+    }
 
 
     // Stampo i parametri della simulazione
@@ -64,8 +82,19 @@ class ModelloXY{
             cout << endl << endl << endl;
     }
 
+    // Stampo la matrice a terminale
+    void stampa_mat(){
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                cout << m_lattice[i][j] << "    ";
+            }
+            cout << endl;
+        }
+    }
+
 
     private:
+    double** m_lattice;
     double m_temp, m_J, m_beta;
     int m_nblk, m_nstep, m_nspin;
     
