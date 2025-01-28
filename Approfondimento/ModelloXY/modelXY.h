@@ -20,6 +20,7 @@ int Pbc(int nspin, int i)
     return i;
 }
 
+
 // Classe per studio del modello di Ising
 class ModelloXY{
     public:
@@ -57,6 +58,7 @@ class ModelloXY{
         fileIn >> m_J;    
         fileIn >> m_nblk;
         fileIn >> m_nstep;
+        fileIn >> m_delta;
 
         fileIn.close();
 
@@ -88,6 +90,7 @@ class ModelloXY{
     int getNstep(){ return m_nstep; }
     double getTemp(){ return m_temp; }
     double getBeta(){ return m_beta; }
+    double getDelta(){ return m_delta; }
 
 
     // Stampo i parametri della simulazione
@@ -98,6 +101,7 @@ class ModelloXY{
             cout << "Temperatura:             " << setprecision(3) << m_temp << endl;
             cout << "Beta:                    " << setprecision(3) << m_beta << endl;
             cout << "J:                       " << setprecision(3) << m_J << endl;
+            cout << "Delta:                   " << setprecision(3) << m_delta << endl;
             cout << "Numero blocchi           " << m_nblk << endl;
             cout << "Lunghezza simulazione:   " << m_nstep << endl;
             cout << endl << endl << endl;
@@ -156,10 +160,43 @@ class ModelloXY{
         return appo;
     }
 
+    // Energia interazione con primi vicini (serve per mossa metropolis)
+    double Boltzmann(double spin, int xcoor, int ycoor){
+      double ene = 0;
+      
+      // Considero separatamente i quattro primi vicini
+      ene = -m_J * cos(m_lattice[xcoor][Pbc(m_nspin, ycoor + 1)] - spin);
+      ene -= m_J * cos(m_lattice[xcoor][Pbc(m_nspin, ycoor - 1)] - spin);
+      ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor + 1)][ycoor] - spin);
+      ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor - 1)][ycoor] - spin);
+
+      return ene;
+    }
+
 
     // Singola mossa metropolis
     void Move(){
-        ;
+        
+        // Seleziono lo spin da ruotare
+        int xcoor = (int)(m_rnd.Rannyu()*m_nspin);
+        int ycoor = (int)(m_rnd.Rannyu()*m_nspin);
+
+        // Valuto di quanto ruotare (parametro delta fissato per acceptance rate 50%)
+        double change = m_rnd.Rannyu(-m_delta, m_delta);
+
+        // Energie prima e dopo inversione
+        double appo = m_lattice[xcoor][ycoor] + change;
+        double enei = Boltzmann(m_lattice[xcoor][ycoor], xcoor, ycoor);
+        double enef = Boltzmann(appo, xcoor, ycoor);
+
+        // Valuto la differenza di energia
+        if(enef - enei < 0){
+            m_lattice[xcoor][ycoor] = appo;
+        }
+        else if(m_rnd.Rannyu() < exp(-m_beta * (enef - enei))){
+            m_lattice[xcoor][ycoor] = appo;
+        }
+        
     }
 
 
@@ -174,8 +211,8 @@ class ModelloXY{
     // Data membri classe --> sono parametri simulativi
     Random m_rnd;
     double** m_lattice;
-    double m_temp, m_J, m_beta;
     int m_nblk, m_nstep, m_nspin;
+    double m_temp, m_J, m_beta, m_delta;
     
 };
 
