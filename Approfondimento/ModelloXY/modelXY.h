@@ -10,9 +10,17 @@
 using namespace std;
 
 //Random numbers
-#include "random.h"
+#include "random/random.h"
 
+// Funzione per condizioni al contorno periodiche
+int Pbc(int nspin, int i)
+{
+    if(i >= nspin) i = i - nspin;
+    else if(i < 0) i = i + nspin;
+    return i;
+}
 
+// Classe per studio del modello di Ising
 class ModelloXY{
     public:
     // Costruttore di default
@@ -32,6 +40,11 @@ class ModelloXY{
         if (Primes.is_open()){
             Primes >> p1 >> p2 ;
         } else cerr << "PROBLEM: Unable to open Primes" << endl;
+        
+        ifstream input("random/seed.in"); int seed[4];
+        input >> seed[0] >> seed[1] >> seed[2] >> seed[3];
+        m_rnd.SetRandom(seed,p1,p2);
+        input.close();
         Primes.close();
 
         //Leggiamo parametri simulativi
@@ -129,12 +142,37 @@ class ModelloXY{
     }
 
 
+    // Calcolo energia del sistema
+    double getEne(){
+        double appo = 0;
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                appo -= m_J * cos(m_lattice[i][j] - m_lattice[i][Pbc(m_nspin, j+1)]);
+                appo -= m_J * cos(m_lattice[j][i] - m_lattice[Pbc(m_nspin, j+1)][i]);
+            }
+        }
+
+        return appo;
+    }
+
+
+    // Singola mossa metropolis
+    void Move(){
+        ;
+    }
+
+
+    // Sweep del reticolo con metropolis
+
+
 
 
 
 
     private:
     // Data membri classe --> sono parametri simulativi
+    Random m_rnd;
     double** m_lattice;
     double m_temp, m_J, m_beta;
     int m_nblk, m_nstep, m_nspin;
