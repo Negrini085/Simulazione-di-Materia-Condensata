@@ -69,6 +69,14 @@ class ModelloXY{
     }
 
 
+    // Metodi get per ottenere i parametri simulativi
+    int getNblk(){ return m_nblk; }
+    int getNspin(){ return m_nspin; }
+    int getNstep(){ return m_nstep; }
+    double getTemp(){ return m_temp; }
+    double getBeta(){ return m_beta; }
+
+
     // Stampo i parametri della simulazione
     void stampa_par(){
             cout << endl;
@@ -93,7 +101,40 @@ class ModelloXY{
     }
 
 
+    // Calcolo magnetizzazione lungo x del sistema
+    double getMagnX(){
+        double appo = 0;
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                appo += cos(m_lattice[i][j]);
+            }
+        }
+
+        return appo;
+    }
+    
+    
+    // Calcolo magnetizzazione lungo y del sistema
+    double getMagnY(){
+        double appo = 0;
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                appo += sin(m_lattice[i][j]);
+            }
+        }
+
+        return appo;
+    }
+
+
+
+
+
+
     private:
+    // Data membri classe --> sono parametri simulativi
     double** m_lattice;
     double m_temp, m_J, m_beta;
     int m_nblk, m_nstep, m_nspin;
