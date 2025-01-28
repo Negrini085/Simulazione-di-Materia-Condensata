@@ -5,14 +5,12 @@ int main(){
     // Lettura parametri ed inizializzazione modello
     ModelloXY sistema = ModelloXY("input.dat");
     sistema.stampa_par();
-    sistema.stampa_mat();
-    cout << sistema.getMagnX() << endl;
-    cout << sistema.getMagnY() << endl;
 
     // Termalizzazione del modello
-    // for(int i=0; i<3000; i++) {  }
-
-    // Fase di simulazione, con data-blocking
+    for(int i=0; i<100000; i++) {
+        sistema.Sweep();
+        cout << i+1 << "   " << sistema.getEne() << endl;
+    }
 
   return 0;
 }

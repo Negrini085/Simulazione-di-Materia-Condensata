@@ -196,13 +196,17 @@ class ModelloXY{
         else if(m_rnd.Rannyu() < exp(-m_beta * (enef - enei))){
             m_lattice[xcoor][ycoor] = appo;
         }
-        
+
     }
 
 
     // Sweep del reticolo con metropolis
+    void Sweep(){
 
+        // Per fare uno seep, servono nspin * nspin tentativi
+        for(int i=0; i<m_nspin*m_nspin; i++){ Move(); }
 
+    }
 
 
 
