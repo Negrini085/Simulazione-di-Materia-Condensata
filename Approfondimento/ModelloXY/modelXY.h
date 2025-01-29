@@ -4,13 +4,17 @@
 #include <iostream>
 #include <fstream>
 #include <ostream>
-#include <cmath>
 #include <iomanip>
+#include <vector>
+#include <cmath>
 
 using namespace std;
 
 //Random numbers
 #include "random/random.h"
+
+// Variabile globale per acc. rate
+int accettate = 0;
 
 // Funzione per condizioni al contorno periodiche
 int Pbc(int nspin, int i)
@@ -59,14 +63,12 @@ class ModelloXY{
         fileIn >> m_nblk;
         fileIn >> m_nstep;
         fileIn >> m_delta;
+        fileIn >> m_term;
 
         fileIn.close();
 
         //Inizializzazione della matrice (parto con tutti gli spin verso l'alto)
-        m_lattice = new double*[m_nspin];
-        for(int i=0; i<m_nspin; i++){
-            m_lattice[i] = new double[m_nspin];
-        }
+        m_lattice.resize(m_nspin, vector<double>(m_nspin));
 
         for(int i=0; i<m_nspin; i++){
             for(int j=0; j<m_nspin; j++){
@@ -76,12 +78,7 @@ class ModelloXY{
 
     }
     //Distruttore
-    ~ModelloXY() {
-        for(int i=0; i<m_nspin; i++){
-            delete[] m_lattice[i];
-        }
-        delete[] m_lattice;
-    }
+    ~ModelloXY() {;}
 
 
     // Metodi get per ottenere i parametri simulativi
@@ -91,6 +88,7 @@ class ModelloXY{
     double getTemp(){ return m_temp; }
     double getBeta(){ return m_beta; }
     double getDelta(){ return m_delta; }
+    double getTerm(){ return m_term; }
 
 
     // Stampo i parametri della simulazione
@@ -104,6 +102,7 @@ class ModelloXY{
             cout << "Delta:                   " << setprecision(3) << m_delta << endl;
             cout << "Numero blocchi           " << m_nblk << endl;
             cout << "Lunghezza simulazione:   " << m_nstep << endl;
+            cout << "Fase di termalizzazione: " << m_term << endl;
             cout << endl << endl << endl;
     }
 
@@ -178,8 +177,15 @@ class ModelloXY{
     void Move(){
         
         // Seleziono lo spin da ruotare
-        int xcoor = (int)(m_rnd.Rannyu()*m_nspin);
-        int ycoor = (int)(m_rnd.Rannyu()*m_nspin);
+        int xcoor, ycoor;
+
+	do{
+	    xcoor = static_cast<int>(m_rnd.Rannyu(0, m_nspin));
+	}while(xcoor < 0);
+
+	do{
+	   ycoor = static_cast<int>(m_rnd.Rannyu(0, m_nspin));
+	}while(ycoor < 0);
 
         // Valuto di quanto ruotare (parametro delta fissato per acceptance rate 50%)
         double change = m_rnd.Rannyu(-m_delta, m_delta);
@@ -192,9 +198,11 @@ class ModelloXY{
         // Valuto la differenza di energia
         if(enef - enei < 0){
             m_lattice[xcoor][ycoor] = appo;
+            accettate += 1;
         }
-        else if(m_rnd.Rannyu() < exp(-m_beta * (enef - enei))){
+        else if(m_rnd.RannyuUnit() < exp(-m_beta * (enef - enei))){
             m_lattice[xcoor][ycoor] = appo;
+            accettate += 1;
         }
 
     }
@@ -214,9 +222,9 @@ class ModelloXY{
     private:
     // Data membri classe --> sono parametri simulativi
     Random m_rnd;
-    double** m_lattice;
-    int m_nblk, m_nstep, m_nspin;
+    vector<vector<double>> m_lattice;
     double m_temp, m_J, m_beta, m_delta;
+    int m_nblk, m_nstep, m_nspin, m_term;
     
 };
 

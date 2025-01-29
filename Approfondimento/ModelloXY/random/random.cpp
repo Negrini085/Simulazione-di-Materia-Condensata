@@ -35,18 +35,18 @@ void Random :: SaveSeed(){
 
 double Random :: Gauss(double mean, double sigma) {
    // This function generates a random number from a Gaussian distribution with given mean and sigma
-   double s=Rannyu();
-   double t=Rannyu();
+   double s=RannyuUnit();
+   double t=RannyuUnit();
    double x=sqrt(-2.*log(1.-s))*cos(2.*M_PI*t);
    return mean + x * sigma;
 }
 
 double Random :: Rannyu(double min, double max){
    // This function generates a random number in the range [min, max)
-   return min+(max-min)*Rannyu();
+   return min+(max-min)*RannyuUnit();
 }
 
-double Random :: Rannyu(void){
+double Random :: RannyuUnit(void){
   // This function generates a random number in the range [0,1)
   const double twom12=0.000244140625;
   int i1,i2,i3,i4;
@@ -87,12 +87,12 @@ void Random :: SetRandom(int * s, int p1, int p2){
 
 //Metodo per distribuzione di probabilità esponenziale
 double Random::Exponetial(double lambda) {
-   return -(1/lambda) * log(1-Rannyu());
+   return -(1/lambda) * log(1-RannyuUnit());
 }
 
 //Metodo per distribuzione di probabilità Lorentziana
 double Random::Lorentian(double Lambda, double mu) {
-   return Lambda * tan(M_PI * (Rannyu() - 1/2)) + mu;
+   return Lambda * tan(M_PI * (RannyuUnit() - 1/2)) + mu;
 }
 
 

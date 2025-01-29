@@ -29,7 +29,7 @@ public:
   // Method to save the seed to a file
   void SaveSeed();
   // Method to generate a random number in the range [0,1)
-  double Rannyu(void);
+  double RannyuUnit(void);
   // Method to generate a random number in the range [min,max)
   double Rannyu(double min, double max);
   // Method to generate a random number with a Gaussian distribution
