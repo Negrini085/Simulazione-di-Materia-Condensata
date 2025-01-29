@@ -4,7 +4,7 @@
 #    	G N U P L O T
 #    	Version 5.4 patchlevel 2    last modified 2021-06-01 
 #    
-#    	Copyright (C) 1986-1993, 1998, 2004, 2007-2021
+#    	Copyright (C) 1986-1993, 1998, 1004, 1007-2021
 #    	Thomas Williams, Colin Kelley and many others
 #    
 #    	gnuplot home:     http://www.gnuplot.info
@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Autocorrelazione m: 300 x 300, T = 2.4" 
+set title "Autocorrelazione: 100 x 100, T = 2.35" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t2.4_size300_seed4.out"
-p 'tcorr_t2.4_size300_seed1.out' u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t2.4_size300_seed2.out' u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t2.4_size300_seed3.out' u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t2.4_size300_seed4.out' u ($0+1):1 w l lw 2 t 'Traiettoria 4'
+## Last datafile plotted: "term_t2.35_size100_seed4.out"
+p 'tcorr_t2.35_size100_seed1.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t2.35_size100_seed2.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t2.35_size100_seed3.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t2.35_size100_seed4.out' every ::0::100 u ($0+1):1 w l lw 2 t 'Traiettoria 4'
 #    EOF
