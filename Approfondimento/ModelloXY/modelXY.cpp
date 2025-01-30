@@ -2,9 +2,13 @@
 
 int main(int argc, char** argv){
 
+    double ene = 0;
+    double magnY = 0;
+    double magnX = 0;
+
     //File dei parametri
-    if(argc != 2){
-        cout << "Utilizzo codice: ./modelXY <nome file input>" << endl;
+    if(argc != 3){
+        cout << "Utilizzo codice: ./modelXY <nome file input> <nome file conf>" << endl;
         return -1;
     }
 
@@ -17,14 +21,29 @@ int main(int argc, char** argv){
     for(int i=0; i<sistema.getTerm(); i++){ sistema.Sweep(); }
 
     // Termalizzazione del modello
-    for(int i=0; i<sistema.getNstep(); i++){
-        // Eseguo uno sweep del sistema
-        sistema.Sweep();
+    accettate = 0;
+    for(int i=0; i<sistema.getNblk(); i++){
+
+        for(int j=0; j<sistema.getNstep(); j++){
+            // Eseguo uno sweep del sistema
+            sistema.Sweep();
+
+            ene += sistema.getEne();
+            magnX += sistema.getMagnX();
+            magnY += sistema.getMagnY();
+
+        }
 
         // Stampo osservabili
-        cout << i+1 << "   " << sistema.getEne()  << "  " << sistema.getMagnX() << "   " << sistema.getMagnY() << "   " << accettate*100/(sistema.getNspin() * sistema.getNspin()) << endl;
+        cout << i+1 << "   " << ene/double(sistema.getNstep())  << "  " <<  magnX/double(sistema.getNstep()) << "   " << magnY/double(sistema.getNstep()) << endl;
+        
         accettate = 0;
+        ene = 0;
+        magnX = 0;
+        magnY = 0;
     }
+
+    sistema.stampa_mat();
 
   return 0;
 }
