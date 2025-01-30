@@ -169,7 +169,23 @@ Alla temperatura critica, i cluster sono di tutte le dimensioni, partendo da sin
 momenti magnetici coinvolti. In questo caso la lunghezza di correlazione è infinita e per iterazioni successive del metodo introdotto 
 in precedenza non si ha alcun cambio nella distrubuzione delle dimensioni dei cluster. Il reticolo rimane a $T_c$, che risulta essere 
 un punto fisso della funzione di coarse-graining. Chiaramente, gli altri punti fissi sono $T\,=\,0$ e $T\,=\,\infty$ a cui tendono 
-tutti i sistemi che non si trovano in partenza al punto critico.
+tutti i sistemi che non si trovano in partenza al punto critico. Nella Figura seguente è possibile apprezzare l'applicazione della 
+tecnica precedentemente esposta ad un sistema con $T \simeq T_c$, in cui una singola iterazione dell'algoritmo ha come unico effetto 
+la cancellazione dei cluster di dimensione inferiore alla dimensione dei sotto-blocchi.
+
+
+\vspace*{\fill}
+
+\begin{tikzpicture}
+    \node (img1) at (-1,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg/cg_10000_Tc.png}};
+    
+    \node (img2) at (7,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg/cg_1000_Tc.png}};
+    
+    \draw[->,thick] (img1.east)  -- node[above] {CG} (img2.west);
+
+\end{tikzpicture}
+
+\vspace*{\fill}
 
 
 \vspace*{\fill}
