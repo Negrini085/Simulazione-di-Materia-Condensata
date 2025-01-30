@@ -1,0 +1,55 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{wolffMove}\PYG{o}{*}\PYG{p}{(}\PYG{n}{modIsing}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n+nb}{seq}\PYG{o}{[}\PYG{n+nb}{seq}\PYG{o}{[}\PYG{n+nb}{int}\PYG{o}{]]}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{:}\PYG{+w}{ }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{PCG}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{temp}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{float32}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{acc}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{float32}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{nspin}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{p}{):}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{+w}{ }\PYG{o}{=}
+\PYG{c}{\PYGZsh{} Algoritmo di Wolff per evolvere il modello di Ising 2D}
+
+\PYG{+w}{    }\PYG{k+kd}{var}
+\PYG{+w}{        }\PYG{n}{appo}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}
+\PYG{+w}{        }\PYG{n}{conta}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}
+\PYG{+w}{        }\PYG{n}{test}\PYG{p}{:}\PYG{+w}{ }\PYG{n}{IsingCoord}
+\PYG{+w}{        }\PYG{n}{clusterSize}\PYG{p}{:}\PYG{n+nb}{int}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{+w}{        }\PYG{n}{stack}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{seq}\PYG{o}{[}\PYG{n}{IsingCoord}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{@[]}
+\PYG{+w}{        }\PYG{n}{padd}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{acc}\PYG{o}{/}\PYG{n}{temp}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{c}{\PYGZsh{} Variabili per coordinate spin}
+\PYG{+w}{        }\PYG{n}{randSpin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{upNeigh}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{downNeigh}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{leftNeigh}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{rightNeigh}\PYG{p}{:}\PYG{+w}{ }\PYG{n}{IsingCoord}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Valuto casualmente spin}
+\PYG{+w}{    }\PYG{n}{randSpin}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{newRandomCoord}\PYG{p}{(}\PYG{n}{nspin}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{randSpin}\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Salvo valore iniziale spin (per successivi confronti) e poi inverto spin}
+\PYG{+w}{    }\PYG{n}{appo}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{randSpin}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{randSpin}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}
+\PYG{+w}{    }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{randSpin}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{randSpin}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{appo}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Continuo fino a quando non ho controllato tutte le possibilità}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{len}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{:}
+\PYG{+w}{        }\PYG{n}{test}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{pop}
+\PYG{+w}{        }\PYG{n}{clusterSize}\PYG{+w}{ }\PYG{o}{+=}\PYG{+w}{ }\PYG{l+m+mi}{1}
+
+\PYG{+w}{        }\PYG{c}{\PYGZsh{} Valuto quali siano i primi vicini}
+\PYG{+w}{        }\PYG{n}{upNeigh}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{newCoord}\PYG{p}{(}\PYG{n}{test}\PYG{p}{.}\PYG{n}{xcoor}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{test}\PYG{p}{.}\PYG{n}{ycoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{mod}\PYG{+w}{ }\PYG{n}{nspin}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{downNeigh}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{newCoord}\PYG{p}{(}\PYG{n}{test}\PYG{p}{.}\PYG{n}{xcoor}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{test}\PYG{p}{.}\PYG{n}{ycoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{nspin}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{mod}\PYG{+w}{ }\PYG{n}{nspin}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{leftNeigh}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{newCoord}\PYG{p}{((}\PYG{n}{test}\PYG{p}{.}\PYG{n}{xcoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{mod}\PYG{+w}{ }\PYG{n}{nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{test}\PYG{p}{.}\PYG{n}{ycoor}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{rightNeigh}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{newCoord}\PYG{p}{((}\PYG{n}{test}\PYG{p}{.}\PYG{n}{xcoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{nspin}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{mod}\PYG{+w}{ }\PYG{n}{nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{test}\PYG{p}{.}\PYG{n}{ycoor}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{c}{\PYGZsh{} Aggiungo al cluster solo se hanno lo stesso orientamento dello spin di partenza}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{upNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{upNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{appo}\PYG{+w}{ }\PYG{o+ow}{and}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{rand}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{padd}\PYG{p}{:}
+\PYG{+w}{            }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{upNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{upNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{appo}
+\PYG{+w}{            }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{upNeigh}\PYG{p}{);}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{downNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{downNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{appo}\PYG{+w}{ }\PYG{o+ow}{and}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{rand}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{padd}\PYG{p}{:}
+\PYG{+w}{            }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{downNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{downNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{appo}
+\PYG{+w}{            }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{downNeigh}\PYG{p}{);}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{rightNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{rightNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{appo}\PYG{+w}{ }\PYG{o+ow}{and}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{rand}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{padd}\PYG{p}{:}
+\PYG{+w}{            }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{rightNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{rightNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{appo}
+\PYG{+w}{            }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{rightNeigh}\PYG{p}{);}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{leftNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{leftNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{n}{appo}\PYG{+w}{ }\PYG{o+ow}{and}\PYG{+w}{ }\PYG{n}{rg}\PYG{p}{.}\PYG{n}{rand}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{padd}\PYG{p}{:}
+\PYG{+w}{            }\PYG{n}{modIsing}\PYG{o}{[}\PYG{n}{leftNeigh}\PYG{p}{.}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{leftNeigh}\PYG{p}{.}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{appo}
+\PYG{+w}{            }\PYG{n}{stack}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{leftNeigh}\PYG{p}{);}
+
+
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{clusterSize}
+
+\end{Verbatim}
