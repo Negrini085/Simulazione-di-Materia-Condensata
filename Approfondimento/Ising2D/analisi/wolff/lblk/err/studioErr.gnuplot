@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Dimensione blocco: N = 500, T = 1.5" 
+set title "Dimensione blocco: N = 500, T = 2.25" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t1.0_size30000_seed4.out"
-p 'errM_size500_t1.5.dat' u (($0+1)*5   ):1 w l lw 2 t 'Traiettoria 1', '' u (($0+1)*5 ):2 w l lw 2 t 'Traiettoria 2', '' u (($0+1)*5   ):3 w l lw 2 t 'Traiettoria 3', '' u (($0+1)*5 ):4 w l lw 2 t 'Traiettoria 4'
+## Last datafile plotted: "term_t1.0_size50000_seed4.out"
+p 'errM_size500_t2.25.dat' u (($0+1)*5   ):1 w l lw 2 t 'Traiettoria 1', '' u (($0+1)*5 ):2 w l lw 2 t 'Traiettoria 2', '' u (($0+1)*5   ):3 w l lw 2 t 'Traiettoria 3', '' u (($0+1)*5 ):4 w l lw 2 t 'Traiettoria 4'
 #    EOF
