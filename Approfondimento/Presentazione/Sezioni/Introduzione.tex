@@ -51,40 +51,41 @@
     \begin{columns}
 
         \begin{column}{0.5\textwidth}
-			
-			\vspace{12pt}
+			\begin{block}{Campo medio}     
 
-			\begin{itemize}[itemsep=0.5em, label=$\diamond$]
-                \item Teoria di campo medio
-                \item Sistema presenta una transizione di fase a $T_c \neq 0$
-            \end{itemize}
+                \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                    \item Transizione di fase a $T_c \neq 0$
+                \end{itemize}
+                
+			    $$ m\,=\,\tanh{\left[\beta\left(h\,+\,Jn_{nn}m\right)\right]} $$
 
-			\vspace{12pt}
+			    \vspace{0.7cm}
 
-			\begin{equation*}
-				m\,=\,\tanh{\left[\beta\left(h\,+\,Jn_{nn}m\right)\right]}
-				\label{eq: magn_Ising1D_MF}
-			\end{equation*}
+                \centering
+				\includegraphics[width=0.8\textwidth]{Immagini/Introduzione/magn_Ising1D_mf.png}
 
+            \end{block}
         \end{column}
 
 
         \begin{column}{0.5\textwidth}
+            \begin{block}{Soluzione analitica}
 			
-			\vspace{12pt}
+			    \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                    \item No magnetizzazione se $T\,\neq\,0$, $h\,=\,0$
+                \end{itemize}
 
-			\begin{itemize}[itemsep=0.5em, label=$\diamond$]
-                \item Soluzione analitica
-                \item Sistema disordinato per ogni $T\,\neq\,0$ a campo esterno nullo
-            \end{itemize}
+			    \begin{equation*}
+			    	m\,=\,\frac{\sinh{\left(\beta h\right)}}{\sqrt{e^{-4\beta J}\,+\,\sinh^2{\left(\beta h\right)}}}
+			    	\label{eq: magn_Ising1D_AS}
+			    \end{equation*}
 
-			\vspace{12pt}
+			    \vspace{0.1cm}
 
-			\begin{equation*}
-				m\,=\,\frac{\sinh{\left(\beta h\right)}}{\sqrt{e^{-4\beta J}\,+\,\sinh^2{\left(\beta h\right)}}}
-				\label{eq: magn_Ising1D_AS}
-			\end{equation*}
-
+                \centering
+				\includegraphics[width=0.8\textwidth]{Immagini/Introduzione/magn_Ising1D_sa.png}
+            
+            \end{block}
         \end{column}
       \end{columns}
   
@@ -131,6 +132,48 @@
                 \includegraphics[width=0.45\textwidth]{Immagini/Introduzione/cg_1000_1.0.png} &
                 \includegraphics[width=0.45\textwidth]{Immagini/Introduzione/cg_1000_3.0.png} \\
             \end{tabular}
+        
+        \end{column}
+      \end{columns}
+  
+\end{frame}
+
+
+
+%----------------------------------------------%
+%			     Quarta slide			       %
+%	Modello XY e diffetti parametro d'ordine   %
+%----------------------------------------------%
+\begin{frame}
+    \frametitle{Modello XY}
+    \framesubtitle{}
+
+    \begin{columns}
+
+        \begin{column}{0.55\textwidth}
+
+            \begin{block}{Hamiltoniana}
+			    \begin{equation*}
+                    H\,=\,-J\sum_{\left<i,j\right>}\vec{s_i} \cdot \vec{s_j}\,-\,\sum_i \vec{h} \cdot \vec{s_i} 
+				    \label{eq: magn_Ising2D_AS}
+			    \end{equation*}
+            \end{block}
+
+            \vspace{0.5cm}
+
+			\begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                \item Simmetria continua
+                \item Difetti topologici (vortici)
+            \end{itemize}
+
+        \end{column}
+        
+        \vspace{0.3cm}
+
+        \begin{column}{0.45\textwidth}
+			
+			\centering
+            \includegraphics[width=\textwidth]{Immagini/Introduzione/modelloXY.png}
         
         \end{column}
       \end{columns}
