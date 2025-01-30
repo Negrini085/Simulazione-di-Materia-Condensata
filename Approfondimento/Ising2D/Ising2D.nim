@@ -101,6 +101,19 @@ proc inizioStampaWolffTerm*(streamOut: FileStream; eneblk, magnblk, dimclblk: fl
         raise newException(CatchableError, msg)
 
 
+proc newInizioStampaWolffTerm*(streamOut: FileStream; nmove:int, eneblk, magnblk, dimclblk: float32) = 
+    # Funzione per intestazione del file di output
+
+    if not isNil(streamOut):
+        streamOut.writeLine("# Simulazione modello di Ising 1D")
+        streamOut.writeLine("# Mossa \t Energia \t Magnetizzazione \t Dimensione cluster")
+        streamOut.writeLine(fmt"{nmove}     {eneblk}      {magnblk}       {dimclblk}")
+
+    else:
+        let msg = "Errore in apertura del file di output! Termino esecuzione del programma."
+        raise newException(CatchableError, msg)
+
+
 proc stampaWolffTerm*(streamOut: FileStream, nmove: int, eneblk, magnblk, dimclblk: float32) = 
     # Funzione per intestazione del file di output
 
@@ -292,7 +305,7 @@ when isMainModule:
         # Stampa della configurazione termalizzata
         # echo "Stampa della configurazione termalizzata"
         # confOut.stampaConf(isingMod, nspin) 
-# 
+
         # echo "Individuo cluster"
         # labels = isingMod.individuaClust(nspin)
         # echo fmt"Dimensioni matrice delle labels {len(labels)}"
@@ -425,8 +438,8 @@ when isMainModule:
             lenBlk = int(lsim/nblk)
 
             obsOut = newFileStream(fileOut, fmWrite)
-            blkOut = newFileStream(labelsFile, fmWrite)
-            confOut = newFileStream(confFile, fmWrite)
+            # blkOut = newFileStream(labelsFile, fmWrite)
+            # confOut = newFileStream(confFile, fmWrite)
 
 
 
@@ -437,94 +450,114 @@ when isMainModule:
         echo "\n\nStudio con algoritmo di Wolff"
         echo "Inizio la termalizzazione del modello di Ising"
         isingMod = inizializzaIsing(nspin)    
-
-        temp = tc
-        for i in 0..term:
-            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
-            eneblk = isingMod.calcolaEnergia(nspin, acc)
-            magnblk = isingMod.calcolaMagn(nspin)
-
-            obsOut.stampaTerm(i+1, eneblk, magnblk)
-            echo fmt"Eseguita mossa termalizzazione: {i+1}"
         
         var 
             conta: int = 0
             limit: int = 0
 
-#        while limit < 3000 * nspin * nspin:
-#            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
-#            limit += dimclblk
-#
-#            eneblk = isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
-#            magnblk = isingMod.calcolaMagn(nspin)/float32(nspin * nspin)
-#            
-#            if conta != 0:
-#                obsOut.stampaWolffTerm(conta+1, eneblk, magnblk, float32(dimclblk))
-#                conta += 1           
-#                if conta mod 1000 == 0:
-#                    echo fmt"Effettata mossa termalissazione: {conta}"
-#            else:
-#                conta = 1
-#                obsOut.inizioStampaWolffTerm(eneblk, magnblk, float32(dimclblk))
+        
+        #-------------------------------------#
+        #       Fase di termalizzazione       #
+        #-------------------------------------#
+        while limit < term * nspin * nspin:
+            dimclblk = isingMod.wolffMove(rg, temp, acc, nspin)
+            limit += dimclblk
 
-        # Stampa della configurazione termalizzata
-        echo "Stampo configurazione termalizzata"
-        confOut.stampaConf(isingMod, nspin) 
-
-        # Stampa della mappa delle labels
-        echo "Calcolo dimensioni dei cluster"
-        labels = isingMod.individuaClust(nspin)
-        echo fmt"Dimensioni matrice delle labels {len(labels)}"
-        echo "Stampo matrice delle labels"
-        blkOut.stampaConf(labels, nspin)
-
-        #--------------------------------------------------#
-        #         Evoluzione del sistema con Wolff         #
-        #--------------------------------------------------#
+        #-------------------------------------#
+        #        Fase di data-blocking        #
+        #-------------------------------------#
+        limit = 0
         echo "\n\nInizio la simulazione del modello di Ising"
         for i in 0..<nblk:
             
-            dimclblk = 0
-            #---------------------------------------------------#
-            #       Studio osservabili nel singolo blocco       #
-            #---------------------------------------------------#
-            for j in 0..<lenBlk:
+            conta = 0
+            # Faccio le iterazioni necessarie per il singolo blocco
+            while dimclblk < nspin * nspin:
                 dimclblk += isingMod.wolffMove(rg, temp, acc, nspin)
 
-                # Energia 
-                appo = isingMod.calcolaEnergia(nspin, acc)
-                eneblk += appo/float32(lenBlk)
-                ene2blk += appo*appo/float32(lenBlk)
-
-                # Magnetizzazione
+                conta += 1
+                eneblk += isingMod.calcolaEnergia(nspin, acc)/float32(nspin * nspin)
                 appo = isingMod.calcolaMagn(nspin)
-                magnblk += appo/float32(lenBlk)
-                magn2blk += appo*appo/float32(lenBlk)
-
-
-            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk, 2))/float32(nspin * nspin)
-            chiblk = 1/(temp) * (magn2blk - pow(magnblk, 2))/float32(nspin * nspin)
-
-            eneblk = eneblk/float32(nspin * nspin)
-            magnblk = magnblk/float32(nspin * nspin)
-
-            if i != 0:
-                obsOut.stampaWolffObs(i+1, eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
-            else:    
-                obsOut.inizioStampaWolffObs(eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
+                if temp<tc:
+                    appo = abs(appo)
+                magnblk += appo/float32(nspin * nspin)
             
+            limit += conta
+            if i != 0:
+                obsOut.stampaWolffTerm(limit, eneblk/float32(conta), magnblk/float32(conta), float32(dimclblk)/float32(conta))
+            else:
+                obsOut.newInizioStampaWolffTerm(limit, eneblk/float32(conta), magnblk/float32(conta), float32(dimclblk)/float32(conta))
+
             echo "-----------------------------------------------"
             echo ""
             echo fmt"          Numero blocco: {i+1}" 
+            echo fmt"        Algoritmo Wolff: T = {temp}" 
             echo ""
             echo "-----------------------------------------------"
 
             eneblk = 0
-            ene2blk = 0
             magnblk = 0
-            magn2blk = 0
-        
+            dimclblk = 0
+
+        # Stampa della configurazione termalizzata
+        # echo "Stampo configurazione termalizzata"
+        # confOut.stampaConf(isingMod, nspin) 
+
+        # Stampa della mappa delle labels
+        # echo "Calcolo dimensioni dei cluster"
+        # labels = isingMod.individuaClust(nspin)
+        # echo fmt"Dimensioni matrice delle labels {len(labels)}"
+        # echo "Stampo matrice delle labels"
+        # blkOut.stampaConf(labels, nspin)
+
+        #--------------------------------------------------#
+        #         Evoluzione del sistema con Wolff         #
+        #--------------------------------------------------#
+#        echo "\n\nInizio la simulazione del modello di Ising"
+#        for i in 0..<nblk:
+#            
+#            dimclblk = 0
+#            #---------------------------------------------------#
+#            #       Studio osservabili nel singolo blocco       #
+#            #---------------------------------------------------#
+#            for j in 0..<lenBlk:
+#                dimclblk += isingMod.wolffMove(rg, temp, acc, nspin)
+#
+#                # Energia 
+#                appo = isingMod.calcolaEnergia(nspin, acc)
+#                eneblk += appo/float32(lenBlk)
+#                ene2blk += appo*appo/float32(lenBlk)
+#
+#                # Magnetizzazione
+#                appo = abs(isingMod.calcolaMagn(nspin))
+#                magnblk += appo/float32(lenBlk)
+#                magn2blk += appo*appo/float32(lenBlk)
+#
+#
+#            cpblk = 1/(temp * temp) * (ene2blk - pow(eneblk, 2))/float32(nspin * nspin)
+#            chiblk = 1/(temp) * (magn2blk - pow(magnblk, 2))/float32(nspin * nspin)
+#
+#            eneblk = eneblk/float32(nspin * nspin)
+#            magnblk = magnblk/float32(nspin * nspin)
+#
+#            if i != 0:
+#                obsOut.stampaWolffObs(i+1, eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
+#            else:    
+#                obsOut.inizioStampaWolffObs(eneblk, magnblk, cpblk, chiblk, float32(dimclblk)/float32(lenBlk))
+#            
+#            echo "-----------------------------------------------"
+#            echo ""
+#            echo fmt"          Numero blocco: {i+1}" 
+#            echo fmt"        Algoritmo Wolff: T = {temp}" 
+#            echo ""
+#            echo "-----------------------------------------------"
+#
+#            eneblk = 0
+#            ene2blk = 0
+#            magnblk = 0
+#            magn2blk = 0
+#        
 
         obsOut.close()
-        blkOut.close()
-        confOut.close()
+        # blkOut.close()
+        # confOut.close()
