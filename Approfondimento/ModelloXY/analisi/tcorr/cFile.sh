@@ -1,8 +1,7 @@
 #!/bin/bash
 
-tempXY=(0.25 0.5 0.75 1.0 1.25 1.5)               # Temperature a cui simulo il modello
-deltaXY=(0.8 1.1 1.4 1.7 2.5 3.2)                 # Rotazione angolare degli spin
-sizeXY=(100)                      		  # Dimensioni del modello di Ising
+tempXY=(0.5 1.0 1.5 2.0 2.5 3.0)                  # Temperature a cui simulo il modello
+sizeXY=(50 100 200)                   		  # Dimensioni del modello di Ising
 
 
 
@@ -15,7 +14,7 @@ for ((i=0; i<${#sizeXY[@]}; i++)); do
     for ((j=0; j<${#tempXY[@]}; j++)); do
         for ((k=1; k<=4; k++)); do
             # Eseguo programma e faccio analisi su termalizzazione
-            LC_NUMERIC=C awk -v ns=${sizeXY[i]} 'NR==19{print "#Sweep   Energia    Magn X    Magn Y"}NR>19{print $1,   $2/(ns*ns),    $3/(ns*ns),  $4/(ns*ns)}' tcorr_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out > appo_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out
+            LC_NUMERIC=C awk 'NR==19{print "#Sweep   Energia    Magn X    Magn Y"}NR>49{print $1,   $2,    $3,  $4}' tcorr_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out > appo_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out
             rm tcorr_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out
             mv appo_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out tcorr_t${tempXY[j]}_size${sizeXY[i]}_seed$k.out
     	done
