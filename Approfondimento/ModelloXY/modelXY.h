@@ -54,7 +54,7 @@ class ModelloXY{
 
         //Leggiamo parametri simulativi
         ifstream fileIn;
-        fileIn.open("input.dat");
+        fileIn.open(nomeF);
 
         fileIn >> m_temp;
         m_beta = 1.0/m_temp;
@@ -77,6 +77,54 @@ class ModelloXY{
         }
 
     }
+    // Costruttore che legge input da file & configurazione iniziale da file
+    ModelloXY(string nomeInp, string nomeConf){
+        // Stampo tipologia di codice
+        cout << "***************************************" << endl;
+        cout << "*           Modello XY                *" << endl;
+        cout << "*      Simulazione Monte Carlo        *" << endl;
+        cout << "***************************************" << endl;
+
+
+        // Setup del generatore di numeri casuali
+        int p1, p2;
+        ifstream Primes("random/Primes");
+        if (Primes.is_open()){
+            Primes >> p1 >> p2 ;
+        } else cerr << "PROBLEM: Unable to open Primes" << endl;
+        
+        ifstream input("random/seed.in"); int seed[4];
+        input >> seed[0] >> seed[1] >> seed[2] >> seed[3];
+        m_rnd.SetRandom(seed,p1,p2);
+        input.close();
+        Primes.close();
+
+        //Leggiamo parametri simulativi
+        ifstream fileIn;
+        fileIn.open(nomeInp);
+
+        fileIn >> m_temp;
+        m_beta = 1.0/m_temp;
+        fileIn >> m_nspin;
+        fileIn >> m_J;    
+        fileIn >> m_nblk;
+        fileIn >> m_nstep;
+        fileIn >> m_delta;
+        fileIn >> m_term;
+
+        fileIn.close();
+
+        fileIn.open(nomeConf);
+        //Inizializzazione della matrice (parto con tutti gli spin verso l'alto)
+        m_lattice.resize(m_nspin, vector<double>(m_nspin));
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                fileIn >> m_lattice[i][j];
+            }
+        }
+        fileIn.close();
+    }
     //Distruttore
     ~ModelloXY() {;}
 
@@ -89,6 +137,12 @@ class ModelloXY{
     double getBeta(){ return m_beta; }
     double getDelta(){ return m_delta; }
     double getTerm(){ return m_term; }
+
+    // Metodi set per poter fare raffreddamento della configurazione
+    void setTemp(double t){
+        m_beta = 1/t; 
+        m_temp = t;
+    }
 
 
     // Stampo i parametri della simulazione
