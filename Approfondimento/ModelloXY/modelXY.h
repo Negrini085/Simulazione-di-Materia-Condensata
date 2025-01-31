@@ -170,6 +170,20 @@ class ModelloXY{
         }
     }
 
+    // Stampo la matrice a file
+    void stampa_mat(string fName){
+        ofstream fileOut;
+        fileOut.open(fName);
+
+        for(int i=0; i<m_nspin; i++){
+            for(int j=0; j<m_nspin; j++){
+                fileOut << m_lattice[i][j] << "    ";
+            }
+            fileOut << endl;
+        }
+
+        fileOut.close();
+    }
 
     // Calcolo magnetizzazione lungo x del sistema
     double getMagnX(){

@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Termalizzazione XY: 100 x 100, T = 1.5" 
+set title "Termalizzazione XY: 50 x 50, T = 1.0" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t1.5_size100_seed4.out"
-p 'term_t1.5_size100_seed1.out' u 1:2 w l lw 2 t 'Traiettoria 1', 'term_t1.5_size100_seed2.out' u 1:2 w l lw 2 t 'Traiettoria 2', 'term_t1.5_size100_seed3.out' u 1:2 w l lw 2 t 'Traiettoria 3', 'term_t1.5_size100_seed4.out' u 1:2 w l lw 2 t 'Traiettoria 4'
+## Last datafile plotted: "term_t1.0_size50_seed4.out"
+p 'term_t1.0_size50_seed1.out' u 1:2 w l lw 2 t 'Traiettoria 1', 'term_t1.0_size50_seed2.out' u 1:2 w l lw 2 t 'Traiettoria 2', 'term_t1.0_size50_seed3.out' u 1:2 w l lw 2 t 'Traiettoria 3', 'term_t1.0_size50_seed4.out' u 1:2 w l lw 2 t 'Traiettoria 4'
 #    EOF
