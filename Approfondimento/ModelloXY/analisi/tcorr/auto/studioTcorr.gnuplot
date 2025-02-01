@@ -121,7 +121,7 @@ set cbtics  norangelimit autofreq
 set rtics axis in scale 1,0.5 nomirror norotate  autojustify
 set rtics  norangelimit autofreq 
 unset ttics
-set title "Autocorrelazione: 100 x 100, T = 1.0" 
+set title "Autocorrelazione: 50 x 200, T = 3.0" 
 set title  font ",20" textcolor lt -1 norotate
 set timestamp bottom 
 set timestamp "" 
@@ -175,6 +175,6 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 GNUTERM = "qt"
 I = {0.0, 1.0}
 VoxelDistance = 0.0
-## Last datafile plotted: "term_t1.0_size100_seed4.out"
-p 'tcorr_t1.0_size100_seed1.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t1.0_size100_seed2.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t1.0_size100_seed3.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t1.0_size100_seed4.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 4'
+## Last datafile plotted: "term_t3.0_size50_seed4.out"
+p 'tcorr_t3.0_size50_seed1.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 1', 'tcorr_t3.0_size50_seed2.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 2', 'tcorr_t3.0_size200_seed3.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 3', 'tcorr_t3.0_size200_seed4.out' every ::0::5000 u ($0+1):1 w l lw 2 t 'Traiettoria 4'
 #    EOF
