@@ -31,7 +31,7 @@ int main(int argc, char** argv){
             // Eseguo uno sweep del sistema
             sistema.Sweep();
 
-            ene += sistema.getEne();
+            ene += sistema.getEne(0.1);
             magnX += sistema.getMagnX();
             magnY += sistema.getMagnY();
 

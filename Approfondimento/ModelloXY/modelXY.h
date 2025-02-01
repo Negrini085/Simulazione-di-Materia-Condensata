@@ -214,13 +214,14 @@ class ModelloXY{
 
 
     // Calcolo energia del sistema
-    double getEne(){
+    double getEne(double h){
         double appo = 0;
 
         for(int i=0; i<m_nspin; i++){
             for(int j=0; j<m_nspin; j++){
                 appo -= m_J * cos(m_lattice[i][j] - m_lattice[i][Pbc(m_nspin, j+1)]);
                 appo -= m_J * cos(m_lattice[j][i] - m_lattice[Pbc(m_nspin, j+1)][i]);
+                appo -= h * cos(m_lattice[i][j]);
             }
         }
 
@@ -228,7 +229,7 @@ class ModelloXY{
     }
 
     // Energia interazione con primi vicini (serve per mossa metropolis)
-    double Boltzmann(double spin, int xcoor, int ycoor){
+    double Boltzmann(double spin, int xcoor, int ycoor, double h){
       double ene = 0;
       
       // Considero separatamente i quattro primi vicini
@@ -236,6 +237,7 @@ class ModelloXY{
       ene -= m_J * cos(m_lattice[xcoor][Pbc(m_nspin, ycoor - 1)] - spin);
       ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor + 1)][ycoor] - spin);
       ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor - 1)][ycoor] - spin);
+      ene -= h * cos(spin);
 
       return ene;
     }
@@ -260,8 +262,8 @@ class ModelloXY{
 
         // Energie prima e dopo inversione
         double appo = m_lattice[xcoor][ycoor] + change;
-        double enei = Boltzmann(m_lattice[xcoor][ycoor], xcoor, ycoor);
-        double enef = Boltzmann(appo, xcoor, ycoor);
+        double enei = Boltzmann(m_lattice[xcoor][ycoor], xcoor, ycoor, 0.1);
+        double enef = Boltzmann(appo, xcoor, ycoor, 0.1);
 
         // Valuto la differenza di energia
         if(enef - enei < 0){
