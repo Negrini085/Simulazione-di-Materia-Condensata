@@ -1,4 +1,4 @@
-\section{Simulazioni modello di Ising 1D}
+\section{Simulazioni modello di Ising 2D}
 
 %-----------------------------------------%
 %				Prima slide				  %
@@ -132,36 +132,6 @@
 
 
 %-----------------------------------------%
-%		  	  Terza slide - B			  %
-%	      Studio della T critica    	  %
-%-----------------------------------------%
-\begin{frame}
-    \frametitle{Dipendenza da $J$}
-    \framesubtitle{}
-
-    \begin{columns}
-        \begin{column}{0.6\textwidth}
-
-            \centering
-            \includegraphics[width=\textwidth]{Immagini/simIsing2D/dipJ_Tc.png}
-
-        \end{column}
-    
-        \begin{column}{0.4\textwidth}
-
-                \begin{itemize}[itemsep=0.5em, label=$\diamond$]
-                    \item Aumenta $J$, aumenta $T_c$
-                    \item Presenza o meno di ordine dipende dall'intensità dell'interazione
-                \end{itemize}
-            
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
-
-
-%-----------------------------------------%
 %			  Quarta slide				  %
 %	   Studio dell'energia interna   	  %
 %-----------------------------------------%
@@ -197,24 +167,55 @@
 
 
 %-----------------------------------------%
-%			  Quinta slide				  %
-%	   Studio del calore specifico   	  %
+%		  	  Quinta slide - A			  %
+%	      Studio della T critica    	  %
 %-----------------------------------------%
 \begin{frame}
-    \frametitle{Calore specifico}
+    \frametitle{Dipendenza da $J$}
     \framesubtitle{}
+
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+
+            \centering
+            \includegraphics[width=\textwidth]{Immagini/simIsing2D/dipJ_Tc.png}
+
+        \end{column}
+    
+        \begin{column}{0.4\textwidth}
+
+                \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                    \item Aumenta $J$, aumenta $T_c$
+                    \item Presenza o meno di ordine dipende dall'intensità dell'interazione
+                \end{itemize}
+            
+        \end{column}
+    \end{columns}
 
 \end{frame}
 
 
 
 %-----------------------------------------%
-%		   	   Sesta slide				  %
-%	    Studio della suscettività   	  %
+%			Quinta slide - B			  %
+%	   Studio del calore specifico   	  %
 %-----------------------------------------%
 \begin{frame}
-    \frametitle{Suscettività}
+    \frametitle{Regione critica}
     \framesubtitle{}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+
+            \centering
+            \includegraphics[width=\textwidth]{Immagini/simIsing2D/cp_zCrit.png}
+
+        \end{column}
+    
+        \begin{column}{0.5\textwidth}
+            
+        \end{column}
+    \end{columns}
 
 \end{frame}
 
@@ -279,17 +280,5 @@
         \draw[fill=black] (5, 0) circle (2pt); 
         \node[above] at (5, 0) {$T_c$}; 
     \end{tikzpicture}
-    
-\end{frame}
-
-
-
-%-----------------------------------------%
-%		   	    Nona slide				  %
-%	     Studio con coarse graining   	  %
-%-----------------------------------------%
-\begin{frame}
-    \frametitle{Esponenti critici}
-    \framesubtitle{}
     
 \end{frame}
