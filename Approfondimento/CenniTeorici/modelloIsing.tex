@@ -18,6 +18,8 @@
 \usepackage{array}
 \usepackage{minted} % Per evidenziare il codice
 \usepackage{tikz}
+\usepackage{tcolorbox}  % Per i riquadri colorati
+\usepackage{caption} 
 
 
 
@@ -52,6 +54,8 @@
 \fancyhead[R]{\textit{\leftmark}}
 \fancyfoot[C]{\thepage}
 
+\definecolor{blocchi}{RGB}{56, 97, 14}
+
 % Titolo e autore
 \title{\textbf{Il modello di Ising}}
 \author{Autore: Filippo Negrini \\
@@ -79,6 +83,7 @@
 \newpage
 \input{Sezioni/simIsing2D.tex}
 \input{Sezioni/simXY.tex}
+\newpage
 \input{Sezioni/Appendice.tex}
 \newpage
 \input{Sezioni/Bibliografia.tex}
