@@ -27,6 +27,10 @@ nella seguente figura, comprensiva di entrambe le casistiche.
 
 \subsection{Osservabili}
 
+La prima quantità a cui siamo interessati è la magnetizzazione, che costituisce il parametro d'ordine del 
+sistema. Possiamo osservare, come predetto dalla soluzione esatta del modello di Ising 1D, che in assenza di 
+campo magnetico non è presente magnetizzazione per qualsiasi temperatura finita. E' possibile ottenere spin allineati e quindi un 
+sistema ordinato solamente quando viene applicato un campo esterno.
 
 \begin{figure}[htbp]
     \centering
@@ -42,58 +46,50 @@ nella seguente figura, comprensiva di entrambe le casistiche.
     \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+La presenza di un campo magnetico esterno implica che il secondo termine dell'hamiltoniana è diverso da zero: questo si traduce in 
+ground state e stati eccitati ad energia inferiore rispetto al caso senza h.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/magn_h0.0.png}
-    \caption{Magnetizzazione modello di Ising 1D: h = 0.0.}
-    \label{fig: magn_Ising1D_h0.0}
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/ene_h0.0.png}
+      \caption{Energia: h = 0.0.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/ene_h0.02.png}
+      \caption{Energia: h = 0.02.}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+Oltre a magnetizzazione ed energia è possibile valutare le funzioni di risposta, ossia suscettività magnetica e calore specitico. In 
+particolare è stato ottenuto quanto segue.
+
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/magn_h0.02.png}
-    \caption{Magnetizzazione modello di Ising 1D: h = 0.02.}
-    \label{fig: magn_Ising1D_h0.02}
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/chi_h0.0.png}
+      \caption{Suscettività: h = 0.0.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/chi_h0.02.png}
+      \caption{Suscettività: h = 0.02.}
+    \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/ene_h0.0.png}
-    \caption{Energia modello di Ising 1D: h = 0.0.}
-    \label{fig: ene_Ising1D_h0.0}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/ene_h0.02.png}
-    \caption{Energia modello di Ising 1D: h = 0.02.}
-    \label{fig: ene_Ising1D_h0.02}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/chi_h0.0.png}
-    \caption{Suscettività modello di Ising 1D: h = 0.0.}
-    \label{fig: chi_Ising1D_h0.0}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/chi_h0.02.png}
-    \caption{Suscettività modello di Ising 1D: h = 0.02.}
-    \label{fig: chi_Ising1D_h0.0}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/cp_h0.0.png}
-    \caption{Calore specifico modello di Ising 1D: h = 0.0.}
-    \label{fig: cp_Ising1D_h0.0}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Immagini/simIsing1D/cp_h0.02.png}
-    \caption{Calore specifico modello di Ising 1D: h = 0.02.}
-    \label{fig: cp_Ising1D_h0.0}
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/cp_h0.0.png}
+      \caption{Calore specifico: h = 0.0.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}  
+      \centering
+      \includegraphics[page=1, width=\textwidth]{Immagini/simIsing1D/cp_h0.02.png}
+      \caption{Calore specifico: h = 0.02.}
+    \end{minipage}
 \end{figure}
