@@ -203,7 +203,7 @@
 %	      Studio della T critica    	  %
 %-----------------------------------------%
 \begin{frame}
-    \frametitle{Dipendenza da $J$}
+    \frametitle{$T_c$: dipendenza da $J$}
     \framesubtitle{}
 
     \begin{columns}
@@ -237,14 +237,20 @@
     \framesubtitle{}
 
     \begin{columns}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.6\textwidth}
 
             \centering
             \includegraphics[width=\textwidth]{Immagini/simIsing2D/cp_zCrit.png}
 
         \end{column}
     
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.4\textwidth}
+
+            \begin{itemize}[itemsep=0.5em, label=$\diamond$]
+                \item Transizione di fase solo nel limite termodinamico
+                \item Aumenta N, meglio risolto è il picco
+                \item $N \to \infty$ implica $T_{max} \to T_c^+$
+            \end{itemize}
             
         \end{column}
     \end{columns}
@@ -254,28 +260,7 @@
 
 
 %-----------------------------------------%
-%		   	  Settima slide				  %
-%	     Studio con coarse graining   	  %
-%-----------------------------------------%
-\begin{frame}
-    \frametitle{Coarse graining}
-    \framesubtitle{}
-
-    \centering
-    \begin{tikzpicture}
-        \node (img1) at (-1,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_10000_Tc.png}};
-        
-        \node (img2) at (7,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_1000_Tc.png}};
-        
-        \draw[->,thick] (img1.east)  -- node[above] {CG} (img2.west);
-    \end{tikzpicture}
-    
-\end{frame}
-
-
-
-%-----------------------------------------%
-%		   	   Ottava slide				  %
+%		   	   Settima slide	    	  %
 %	      Dimensione dei clusters   	  %
 %-----------------------------------------%
 \begin{frame}
@@ -311,6 +296,27 @@
         
         \draw[fill=black] (5, 0) circle (2pt); 
         \node[above] at (5, 0) {$T_c$}; 
+    \end{tikzpicture}
+    
+\end{frame}
+
+
+
+%-----------------------------------------%
+%		   	  Ottava slide				  %
+%	     Studio con coarse graining   	  %
+%-----------------------------------------%
+\begin{frame}
+    \frametitle{Coarse graining}
+    \framesubtitle{}
+
+    \centering
+    \begin{tikzpicture}
+        \node (img1) at (-1,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_10000_Tc.png}};
+        
+        \node (img2) at (7,0) {\includegraphics[width=0.4\textwidth]{Immagini/simIsing2D/cg_1000_Tc.png}};
+        
+        \draw[->,thick] (img1.east)  -- node[above] {CG} (img2.west);
     \end{tikzpicture}
     
 \end{frame}
