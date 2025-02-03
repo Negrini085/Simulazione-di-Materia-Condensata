@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Periodic Boundary Conditions}
+\PYG{+w}{    }\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{Pbc}\PYG{p}{(}\PYG{n}{n}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{i}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{p}{):}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{:}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{n}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{n}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{i}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Energia di interazione con i primi vicini}
+\PYG{+w}{    }\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{Boltzmann}\PYG{p}{(}\PYG{n}{spin}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{float}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}\PYG{p}{):}\PYG{+w}{ }\PYG{n+nb}{float}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{        }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{ene}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{float}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.0}
+
+\PYG{+w}{        }\PYG{n}{ene}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{m\PYGZus{}J}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cos}\PYG{p}{(}\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{Pbc}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{spin}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{ene}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}J}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cos}\PYG{p}{(}\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{Pbc}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{spin}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{ene}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}J}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cos}\PYG{p}{(}\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{Pbc}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{][}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{spin}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{ene}\PYG{+w}{ }\PYG{o}{\PYGZhy{}=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}J}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{cos}\PYG{p}{(}\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{Pbc}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{][}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{spin}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{ene}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Singola mossa Metropolis}
+\PYG{+w}{    }\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{Move}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{        }\PYG{k+kd}{var}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{p}{:}\PYG{+w}{ }\PYG{n+nb}{int}
+
+\PYG{+w}{        }\PYG{n}{xcoor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rand}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{ycoor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{rand}\PYG{p}{(}\PYG{n}{m\PYGZus{}nspin}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{k}{let}\PYG{+w}{ }\PYG{n}{change}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{random}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{m\PYGZus{}delta}\PYG{+w}{ }\PYG{p}{..}\PYG{+w}{ }\PYG{n}{m\PYGZus{}delta}\PYG{p}{)}
+\PYG{+w}{        }\PYG{k}{let}\PYG{+w}{ }\PYG{n}{appo}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{change}
+\PYG{+w}{        }\PYG{k}{let}\PYG{+w}{ }\PYG{n}{enei}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Boltzmann}\PYG{p}{(}\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{ycoor}\PYG{o}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{p}{)}
+\PYG{+w}{        }\PYG{k}{let}\PYG{+w}{ }\PYG{n}{enef}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Boltzmann}\PYG{p}{(}\PYG{n}{appo}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{xcoor}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ycoor}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{n}{enef}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{enei}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{o+ow}{or}\PYG{+w}{ }\PYG{n}{random}\PYG{p}{(}\PYG{l+m+mf}{1.0}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{m\PYGZus{}beta}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{enef}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{enei}\PYG{p}{)):}
+\PYG{+w}{          }\PYG{n}{m\PYGZus{}lattice}\PYG{o}{[}\PYG{n}{xcoor}\PYG{o}{][}\PYG{n}{ycoor}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{appo}
+\PYG{+w}{          }\PYG{n}{inc}\PYG{+w}{ }\PYG{n}{accettate}
+
+\PYG{+w}{    }\PYG{c}{\PYGZsh{} Sweep del reticolo con Metropolis}
+\PYG{+w}{    }\PYG{k}{proc}\PYG{+w}{ }\PYG{n+nf}{Sweep}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{        }\PYG{k}{for}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o+ow}{in}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{p}{..}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nspin}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{m\PYGZus{}nspin}\PYG{p}{:}
+\PYG{+w}{            }\PYG{n}{Move}\PYG{p}{()}
+\end{Verbatim}

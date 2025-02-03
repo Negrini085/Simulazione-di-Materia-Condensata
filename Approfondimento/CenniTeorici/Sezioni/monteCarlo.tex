@@ -184,6 +184,52 @@ da due a quattro. La struttura in sè dell'algoritmo rimane la stessa.
 
 
 
+\subsubsection{Metropolis Modello XY}
+
+\begin{minted}[frame=lines, fontsize=\small, bgcolor=blue!10, breaklines = true]{nim}
+    # Periodic Boundary Conditions
+    proc Pbc(n: int, i: int): int =
+        if i >= n: return i - n
+        if i < 0: return i + n
+        return i
+      
+    # Energia di interazione con i primi vicini
+    proc Boltzmann(spin: float, xcoor: int, ycoor: int): float =
+        var ene: float = 0.0
+      
+        ene = -m_J * cos(m_lattice[xcoor][Pbc(m_nspin, ycoor + 1)] - spin)
+        ene -= m_J * cos(m_lattice[xcoor][Pbc(m_nspin, ycoor - 1)] - spin)
+        ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor + 1)][ycoor] - spin)
+        ene -= m_J * cos(m_lattice[Pbc(m_nspin, xcoor - 1)][ycoor] - spin)
+      
+        return ene
+    
+    # Singola mossa Metropolis
+    proc Move() =
+        var xcoor, ycoor: int
+      
+        xcoor = rand(m_nspin - 1)
+        ycoor = rand(m_nspin - 1)
+      
+        let change = random(-m_delta .. m_delta)
+        let appo = m_lattice[xcoor][ycoor] + change
+        let enei = Boltzmann(m_lattice[xcoor][ycoor], xcoor, ycoor)
+        let enef = Boltzmann(appo, xcoor, ycoor)
+      
+        if enef - enei < 0 or random(1.0) < exp(-m_beta * (enef - enei)):
+          m_lattice[xcoor][ycoor] = appo
+          inc accettate
+    
+    # Sweep del reticolo con Metropolis
+    proc Sweep() =
+        for i in 0 ..< m_nspin * m_nspin:
+            Move()
+\end{minted}    
+
+In questo caso la mossa proposta è una rotazione casuale dello spin selezionata nell'intervallo $\left(-\delta,\,\delta\right)$. Tale 
+parametro viene fissato in modo tale da avere un acceptance rate pari a circa il 50 \%. 
+
+
 \subsection{Termalizzazione}
 
 Una simulazione Monte-Carlo è detta all'equilibrio nel momento in cui viene correttamente campionato il peso statistico di Boltzmann 
@@ -389,22 +435,20 @@ proc wolffMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, acc: fl
         # Aggiungo al cluster solo se hanno lo stesso orientamento dello spin di partenza
         if modIsing[upNeigh.xcoor][upNeigh.ycoor] == appo and rg.rand() < padd:
             modIsing[upNeigh.xcoor][upNeigh.ycoor] = -appo
-            stack.add(upNeigh);
+            stack.add(upNeigh)
 
         if modIsing[downNeigh.xcoor][downNeigh.ycoor] == appo and rg.rand() < padd:
             modIsing[downNeigh.xcoor][downNeigh.ycoor] = -appo
-            stack.add(downNeigh);
+            stack.add(downNeigh)
 
         if modIsing[rightNeigh.xcoor][rightNeigh.ycoor] == appo and rg.rand() < padd:
             modIsing[rightNeigh.xcoor][rightNeigh.ycoor] = -appo
-            stack.add(rightNeigh);
+            stack.add(rightNeigh)
 
         if modIsing[leftNeigh.xcoor][leftNeigh.ycoor] == appo and rg.rand() < padd:
             modIsing[leftNeigh.xcoor][leftNeigh.ycoor] = -appo
-            stack.add(leftNeigh);
-            
+            stack.add(leftNeigh)
     
     return clusterSize
-
 \end{minted}    
     
