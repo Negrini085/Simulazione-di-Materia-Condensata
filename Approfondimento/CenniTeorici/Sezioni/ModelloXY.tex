@@ -174,4 +174,58 @@ presente una raffigurazione dello spazio del parametro d'ordine, il quale viene 
 
 \subsection{Transizione Kosterlitz-Thouless}
 
+Il modello XY in due dimensioni non presenta magnetizzazione spontanea a temperatura finita, ma questo non esclude la presenta di una transizione 
+di fase che non necessita della presenza di ordine. A bassa temperatura il modello non presenta spin allineati, ma è caratterizzato 
+da proprietà di correlazione differenti rispetto a quelle della fase paramagnetica a $T \gg 1$. Se nel caso ad alta temperatura la 
+funzione di correlazione decade esponenzialmente, per $T \to 0$ tale andamento viene sostituito da una caduta tipo power-law, caratteristica 
+del comportamento di un sistema al punto critico. Sistemi di questo genere sono caratterizzati da \textit{quasi long-range order}. 
+Per basse temperture è possibile mostrare che la funzione di correlazione fra due spin è 
 
+\begin{equation}
+    \langle \vec{s}\left(\vec{r}\right) \cdot \vec{s}\left(0\right) \rangle\,=\,\left(\frac{r}{a}\right)^{-\frac{1}{2 \pi \beta J}}
+    \label{eq: corr_XY_KT}
+\end{equation}
+
+Nel limite in cui $r \to \infty$, le variabili angolari $\theta\left(\vec{r}\right)$ e $\theta\left(0\right)$ diventano scorrelate ad una 
+qualsiasi temperatura finita (in accordo con quanto sottolineato precedentemente, ossia assenza di fase ordinata). Tuttavia l'andamento  
+dell'auto-correlazione riportata in \eqref{eq: corr_XY_KT} non è nè costante, come ci si aspetterebbe nel caso di ordine a lungo raggio, nè 
+esponenziale come nel limite di alta temperatura. Dato che scaling tipo power-law sono tipici del punto critico, l'unica conclusione logica è 
+che il sistema sia critico per un certo range di temperature finite, ossia fino a quando regge l'approssimazione di spin-wave utilizzata per 
+ricavare il risultato precedente. Tale comportamento è legato a come cambiano le variabili angolari all'aumentare della temperatura: al di sopra di 
+un certo valore limite è possibile che si presentino vortici. La variazione di energia libera associata alla formazione di un vortice è 
+pari a 
+
+\begin{equation}
+    \Delta F\,=\,\left(\pi J\,-\,2 k_B T\right)\log{\left(R\right)} + c
+    \label{eq: diffF_vort_KT}
+\end{equation}
+
+dove $R$ è la dimensione lineare del vortice, che fornisce un'informazione relativa a quale regione risulti occupata dal vortice. Al 
+di sopra della temperatura critica 
+
+\begin{equation}
+    T_{KT}\,=\,\frac{\pi J}{2 k_B}
+    \label{eq: T_KT}
+\end{equation}
+
+la variazione di energia libera per la formazione di un difetto è negativa: i vortici proliferano e l'approssimazione di spin-wave non 
+è più adeguata per la descrizione del modello, essendo le variabili angolari rapidamente scorrelate. Tuttavia, una coppia di vortici con 
+carica opposta (ossia con winding number +1 e -1 rispettivamente) può essere stabile se la distanza fra gli stessi non è troppo elevata. Molti 
+vortici possono esistere anche per $T\,<\,T_{KT}$, basta che la carica totale degli stessi sia nulla. A bassa temperatura i vortici possono 
+essere legati a coppie, e la transizione di Kosterlitz-Thouless è associata alla rottura dei "legami presenti". La situazione che abbiamo 
+appena descritto è riportata in Figura \ref{fig: riass_KT}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Immagini/riass_KT.png}
+    \caption{Riassunto delle caratteristiche principali della Kosterlitz-Thouless. A basse temperature la correlazione è una power-law, fino 
+    ad una certa temperatura $T_{KT}$ in cui si assiste all'unbinding dei vortici. Immagine da \cite{galliFSA}.}
+    \label{fig: riass_KT}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Immagini/riass1_KT.png}
+    \caption{Esempio visivo della transizione di Kosterlitz-Thouless.}
+    \label{fig: riass_KT1}
+\end{figure}
