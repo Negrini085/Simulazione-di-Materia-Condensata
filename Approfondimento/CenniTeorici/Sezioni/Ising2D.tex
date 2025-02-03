@@ -53,6 +53,35 @@ precedente è un integrale ellittico completo del primo ordine.
 
 
 
+\subsection{Finite size scaling}
+
+I modelli su cui è possibile effettuare uno studio computazionale hanno dimensione finita e di conseguenza sono solo un'approssimazione 
+del limite termodinamico; il fatto che non venga considerato un numero di spin infinito si traduce in una descrizione inesatta della 
+transizione di fase. Per $T \to T_c$ la lunghezza di correlazione dovrebbe divergere, ma per un sistema come quelli simulati per mezzo di 
+tecniche Monte-Carlo, il massimo valore di $\xi$ è $L$, ossia la dimensione lineare del reticolo. A causa di questo cut-off sulla 
+lunghezza di correlazione, altre quantità divergenti come il calore specifico e la suscettività magnetica presenteranno semplicemente un 
+picco a $T_c$, ma non assumeranno valore infinito. Inoltre la caduta della magnetizzazione non sarà tanto rapida come per il risultato 
+analitico, ma invece di un gradino si otterrà una curva derivabile in cui $m$ tende a zero meno rapidamente. La temperatura critica, 
+che per il modello di Ising 2D è $T_c \simeq 2.269$, non può essere predetta correttamente simulando un sistema finito. Supponendo di 
+avere un reticolo di dimensione $L$, la temperatura critica valutata con un analisi computazionale differisce da quella calcolata 
+analiticamente nel limite termodinamico di un fattore che dipende proprio dalla size del sistema. Infatti 
+
+\begin{equation}
+	T_c\left(L\right)\,-\,T_c\left(\infty\right) \simeq L^{-1/\nu}
+	\label{eq: fs_Tc}
+\end{equation}
+
+Questo risulta evidente nello studio del calore specifico al variare della temperatura critica riportato in Figura \ref{fig: cp_Ising2D_crit}, in cui il 
+picco dello stesso tende al valor vero all'aumento della dimensione reticolare.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Immagini/simIsing2D/cp.png}
+    \caption{Calore specifico: h = 0.0.}
+    \label{fig: cp_Ising2D_crit}
+\end{figure}
+
+
 \subsection{Domain walls}
 
 Consideriamo ora un sistema di dimensione lineare $La$, dove $L$ è un numero reale ed $a$ invece il passo reticolare, in uno spazio a $d$ dimensioni. 
