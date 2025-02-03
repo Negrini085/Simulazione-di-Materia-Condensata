@@ -66,49 +66,57 @@ proc metropolisMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, ac
             accettate += 1
 
 
-proc wolffMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, acc: float32, nspin: int): int = 
+proc wolffMove*(modIsing: var seq[seq[int]], rg: var PCG, temp: float32, acc: float32, nspin: int): float32 = 
     # Algoritmo di Wolff per evolvere il modello di Ising 2D
 
     var 
+        appo: int
+        conta: int
         test: IsingCoord
-        clusterSize:int = 1
+        clusterSize:int = 0
         stack: seq[IsingCoord] = @[]
         padd = 1 - exp(-2*acc/temp)
 
-        # Genero casualmente una coordinata appartendente al reticolo (sarà lo spin casuale)
+        # Variabili per coordinate spin
+        randSpin, upNeigh, downNeigh, leftNeigh, rightNeigh: IsingCoord
+
+    while clusterSize < nspin * nspin:
+        # Valuto casualmente spin
         randSpin = rg.newRandomCoord(nspin)
+        stack.add(randSpin)
 
-        # Valuto le coordinate dei primi vicini
-        upNeigh = newCoord(randSpin.xcoor, (randSpin.ycoor + 1) mod nspin)
-        downNeigh = newCoord(randSpin.xcoor, (randSpin.ycoor + nspin - 1) mod nspin)
-        leftNeigh = newCoord((randSpin.xcoor + 1) mod nspin, randSpin.ycoor)
-        rightNeigh = newCoord((randSpin.xcoor + nspin - 1) mod nspin, randSpin.ycoor)
+        # Salvo valore iniziale spin (per successivi confronti) e poi inverto spin
+        appo = modIsing[randSpin.xcoor][randSpin.ycoor]
+        modIsing[randSpin.xcoor][randSpin.ycoor] = -appo
 
-    #Aggiungo i primi vicini alla stack
-    stack.add(upNeigh); stack.add(downNeigh); stack.add(leftNeigh); stack.add(rightNeigh)
+        # Continuo fino a quando non ho controllato tutte le possibilità
+        while stack.len() > 0:
+            test = stack.pop
+            clusterSize += 1
 
-    # Cambio l'orientazione dello spin (per evitare se ho già incluso o meno uno spin nel cluster)
-    modIsing[randSpin.xcoor][randSpin.ycoor] = - modIsing[randSpin.xcoor][randSpin.ycoor]
+            # Valuto quali siano i primi vicini
+            upNeigh = newCoord(test.xcoor, (test.ycoor + 1) mod nspin)
+            downNeigh = newCoord(test.xcoor, (test.ycoor + nspin - 1) mod nspin)
+            leftNeigh = newCoord((test.xcoor + 1) mod nspin, test.ycoor)
+            rightNeigh = newCoord((test.xcoor + nspin - 1) mod nspin, test.ycoor)
 
-    # Continuo fino a quando non ho controllato tutte le possibilità
-    while stack.len() > 0:
-        test = stack.pop
+            # Aggiungo al cluster solo se hanno lo stesso orientamento dello spin di partenza
+            if modIsing[upNeigh.xcoor][upNeigh.ycoor] == appo and rg.rand() < padd:
+                modIsing[upNeigh.xcoor][upNeigh.ycoor] = -appo
+                stack.add(upNeigh);
 
-        # Controllo se per caso ha lo stesso orientamento dello spin di partenza (quindi opposto una 
-        # volta effettuato il flip)
-        if modIsing[test.xcoor][test.ycoor] != modIsing[randSpin.xcoor][randSpin.ycoor]:
+            if modIsing[downNeigh.xcoor][downNeigh.ycoor] == appo and rg.rand() < padd:
+                modIsing[downNeigh.xcoor][downNeigh.ycoor] = -appo
+                stack.add(downNeigh);
 
-            # Valuto se ha senso aggiungere o meno lo spin (ho una certa probabilità d'accettazione)
-            if rg.rand() < padd:
-                
-                # Aggiungo lo spin nel cluster e inverto lo spin
-                clusterSize += 1
-                modIsing[test.xcoor][test.ycoor] = - modIsing[test.xcoor][test.ycoor] 
+            if modIsing[rightNeigh.xcoor][rightNeigh.ycoor] == appo and rg.rand() < padd:
+                modIsing[rightNeigh.xcoor][rightNeigh.ycoor] = -appo
+                stack.add(rightNeigh);
 
-                # Valuto quali siano i primi vicini e aggiungo nella stack
-                upNeigh = newCoord(test.xcoor, (test.ycoor + 1) mod nspin); stack.add(upNeigh)
-                downNeigh = newCoord(test.xcoor, (test.ycoor + nspin - 1) mod nspin); stack.add(downNeigh)
-                leftNeigh = newCoord((test.xcoor + 1) mod nspin, test.ycoor); stack.add(leftNeigh)
-                rightNeigh = newCoord((test.xcoor + nspin - 1) mod nspin, test.ycoor); stack.add(rightNeigh)
+            if modIsing[leftNeigh.xcoor][leftNeigh.ycoor] == appo and rg.rand() < padd:
+                modIsing[leftNeigh.xcoor][leftNeigh.ycoor] = -appo
+                stack.add(leftNeigh);
+            
+        conta += 1
     
-    return clusterSize
+    return clusterSize/conta

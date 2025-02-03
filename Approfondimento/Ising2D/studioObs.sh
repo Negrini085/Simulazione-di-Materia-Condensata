@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input_file="param2.in"               			     # Nome del file di input
-tempIsing=(2.2 2.25 2.26 2.27 2.28 2.29)        	     # Temperature a cui simulo il modello
-sizeIsing=(100 200 300)                 		     # Dimensioni del modello di Ising
+input_file="param1.in"               			# Nome del file di input
+tempIsing=(2.315 2.325 2.335)		# Temperature a cui simulo il modello
+sizeIsing=(6 12 25 50 100)		             			# Dimensioni del modello di Ising
 
 
 #---------------------------------------------------------------------#
@@ -17,7 +17,7 @@ for ((i=0; i<${#sizeIsing[@]}; i++)); do
         sed -i "s/^temp\s\+.*/temp\t\t"$t"/" "$input_file"
 
         # Eseguo programma per determinazione osservabili
-        ./stObs wolff param2.in analisi/pcrit/zCrit/obs_size${sizeIsing[i]}_t${t}.out
+        ./stObs metro param1.in analisi/pcrit/zCrit/obs_size${sizeIsing[i]}_t${t}.out
     
     done
 

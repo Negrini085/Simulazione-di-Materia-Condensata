@@ -1,0 +1,8 @@
+temp		2.335
+nspin		100
+acc     	1.0
+lsim		250000
+nblk   		250
+state		10
+incr		15
+term		10000
