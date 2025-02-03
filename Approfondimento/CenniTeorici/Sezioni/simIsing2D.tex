@@ -60,6 +60,45 @@ legame.
 \end{figure}
 
 
+
+
+
 \subsection{Studio del punto critico}
+
+L'analisi del punto critico è stata effettuata con l'algoritmo di Wolff, dato che consente la generazione di configurazioni 
+scorrelate in modo molto più efficiente dell'algoritmo di Metropolis per $T \simeq T_c$. Questo studio si è concentrato inizialmente 
+sulla dipendenza da $J$ della temperatura critica, che ricordiamo essere pari a
+
+\begin{equation*}
+    T_c\,=\,\frac{2J}{\log{\left(1\,+\,\sqrt{2}\right)}}
+\end{equation*}
+
+In Figura è riportata la magnetizzazione per vari valori della costante d'accoppiamento $J$ e, come si può apprezzare, 
+l'algoritmo di Wolff è in grado di catturare correttamente l'andamento, anche per $T \to T_c$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Immagini/simIsing2D/dipTc.png}
+    \caption{Dipendenza della temperatura critica da J.}
+    \label{fig: Tc_Ising2D}
+\end{figure}
+
+Ho poi analizzato quali fossero il calore specifico e la suscettività magnetica su un certo range di temperature al variare 
+della dimensione reticolare. Nelle seguenti Figure è evidente come all'aumentare di $N$, ossia il numero di spin che costituiscono 
+il lato del reticolo, i risultati ottenuti rappresentano con maggior accuratezza quelli noti nel limite termodinamico.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Immagini/simIsing2D/cp.png}
+    \caption{Calore specifico: h = 0.0.}
+    \label{fig: cp_Ising2D}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Immagini/simIsing2D/chi.png}
+    \caption{Suscettività: h = 0.0.}
+    \label{fig: chi_Ising2D}
+\end{figure}
 
 \newpage
