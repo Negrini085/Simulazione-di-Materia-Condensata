@@ -263,7 +263,7 @@ class ModelloXY{
         // Energie prima e dopo inversione
         double appo = m_lattice[xcoor][ycoor] + change;
         double enei = Boltzmann(m_lattice[xcoor][ycoor], xcoor, ycoor, 0.1);
-        double enef = Boltzmann(appo, xcoor, ycoor, 0.1);
+        double enef = Boltzmann(appo, xcoor, ycoor, 0.0);
 
         // Valuto la differenza di energia
         if(enef - enei < 0){
